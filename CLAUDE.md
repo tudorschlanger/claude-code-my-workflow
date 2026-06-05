@@ -58,6 +58,13 @@ TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
 python scripts/quality_score.py Quarto/file.qmd
 ```
 
+## Stata
+- Always run Stata to verify code and table output rather than generating blindly
+- Stata executable path: `/Applications/StataNow/StataMP.app/Contents/MacOS/stata-mp`
+- Run do-files with: `/Applications/StataNow/StataMP.app/Contents/MacOS/stata-mp -b do filename.do`
+- Logs are written to the same directory as the do-file; always check the `.log` file for errors after running
+
+
 ---
 
 ## Quality Thresholds
@@ -96,6 +103,7 @@ python scripts/quality_score.py Quarto/file.qmd
 | `/learn [skill-name]` | Extract discovery into persistent skill |
 | `/context-status` | Show session health + context usage |
 | `/deep-audit` | Repository-wide consistency audit |
+| `/format-tables` | Format tables for Latex |
 
 ---
 

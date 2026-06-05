@@ -1,100 +1,49 @@
 ---
 name: lit-review
-description: Structured literature search and synthesis with citation extraction and gap identification
-argument-hint: "[topic, paper title, or research question]"
-allowed-tools: ["Read", "Grep", "Glob", "Write", "WebSearch", "WebFetch"]
+description: Structured literature search and synthesis with citation extraction and gap identification. Searches local papers and uses web search for broader context.
+argument-hint: "[topic or research question]"
 ---
 
 # Literature Review
 
-Conduct a structured literature search and synthesis on the given topic.
+## Instructions
 
-**Input:** `$ARGUMENTS` — a topic, paper title, research question, or phenomenon to investigate.
+1. **Scan local papers** -- Read files in `doc/papers/` for directly relevant work.
 
----
+2. **Web search** -- Use WebSearch to find related academic papers, working papers, and preprints
+   - **Finance journals** -- Search in Journal of Finance, Journal of Financial Economics, Review of Financial Studies 
+   - **Economics journals** -- Search in American Economic Review (including P&P), Quarterly Journal of Economics, Journal of Political Economy, Econometrica, Review of Economic Studies, Review of Economics and Statistics, Journal of Monetary Economics 
+   - **Working papers** -- Search in NBER Working Papers, and SSRN 
 
-## Steps
+3. **Organize findings** into categories:
+   - **Theoretical foundation** -- Papers that establish the theoretical framework
+   - **Empirical evidence** -- Papers with related empirical findings
+   - **Methodological** -- Papers with relevant identification strategies
+   - **Debates** -- Conflicting findings or methodological disagreements
 
-1. **Parse the topic** from `$ARGUMENTS`. If a specific paper is named, use it as the anchor.
+4. **For each paper, extract:**
+   - Citation (author, year, journal)
+   - Key finding relevant to this project
+   - Identification strategy used
+   - Data source
+   - How it relates to our work
 
-2. **Search for related work** using available tools:
-   - Check `master_supporting_docs/supporting_papers/` for uploaded papers
-   - Use `WebSearch` to find recent publications (if available)
-   - Use `WebFetch` to access working paper repositories (if available)
-   - Read any existing `.bib` file for papers already in the project
+5. **Identify gaps** -- What questions remain unanswered? Where can this project contribute?
 
-3. **Organize findings** into these categories:
-   - **Theoretical contributions** — models, frameworks, mechanisms
-   - **Empirical findings** — key results, effect sizes, data sources
-   - **Methodological innovations** — new estimators, identification strategies, inference methods
-   - **Open debates** — unresolved disagreements in the literature
+6. **Save report** to `quality_reports/lit-review_YYYY-MM-DD_topic.md`
 
-4. **Identify gaps and opportunities:**
-   - What questions remain unanswered?
-   - What data or methods could address them?
-   - Where do findings conflict?
+## Examples
 
-5. **Extract citations** in BibTeX format for all papers discussed.
+**User says:** `/lit-review partisan bias in economic expectations`
+**Action:** Search local papers + web, synthesize findings, identify gaps.
 
-6. **Save the report** to `quality_reports/lit_review_[sanitized_topic].md`
+## Validity Checks
+   - Ensure that every paper has a URL link or PDF (no fake citations!)
 
----
 
-## Output Format
+## Troubleshooting
 
-```markdown
-# Literature Review: [Topic]
-
-**Date:** [YYYY-MM-DD]
-**Query:** [Original query from user]
-
-## Summary
-
-[2-3 paragraph overview of the state of the literature]
-
-## Key Papers
-
-### [Author (Year)] — [Short Title]
-- **Main contribution:** [1-2 sentences]
-- **Method:** [Identification strategy / data]
-- **Key finding:** [Result with effect size if available]
-- **Relevance:** [Why it matters for our research]
-
-[Repeat for 5-15 papers, ordered by relevance]
-
-## Thematic Organization
-
-### Theoretical Contributions
-[Grouped discussion]
-
-### Empirical Findings
-[Grouped discussion with comparison across studies]
-
-### Methodological Innovations
-[Methods relevant to the topic]
-
-## Gaps and Opportunities
-
-1. [Gap 1 — what's missing and why it matters]
-2. [Gap 2]
-3. [Gap 3]
-
-## Suggested Next Steps
-
-- [Concrete actions: papers to read, data to obtain, methods to consider]
-
-## BibTeX Entries
-
-```bibtex
-@article{...}
-```
-```
-
----
-
-## Important
-
-- **Be honest about uncertainty.** If you cannot verify a citation, say so.
-- **Prioritize recent work** (last 5-10 years) unless seminal papers are older.
-- **Note working papers vs published papers** — working papers may change.
-- **Do NOT fabricate citations.** If you're unsure about a paper's details, flag it for the user to verify.
+| Error | Cause | Solution |
+|-------|-------|----------|
+| "No local papers match" | Topic not in existing library | Rely on web search, suggest relevant papers to add |
+| "Too many results" | Broad topic | Ask user to narrow scope |
