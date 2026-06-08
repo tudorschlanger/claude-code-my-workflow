@@ -29,13 +29,13 @@ Making this distinction explicit prevents:
 
 ### Article I: [Your Primary Artifact Principle]
 
-**Example (LaTeX workflows):** Beamer `.tex` is authoritative; Quarto `.qmd` derives from it.
+**Example (LaTeX workflows):** Beamer `.tex` is authoritative; all outputs derive from it.
 
 **Example (R workflows):** Analysis scripts are authoritative; reports derive from them.
 
 **Example (Jupyter workflows):** Notebooks are authoritative; exported HTML derives from them.
 
-**Example (multi-format):** Source documents (`.qmd`, `.Rmd`) are authoritative; all outputs (HTML, PDF, Word) derive from them.
+**Example (multi-format):** Source documents are authoritative; all outputs (HTML, PDF, Word) derive from them.
 
 **Why this matters:** Prevents circular dependencies and merge conflicts.
 
@@ -91,7 +91,7 @@ All artifacts must [YOUR STANDARD: e.g., compile successfully, pass tests, rende
 
 **Example (multi-language):** Language-specific subdirectories (`R/`, `python/`, `julia/`); no mixed-language files.
 
-**Example (literate programming):** All code lives in `.qmd` or `.Rmd` files; extracted `.R` scripts are derived artifacts.
+**Example (literate programming):** All code lives in literate programming formats; extracted `.R` scripts are derived artifacts.
 
 **Why this matters:** Consistent structure enables navigation, collaboration, and automated tooling.
 

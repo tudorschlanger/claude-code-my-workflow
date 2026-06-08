@@ -9,7 +9,7 @@ allowed-tools: ["Read", "Grep", "Glob", "Write", "Task"]
 
 Produce a thorough, constructive review of an academic manuscript — the kind of report a top-journal referee would write.
 
-**Input:** `$ARGUMENTS` — path to a paper (.tex, .pdf, or .qmd), or a filename in `master_supporting_docs/`.
+**Input:** `$ARGUMENTS` — path to a paper (.tex, .pdf, or .md), or a filename in `master_supporting_docs/`.
 
 ---
 

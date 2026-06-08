@@ -32,7 +32,7 @@ Review the entire slide deck holistically. Produce a pedagogical report covering
 - **Red flag:** Advanced concept introduced before simpler prerequisite
 
 ### 5. FRAGMENT REVEALS FOR PROBLEM → SOLUTION
-- Use `. . .` (Quarto) to create pedagogical moments
+- Use `\pause` or overlay specifications to create pedagogical moments
 - Pattern: State problem → [fragment] → Show solution
 - Target: 3-5 fragment reveals per lecture (not every slide — use sparingly)
 - **Red flag:** Dense theorem slide reveals everything at once when incremental revelation would help

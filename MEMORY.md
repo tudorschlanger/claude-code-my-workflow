@@ -33,7 +33,7 @@ When a mistake is corrected, append a `[LEARN:category]` entry below.
 
 [LEARN:design] Quality standard for guide additions: useful + pedagogically strong + drives usage + leaves great impression + improves upon starting fresh + no redundancy + not slow. All 7 criteria must hold.
 
-[LEARN:design] Generic means working for any academic workflow: pure LaTeX (no Quarto), pure R (no LaTeX), Python/Jupyter, any domain (not just econometrics). Test recommendations across use cases.
+[LEARN:design] Generic means working for any academic workflow: pure LaTeX, pure R (no LaTeX), Python/Jupyter, any domain (not just econometrics). Test recommendations across use cases.
 
 ## File Organization
 

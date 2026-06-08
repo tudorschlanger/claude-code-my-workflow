@@ -37,7 +37,7 @@ When creating or modifying content, ask:
 
 **SPECIFIC (keep local or gitignore):**
 - Machine-specific paths (`TEXINPUTS=../Preambles` on macOS)
-- Tool versions (`Quarto 1.3.x vs 1.4.x`)
+- Tool versions (specific to your toolchain)
 - Institutional requirements (Emory thesis format)
 - Personal preferences (90/100 quality gate for this project)
 - API keys, credentials, local workarounds
@@ -68,7 +68,7 @@ When creating or modifying content, ask:
 
 **What goes here:**
 - Machine setup: `[LEARN:latex] XeLaTeX on macOS requires TEXINPUTS=../Preambles`
-- Tool quirks: `[LEARN:quarto] Version 1.4.x has nested div bug, use 1.3.x`
+- Tool quirks: `[LEARN:toolchain] Specific tool versions may have quirks — document and pin versions`
 - Local paths: `[LEARN:files] Bibliography at ~/Dropbox/References/main.bib`
 - Personal workflow: `[LEARN:workflow] I prefer 90/100 for lecture slides, 80/100 for explorations`
 
@@ -192,7 +192,7 @@ The template CLAUDE.md has `[YOUR PROJECT NAME]`, `[YOUR INSTITUTION]` — this 
 ### Documentation Can Reference Original Use Case
 
 Pedagogically valuable to show real-world example:
-> "Case Study: 6 lectures, 800+ slides, Beamer + Quarto + R replication"
+> "Case Study: 6 lectures, 800+ slides, Beamer + R replication"
 
 This shows what's POSSIBLE, not what's REQUIRED.
 

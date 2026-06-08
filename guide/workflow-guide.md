@@ -1,34 +1,4 @@
----
-title: "My Claude Code Setup"
-subtitle: "A Comprehensive Guide to AI-Assisted Academic Workflows: Slides, Papers, Analysis, and Beyond"
-author: "Pedro H. C. Sant'Anna"
-date: "2026-03-20"
-date-modified: last-modified
-format:
-  html:
-    toc: true
-    toc-depth: 3
-    toc-location: left
-    number-sections: true
-    theme:
-      - cosmo
-      - custom.scss
-    code-copy: true
-    code-overflow: wrap
-    highlight-style: github-dark
-    smooth-scroll: true
-    self-contained: true
-    link-external-newwindow: true
-    include-in-header:
-      text: |
-        <style>
-        :not(pre) > code { background-color: rgba(185,151,91,0.1) !important; color: #8b6914 !important; padding: 0.15em 0.45em !important; border-radius: 3px !important; font-size: 0.87em !important; }
-        pre code { background-color: transparent !important; color: inherit !important; padding: 0 !important; font-size: inherit !important; border-radius: 0 !important; }
-        body:not(.floating):not(.docked) .page-columns.toc-left {
-          grid-template-columns: [screen-start] 1.5em [screen-start-inset] 5fr [page-start] 35px [page-start-inset] minmax(0px,175px) [body-start-outset] 35px [body-start] 1.5em [body-content-start] minmax(450px,calc(1100px - 3em)) [body-content-end] 1.5em [body-end] 50px [body-end-outset] minmax(0px,200px) [page-end-inset] 35px [page-end] 5fr [screen-end-inset] 1.5em [screen-end] !important;
-        }
-        </style>
----
+# Claude Code Academic Workflow Guide
 
 # Why This Workflow Exists {#sec-why}
 
@@ -41,7 +11,7 @@ If you've ever done serious academic work --- built lecture slides, drafted a re
 - **Review is manual and exhausting.** You proofread 140 slides by hand. You re-read your paper for the fifth time looking for the same kinds of errors. You miss a typo in an equation. A student or referee catches it.
 - **No one checks the math.** Grammar checkers catch "teh" but not a flipped sign in a decomposition theorem, a misspecified regression, or a broken replication.
 
-This workflow solves all of these problems. You describe what you want --- "translate Lecture 5 to Quarto," "review my paper before submission," or "analyze this dataset and produce publication-ready tables" --- and Claude handles the rest: plans the approach, implements it, runs [specialized reviewers](#sec-system), fixes issues, verifies quality, and presents results. Like a contractor who manages the entire job.
+This workflow solves all of these problems. You describe what you want --- "review my lecture slides," "review my paper before submission," or "analyze this dataset and produce publication-ready tables" --- and Claude handles the rest: plans the approach, implements it, runs [specialized reviewers](#sec-system), fixes issues, verifies quality, and presents results. Like a contractor who manages the entire job.
 
 ## What Makes Claude Code Different
 
@@ -49,23 +19,22 @@ Claude Code runs on your computer with full access to your file system, terminal
 
 | Capability | What It Means for You |
 |-----------|----------------------|
-| Read & edit your files | Surgical edits to `.tex`, `.qmd`, `.R` files in place |
-| Run shell commands | Compile LaTeX, run R scripts, render Quarto --- directly |
+| Read & edit your files | Surgical edits to `.tex`, `.R` files in place |
+| Run shell commands | Compile LaTeX, run R scripts --- directly |
 | Access git history | Commits, PRs, branches --- all from the conversation |
 | Persistent memory | CLAUDE.md + MEMORY.md survive across sessions |
 | Orchestrator mode | Claude autonomously plans, implements, reviews, fixes, and verifies |
-| Multi-agent workflows | 10 specialized agents for proofreading, layout, pedagogy, code review |
+| Multi-agent workflows | 7 specialized agents for proofreading, layout, pedagogy, code review |
 | Quality gates | Automated scoring --- nothing ships below 80/100 |
 | CLI/headless mode | Run from scripts: `claude -p "compile all lectures"` |
 | Browser bridge | Continue sessions on your phone via `/remote-control` |
 
-::: {.callout-tip}
-## Case Study: Econ 730 at Emory
-
-This workflow was developed over 6+ sessions building a PhD course on Causal Panel Data. The result: 6 complete lectures (140+ slides each), with Beamer + Quarto versions, interactive Plotly charts, TikZ diagrams, and R replication scripts --- all managed by the orchestrator and reviewed by 10 specialized agents across 5 quality dimensions.
-
-While this case study centers on slides, every component --- agents, orchestrator, quality gates --- works identically for research papers, data analysis, and proposals.
-:::
+> **Tip:**
+> **Case Study: Econ 730 at Emory**
+>
+> This workflow was developed over 6+ sessions building a PhD course on Causal Panel Data. The result: 6 complete lectures (140+ slides each), with TikZ diagrams and R replication scripts --- all managed by the orchestrator and reviewed by 7 specialized agents across 5 quality dimensions.
+>
+> While this case study centers on slides, every component --- agents, orchestrator, quality gates --- works identically for research papers, data analysis, and proposals.
 
 ## How It All Works Together
 
@@ -100,9 +69,7 @@ You: "Yes"
 Claude runs /commit (only because you explicitly approved)
 ```
 
-::: {.panel-tabset}
-
-### Paper Review
+**Paper Review:**
 
 ```
 You: "Review my paper draft and prepare it for submission"
@@ -119,7 +86,7 @@ Claude automatically:
 You see: "Done. Fixed 18 issues. Score: 91/100. Ready to commit?"
 ```
 
-### Data Analysis
+**Data Analysis:**
 
 ```
 You: "Analyze this dataset and produce publication-ready output"
@@ -132,8 +99,6 @@ Claude automatically:
      ↓
 You see: "Analysis complete. 3 tables, 4 figures. Score: 85/100."
 ```
-
-:::
 
 ### What You Never Touch Directly
 
@@ -150,17 +115,15 @@ Skills like `/proofread` or `/compile-latex` can be invoked two ways:
 
 Most of the time, you just describe what you want and Claude handles the rest. Explicit skill invocation is there when you want precise control.
 
-::: {.callout-important}
-## The Bottom Line
+> **Important:**
+> **The Bottom Line**
+>
+> **You talk, Claude orchestrates.** The 7 agents, 21 skills, and 17 rules exist so you don't have to think about them. Describe your goal, approve the plan, and let the system work.
 
-**You talk, Claude orchestrates.** The 10 agents, 22 skills, and 18 rules exist so you don't have to think about them. Describe your goal, approve the plan, and let the system work.
-:::
-
-::: {.callout-note}
-## You Don't Need All of This on Day One
-
-This guide describes the full system --- 10 agents, 22 skills, 18 rules. That is the ceiling, not the floor. **Start with just CLAUDE.md and 2--3 skills** (`/compile-latex`, `/proofread`, `/commit`). Add rules and agents as you discover what you need. The template is designed for progressive adoption: fork it, fill in the placeholders, and start working. Everything else is there when you're ready.
-:::
+> **Note:**
+> **You Don't Need All of This on Day One**
+>
+> This guide describes the full system --- 7 agents, 21 skills, 17 rules. That is the ceiling, not the floor. **Start with just CLAUDE.md and 2--3 skills** (`/compile-latex`, `/proofread`, `/commit`). Add rules and agents as you discover what you need. The template is designed for progressive adoption: fork it, fill in the placeholders, and start working. Everything else is there when you're ready.
 
 ---
 
@@ -182,48 +145,44 @@ You need three things: install Claude Code, fork the repo, and paste a prompt. C
 | Tool | Required For | Install |
 |------|-------------|---------|
 | XeLaTeX | LaTeX slides | [TeX Live](https://tug.org/texlive/) or [MacTeX](https://tug.org/mactex/) |
-| [Quarto](https://quarto.org) | Web slides | [quarto.org/docs/get-started](https://quarto.org/docs/get-started/) |
 | R | Figures & data analysis | [r-project.org](https://www.r-project.org/) |
 | [gh CLI](https://cli.github.com/) | PR workflow | `brew install gh` (macOS) |
 
-::: {.callout-note}
-## What Does This Cost?
+> **Note:**
+> **What Does This Cost?**
+>
+> **Claude Pro or Max subscription**: Includes Claude Code usage with generous limits. Check [claude.ai](https://claude.ai) for current pricing and tier details. Best for most academics.
+>
+> **API access** (pay per token): For heavy users or CI/CD. Use [effort levels](#sec-effort) and the [multi-model strategy](#multi-model-strategy-cost-vs-quality) to control costs.
+>
+> Claude Code itself is free and open source. You pay only for the Claude model usage.
 
-**Claude Pro or Max subscription**: Includes Claude Code usage with generous limits. Check [claude.ai](https://claude.ai) for current pricing and tier details. Best for most academics.
+> **Tip:**
+> **Day 1 Checklist**
+>
+> - [ ] Install Claude Code: `curl -fsSL https://claude.ai/install.sh | bash`
+> - [ ] Fork the repo and clone it locally
+> - [ ] Run `claude` in the project directory (first run will prompt for authentication)
+> - [ ] Paste the starter prompt (fill in your project details)
+> - [ ] Wait for Claude to customize `CLAUDE.md` for your project
+> - [ ] Approve the configuration plan
+> - [ ] Ask Claude to do something: *"Review my slides"* or *"Create a lecture on [topic]"*
+> - [ ] Approve the task plan, watch it work, review the output
+>
+> That's it. Everything else --- agents, hooks, rules --- runs automatically in the background.
 
-**API access** (pay per token): For heavy users or CI/CD. Use [effort levels](#sec-effort) and the [multi-model strategy](#multi-model-strategy-cost-vs-quality) to control costs.
-
-Claude Code itself is free and open source. You pay only for the Claude model usage.
-:::
-
-::: {.callout-tip}
-## Day 1 Checklist
-
-- [ ] Install Claude Code: `curl -fsSL https://claude.ai/install.sh | bash`
-- [ ] Fork the repo and clone it locally
-- [ ] Run `claude` in the project directory (first run will prompt for authentication)
-- [ ] Paste the starter prompt (fill in your project details)
-- [ ] Wait for Claude to customize `CLAUDE.md` for your project
-- [ ] Approve the configuration plan
-- [ ] Ask Claude to do something: *"Review my slides"* or *"Create a lecture on [topic]"*
-- [ ] Approve the task plan, watch it work, review the output
-
-That's it. Everything else — agents, hooks, rules — runs automatically in the background.
-:::
-
-::: {.callout-tip collapse="true"}
-## Trouble on Day 1?
-
-**"command not found: claude":** Install Claude Code first: `curl -fsSL https://claude.ai/install.sh | bash`. Requires Node.js 18+ (`node --version` to check).
-
-**Claude seems to ignore the configuration files:** Make sure you ran `claude` from inside the project directory (not a parent folder). Claude reads `.claude/` and `CLAUDE.md` from the current working directory.
-
-**Hooks not firing (no notifications, no reminders):** Check that Python 3 is installed (`python3 --version`) and hook files are executable (`chmod +x .claude/hooks/*`).
-
-**"What does plan approval look like?"** Claude presents a numbered plan and asks for your input. Say "approved", "looks good", or "revise step 3". That's it --- no special commands needed.
-
-For more, see [Troubleshooting](#troubleshooting) in the Appendix.
-:::
+> **Tip:**
+> **Trouble on Day 1?**
+>
+> **"command not found: claude":** Install Claude Code first: `curl -fsSL https://claude.ai/install.sh | bash`. Requires Node.js 18+ (`node --version` to check).
+>
+> **Claude seems to ignore the configuration files:** Make sure you ran `claude` from inside the project directory (not a parent folder). Claude reads `.claude/` and `CLAUDE.md` from the current working directory.
+>
+> **Hooks not firing (no notifications, no reminders):** Check that Python 3 is installed (`python3 --version`) and hook files are executable (`chmod +x .claude/hooks/*`).
+>
+> **"What does plan approval look like?"** Claude presents a numbered plan and asks for your input. Say "approved", "looks good", or "revise step 3". That's it --- no special commands needed.
+>
+> For more, see [Troubleshooting](#troubleshooting) in the Appendix.
 
 ## Step 1: Fork & Clone
 
@@ -239,62 +198,58 @@ Replace `YOUR_USERNAME` with your GitHub username.
 
 Open your terminal in the project directory, run `claude`, and paste the following. Fill in the **bolded placeholders** with your project details:
 
-::: {.callout-note collapse="true"}
-## Using VS Code or Claude Desktop instead of the terminal?
+> **Note:**
+> **Using VS Code or Claude Desktop instead of the terminal?**
+>
+> Everything in this guide works the same in any Claude Code interface. In **VS Code**, open the Claude Code panel (click the Claude icon in the sidebar or press Cmd+Shift+P and search for "Claude Code: Open"). In **Claude Desktop**, open your project folder and start a local session. Then paste the starter prompt below.
+>
+> The guide shows terminal commands because they are the most universal way to explain things, but every skill, agent, hook, and rule works identically regardless of which interface you use.
 
-Everything in this guide works the same in any Claude Code interface. In **VS Code**, open the Claude Code panel (click the Claude icon in the sidebar or press Cmd+Shift+P → "Claude Code: Open"). In **Claude Desktop**, open your project folder and start a local session. Then paste the starter prompt below.
+> **Tip:**
+> **Starter Prompt**
+>
+> I am starting to work on **[PROJECT NAME]** in this repo. **[Describe your project in 2--3 sentences --- what you're building, who it's for, what tools you use (e.g., LaTeX/Beamer, R).]**
+>
+> I want our collaboration to be structured, precise, and rigorous --- even if it takes more time. When creating visuals, everything must be polished and publication-ready. I don't want to repeat myself, so our workflow should be smart about remembering decisions and learning from corrections.
+>
+> I've set up the Claude Code academic workflow (forked from `pedrohcgs/claude-code-my-workflow`). The configuration files are already in this repo (`.claude/`, `CLAUDE.md`, templates, scripts). Please read them, understand the workflow, and then **update all configuration files to fit my project** --- fill in placeholders in `CLAUDE.md`, adjust rules if needed, and propose any customizations specific to my use case.
+>
+> After that, use the plan-first workflow for all non-trivial tasks. Once I approve a plan, switch to contractor mode --- coordinate everything autonomously and only come back to me when there's ambiguity or a decision to make. For our first few sessions, check in with me a bit more often so I can learn how the workflow operates.
+>
+> Enter plan mode and start by adapting the workflow configuration for this project.
 
-The guide shows terminal commands because they are the most universal way to explain things, but every skill, agent, hook, and rule works identically regardless of which interface you use.
-:::
-
-::: {.callout-tip appearance="simple"}
-## Starter Prompt
-
-I am starting to work on **[PROJECT NAME]** in this repo. **[Describe your project in 2--3 sentences --- what you're building, who it's for, what tools you use (e.g., LaTeX/Beamer, R, Quarto).]**
-
-I want our collaboration to be structured, precise, and rigorous --- even if it takes more time. When creating visuals, everything must be polished and publication-ready. I don't want to repeat myself, so our workflow should be smart about remembering decisions and learning from corrections.
-
-I've set up the Claude Code academic workflow (forked from `pedrohcgs/claude-code-my-workflow`). The configuration files are already in this repo (`.claude/`, `CLAUDE.md`, templates, scripts). Please read them, understand the workflow, and then **update all configuration files to fit my project** --- fill in placeholders in `CLAUDE.md`, adjust rules if needed, and propose any customizations specific to my use case.
-
-After that, use the plan-first workflow for all non-trivial tasks. Once I approve a plan, switch to contractor mode --- coordinate everything autonomously and only come back to me when there's ambiguity or a decision to make. For our first few sessions, check in with me a bit more often so I can learn how the workflow operates.
-
-Enter plan mode and start by adapting the workflow configuration for this project.
-:::
-
-**What this does:** Claude will read `CLAUDE.md` and all the rules, fill in your project name, institution, Beamer environments, CSS classes, and project state table, then propose any rule adjustments for your specific use case. You approve the plan, and Claude handles the rest. From there, you just describe what you want to build.
+**What this does:** Claude will read `CLAUDE.md` and all the rules, fill in your project name, institution, Beamer environments, and project state table, then propose any rule adjustments for your specific use case. You approve the plan, and Claude handles the rest. From there, you just describe what you want to build.
 
 ## Optional: Manual Setup
 
 If you prefer to configure things yourself instead of letting Claude handle it:
 
-::: {.callout-note collapse="true"}
-## Manual Configuration Steps (click to expand)
-
-**Customize CLAUDE.md** --- Open `CLAUDE.md` and replace all `[BRACKETED PLACEHOLDERS]`:
-
-1. **Project name and institution**
-2. **Folder structure** (adjust to your layout)
-3. **Current project state** (your lectures/papers)
-4. **Beamer environments** (your custom LaTeX environments)
-5. **CSS classes** (your Quarto theme classes)
-
-**Create your knowledge base** --- Open `.claude/rules/knowledge-base-template.md` and fill in:
-
-1. **Notation registry** --- every symbol you use, where it's introduced, and anti-patterns
-2. **Applications database** --- datasets, papers, and R packages you reference
-3. **Design principles** --- what you've approved and what you've overridden
-
-**Configure permissions** --- Review `.claude/settings.json`. The template includes permissions for git, LaTeX, Quarto, R, and utility scripts. Add any additional tools you use.
-
-**Test it:**
-
-```bash
-# In Claude Code, type:
-/compile-latex MyFirstLecture
-/proofread Slides/MyFirstLecture.tex
-python scripts/quality_score.py Slides/MyFirstLecture.tex
-```
-:::
+> **Note:**
+> **Manual Configuration Steps**
+>
+> **Customize CLAUDE.md** --- Open `CLAUDE.md` and replace all `[BRACKETED PLACEHOLDERS]`:
+>
+> 1. **Project name and institution**
+> 2. **Folder structure** (adjust to your layout)
+> 3. **Current project state** (your lectures/papers)
+> 4. **Beamer environments** (your custom LaTeX environments)
+>
+> **Create your knowledge base** --- Open `.claude/rules/knowledge-base-template.md` and fill in:
+>
+> 1. **Notation registry** --- every symbol you use, where it's introduced, and anti-patterns
+> 2. **Applications database** --- datasets, papers, and R packages you reference
+> 3. **Design principles** --- what you've approved and what you've overridden
+>
+> **Configure permissions** --- Review `.claude/settings.json`. The template includes permissions for git, LaTeX, R, and utility scripts. Add any additional tools you use.
+>
+> **Test it:**
+>
+> ```bash
+> # In Claude Code, type:
+> /compile-latex MyFirstLecture
+> /proofread Slides/MyFirstLecture.tex
+> python scripts/quality_score.py Slides/MyFirstLecture.tex
+> ```
 
 You don't need to fill everything in upfront. Start with 5--10 notation entries and add more as you develop lectures. The starter prompt will set up the essentials --- you can always refine later.
 
@@ -302,9 +257,7 @@ You don't need to fill everything in upfront. Start with 5--10 notation entries 
 
 For complex or ambiguous tasks, Claude may ask 3-5 clarifying questions to create a requirements specification before planning. This catches ambiguity early and reduces rework.
 
-::: {.panel-tabset}
-
-### Slide Creation
+**Slide Creation:**
 ```
 You: "Improve my lecture on hypothesis testing"
 
@@ -312,14 +265,14 @@ Claude: "Let me clarify:
 1. What needs improvement (clarity, examples, pacing)?
 2. Any student feedback to address?
 3. Constraints (time, notation changes)?
-4. Update which outputs (slides, web version, both)?"
+4. Update which outputs (slides)?"
 
 [Creates spec with MUST/SHOULD/MAY priorities]
 [You approve]
 [Then enters plan mode]
 ```
 
-### Data Analysis
+**Data Analysis:**
 ```
 You: "Analyze the survey data"
 
@@ -330,7 +283,7 @@ Claude: "Let me clarify:
 4. Computational constraints (runtime, memory)?"
 ```
 
-### Code Refactoring
+**Code Refactoring:**
 ```
 You: "Clean up my analysis scripts"
 
@@ -340,8 +293,6 @@ Claude: "Let me clarify:
 3. Testing infrastructure available?
 4. Refactor scope (one file, whole project)?"
 ```
-
-:::
 
 After 3-5 questions, Claude creates a specification document in `quality_reports/specs/` with:
 
@@ -390,7 +341,7 @@ The single most powerful pattern in this system is the **adversarial QA loop**:
 
 ```
 +------------------+
-|  quarto-critic   |  "I found 12 issues. 3 Critical."
+|  domain-critic   |  "I found 12 issues. 3 Critical."
 |  (READ-ONLY)     |
 +--------+---------+
          |
@@ -401,12 +352,12 @@ The single most powerful pattern in this system is the **adversarial QA loop**:
 APPROVED   NEEDS WORK
     |          |
   Done    +----v---------+
-          | quarto-fixer |  "Fixed 12/12 issues."
+          |  fixer       |  "Fixed 12/12 issues."
           | (READ-WRITE) |
           +----+---------+
                |
           +----v----------+
-          | quarto-critic |  "Re-audit: 2 remaining."
+          |  domain-critic |  "Re-audit: 2 remaining."
           | (Round 2)     |
           +----+----------+
                |
@@ -415,15 +366,14 @@ APPROVED   NEEDS WORK
 
 **Why it works:** The critic can't fix files (read-only), so it has no incentive to downplay issues. The fixer can't approve itself (the critic re-audits). This prevents the common failure of Claude saying "looks good" about its own work.
 
-::: {.callout-tip}
-## Real Example
-
-In Econ 730 Lecture 6, the critic caught that the Quarto version used `\cdots` (a placeholder) where the Beamer version had the full Hajek weight formula. The fixer replaced it. On re-audit, the critic found 8 more instances of missing `(X)` arguments on outcome models. After 4 rounds, the Quarto slides matched the Beamer source exactly.
-:::
+> **Tip:**
+> **Real Example**
+>
+> In Econ 730 Lecture 6, the critic caught that the slides used `\cdots` (a placeholder) where the full Hajek weight formula should appear. The fixer replaced it. On re-audit, the critic found 8 more instances of missing `(X)` arguments on outcome models. After 4 rounds, the slides were fully consistent.
 
 ## The Orchestrator: Coordinating Agents Automatically
 
-Individual agents are specialists. Skills like `/slide-excellence` and `/qa-quarto` coordinate a few agents for specific tasks. But in day-to-day work, you should not have to think about which agents to run. That is the orchestrator's job.
+Individual agents are specialists. Skills like `/slide-excellence` coordinate a few agents for specific tasks. But in day-to-day work, you should not have to think about which agents to run. That is the orchestrator's job.
 
 The **orchestrator protocol** (`.claude/rules/orchestrator-protocol.md`) is an auto-loaded rule that activates after any plan is approved. It implements the plan, runs the verifier, selects review agents based on file types, applies fixes, re-verifies, and scores against quality gates. It loops until the score meets threshold or max rounds are exhausted.
 
@@ -457,11 +407,10 @@ Points are deducted for issues:
 
 The verification protocol (`.claude/rules/verification-protocol.md`) requires that Claude compile, render, or otherwise verify every output before reporting a task as complete. The orchestrator enforces this as an explicit step in its loop (Step 2: VERIFY). This means Claude **cannot** say "done" without actually checking the output.
 
-::: {.callout-warning}
-## Don't Skip Verification
-
-In Econ 730, verification caught unverified TikZ diagrams that would have deployed with overlapping labels, broken SVGs in Quarto slides that wouldn't display, and R scripts with missing intercept terms that produced silently wrong estimates.
-:::
+> **Warning:**
+> **Don't Skip Verification**
+>
+> In Econ 730, verification caught unverified TikZ diagrams that would have deployed with overlapping labels and R scripts with missing intercept terms that produced silently wrong estimates.
 
 ## Creating Your Own Domain Reviewer {#sec-domain-reviewer}
 
@@ -501,8 +450,8 @@ This means CLAUDE.md should be a **slim constitution** --- short directives and 
 
 - **Core principles** --- 4--5 bullets (plan-first, verify-after, quality gates, LEARN tags)
 - **Folder structure** --- where everything lives
-- **Commands** --- compilation, deployment, key tools
-- **Customization tables** --- Beamer environments, CSS classes
+- **Commands** --- compilation, key tools
+- **Customization tables** --- Beamer environments
 - **Current state** --- what's done, what's in progress
 - **Skill quick reference** --- table of available slash commands
 
@@ -526,14 +475,12 @@ Move everything else into `.claude/rules/` files (with path-scoping so they only
 |---------|-------------|
 | `/compile-latex [file]` | 3-pass XeLaTeX compilation |
 | `/proofread [file]` | Grammar/typo review |
-| `/deploy [Lecture]` | Render and deploy to GitHub Pages |
 ```
 
-::: {.callout-important}
-## Keep It Lean
-
-CLAUDE.md loads every session. If it exceeds ~150 lines, Claude starts ignoring rules silently. Put detailed standards in path-scoped rules (`.claude/rules/`) instead --- they only load when Claude works on matching files, so they don't compete for attention.
-:::
+> **Important:**
+> **Keep It Lean**
+>
+> CLAUDE.md loads every session. If it exceeds ~150 lines, Claude starts ignoring rules silently. Put detailed standards in path-scoped rules (`.claude/rules/`) instead --- they only load when Claude works on matching files, so they don't compete for attention.
 
 ## Rules --- Domain Knowledge That Auto-Loads {#rules---domain-knowledge-that-auto-loads}
 
@@ -554,17 +501,15 @@ Rules are markdown files in `.claude/rules/` that Claude loads automatically. Th
 ```
 .claude/rules/
 ├── r-code-conventions.md        # paths: ["**/*.R"] — R standards
-├── quality-gates.md             # paths: ["*.tex", "*.qmd", "*.R"] — scoring
-├── verification-protocol.md     # paths: ["*.tex", "*.qmd", "docs/"] — verify before done
+├── quality-gates.md             # paths: ["*.tex", "*.R"] — scoring
+├── verification-protocol.md     # paths: ["*.tex"] — verify before done
 ├── replication-protocol.md      # paths: ["scripts/**/*.R"] — replicate first
 ├── exploration-folder-protocol.md  # paths: ["explorations/**"] — sandbox rules
 ├── orchestrator-research.md     # paths: ["scripts/**/*.R", "explorations/**"] — simple loop
-└── ...14 path-scoped rules total
+└── ... path-scoped rules total
 ```
 
 The first three always-on rules total ~148 lines of actionable instructions. `meta-governance` is a reference document for the template's dual nature (working project vs. public template) and loads passively. Path-scoped rules add rich, domain-specific guidance exactly when Claude needs it.
-
-**Sync vs. translate:** The `beamer-quarto-sync` rule handles incremental edits --- fix a typo in Beamer, same fix goes to Quarto. The `/translate-to-quarto` skill is for full initial translation of a new lecture. Translate once, sync thereafter.
 
 **Why rules matter:** Without them, Claude will use generic defaults. With them, Claude follows *your* standards consistently across sessions.
 
@@ -605,7 +550,7 @@ The `templates/constitutional-governance.md` template helps you distinguish betw
 
 ### Example Articles You Might Define
 
-- **Article I: Primary Artifact** — Which file is authoritative (e.g., `.tex` vs `.qmd`, `.Rmd` vs `.html`, notebook vs script)
+- **Article I: Primary Artifact** — Which file is authoritative (e.g., `.tex` vs `.Rmd`, notebook vs script)
 - **Article II: Plan-First Threshold** — When to enter plan mode (e.g., >3 files, >30 min, multi-step workflows)
 - **Article III: Quality Gate** — Minimum score to commit (e.g., 80/100, all tests passing)
 - **Article IV: Verification Standard** — What must pass before commit (e.g., compile, tests, render)
@@ -643,18 +588,16 @@ argument-hint: "[filename without .tex extension]"
 | Skill | Purpose | When to Use |
 |-------|---------|------------|
 | `/compile-latex` | Build PDF from .tex | After any Beamer edit |
-| `/deploy` | Render Quarto + sync to docs/ | Before pushing to GitHub Pages |
+| `/extract-tikz` | Extract TikZ diagrams to SVG | Updating TikZ diagrams |
 | `/proofread` | Grammar and consistency check | Before every commit |
-| `/qa-quarto` | Adversarial Quarto QA | After translating Beamer to Quarto |
 | `/slide-excellence` | Full multi-agent review | Before major milestones |
 | `/create-lecture` | New lecture from scratch | Starting a new topic |
 | `/commit` | Stage, commit, PR, merge | After any completed task |
 
-::: {.callout-note}
-## Built-In Skills
-
-Claude Code ships with built-in skills beyond this template's 22: `/batch` orchestrates parallel refactoring across your codebase (using git worktrees for isolation), `/simplify` runs 3-agent code review and applies fixes, and `/debug` helps troubleshoot sessions. These complement the academic skills above.
-:::
+> **Note:**
+> **Built-In Skills**
+>
+> Claude Code ships with built-in skills beyond this template's 21: `/batch` orchestrates parallel refactoring across your codebase (using git worktrees for isolation), `/simplify` runs 3-agent code review and applies fixes, and `/debug` helps troubleshoot sessions. These complement the academic skills above.
 
 ## Agents --- Specialized Reviewers {#agents---specialized-reviewers}
 
@@ -667,9 +610,6 @@ Agents are the real power of this system. Each agent is an expert in one dimensi
 +-- pedagogy-reviewer.md  # Narrative arc, notation clarity, pacing
 +-- r-reviewer.md         # R code quality and reproducibility
 +-- tikz-reviewer.md      # TikZ diagram visual quality
-+-- quarto-critic.md      # Adversarial Quarto vs Beamer comparison
-+-- quarto-fixer.md       # Applies critic's fixes
-+-- beamer-translator.md  # Beamer -> Quarto translation
 +-- verifier.md           # Task completion verification
 +-- domain-reviewer.md    # YOUR domain-specific substance review
 ```
@@ -704,13 +644,12 @@ Save findings to: quality_reports/[FILENAME]_report.md
 - **Minor:** Style inconsistencies
 ```
 
-::: {.callout-note}
-## Why Specialized Agents?
-
-A single Claude prompt trying to check grammar, layout, math, and code simultaneously will do a mediocre job at all of them. Specialized agents focus on one dimension and do it thoroughly. The `/slide-excellence` skill runs them all in parallel, then synthesizes results.
-
-Claude Code also offers experimental **Agent Teams** --- multiple independent sessions that coordinate, share findings, and challenge each other's approaches. This is a research preview feature; the orchestrator + subagent pattern described here is more mature for academic workflows.
-:::
+> **Note:**
+> **Why Specialized Agents?**
+>
+> A single Claude prompt trying to check grammar, layout, math, and code simultaneously will do a mediocre job at all of them. Specialized agents focus on one dimension and do it thoroughly. The `/slide-excellence` skill runs them all in parallel, then synthesizes results.
+>
+> Claude Code also offers experimental **Agent Teams** --- multiple independent sessions that coordinate, share findings, and challenge each other's approaches. This is a research preview feature; the orchestrator + subagent pattern described here is more mature for academic workflows.
 
 ### Multi-Model Strategy: Cost vs. Quality {#multi-model-strategy-cost-vs-quality}
 
@@ -718,26 +657,25 @@ Not all agents need the same model. Each agent file has a `model:` field in its 
 
 | Task Type | Recommended Model | Why | Examples |
 |-----------|-------------------|-----|----------|
-| Complex translation | `model: opus` | Needs deep understanding of both formats | beamer-translator, quarto-critic |
-| Fast, constrained work | `model: sonnet` | Speed matters more than depth | r-reviewer, quarto-fixer |
+| Complex review | `model: opus` | Needs deep understanding | domain-critic |
+| Fast, constrained work | `model: sonnet` | Speed matters more than depth | r-reviewer, fixer |
 | Default | `model: inherit` | Uses whatever the main session runs | proofreader, slide-auditor |
 
-**The principle:** Use Opus for tasks that require holding two large documents in mind simultaneously (translation, adversarial comparison). Use Sonnet for tasks with clear, bounded scope (fix these 12 issues, check this R script). Let everything else inherit.
+**The principle:** Use Opus for tasks that require holding large documents in mind simultaneously. Use Sonnet for tasks with clear, bounded scope (fix these 12 issues, check this R script). Let everything else inherit.
 
 To change an agent's model, edit its YAML frontmatter:
 
 ```yaml
 ---
-name: quarto-critic
-model: opus   # was: inherit
+name: proofreader
+model: sonnet   # was: inherit
 ---
 ```
 
-::: {.callout-tip}
-## Cost Savings
-
-If you configure model-per-agent, a typical Beamer-to-Quarto translation runs the critic on Opus (2--4 rounds) while the fixer runs on Sonnet (same rounds). This can save roughly 40--60% compared to running everything on Opus, with no quality loss on the fixing step.
-:::
+> **Tip:**
+> **Cost Savings**
+>
+> If you configure model-per-agent, a typical review runs the critic on Opus (2--4 rounds) while the fixer runs on Sonnet (same rounds). This can save roughly 40--60% compared to running everything on Opus, with no quality loss on the fixing step.
 
 ### Advanced Agent Configuration {#sec-agent-config}
 
@@ -778,9 +716,7 @@ Use `maxTurns` to prevent review agents from looping indefinitely, and `tools` t
     "allow": [
       "Bash(git status *)",
       "Bash(xelatex *)",
-      "Bash(Rscript *)",
-      "Bash(quarto render *)",
-      "Bash(./scripts/sync_to_docs.sh *)"
+      "Bash(Rscript *)"
     ]
   },
   "hooks": {
@@ -809,19 +745,18 @@ Use `maxTurns` to prevent review agents from looping indefinitely, and `tools` t
 
 Set via CLI flag (`claude --permission-mode plan`), the `/config` command, or `permissions.defaultMode` in `settings.json`.
 
-::: {.callout-warning}
-## Plans Directory
+> **Warning:**
+> **Plans Directory**
+>
+> By default, Claude saves plans to a global directory (`~/.claude/plans/`), not your project. To keep plans with your project (and in git), add this to `.claude/settings.json`:
+>
+> ```json
+> {
+>   "plansDirectory": "quality_reports/plans"
+> }
+> ```
 
-By default, Claude saves plans to a global directory (`~/.claude/plans/`), not your project. To keep plans with your project (and in git), add this to `.claude/settings.json`:
-
-```json
-{
-  "plansDirectory": "quality_reports/plans"
-}
-```
-:::
-
-The **Stop hook** runs a fast Python script after every response. No LLM call, no latency. It checks whether the session log is current and reminds Claude to update it if not. Behavioral rules like verification and Beamer-Quarto sync are enforced via auto-loaded rules in `.claude/rules/`, which is the right tool for nuanced judgment that Claude can evaluate in-context.
+The **Stop hook** runs a fast Python script after every response. No LLM call, no latency. It checks whether the session log is current and reminds Claude to update it if not. Behavioral rules like verification are enforced via auto-loaded rules in `.claude/rules/`, which is the right tool for nuanced judgment that Claude can evaluate in-context.
 
 ## Effort Levels --- Cost vs. Thoroughness {#sec-effort}
 
@@ -842,11 +777,10 @@ Claude Code lets you control how deeply it reasons about each task. Higher effor
 - **In prompts:** Include "ultrathink" in your prompt to enable extended thinking for that turn. Note: phrases like "think hard" are treated as regular instructions and do *not* allocate extra thinking tokens
 - **Environment variable:** `CLAUDE_CODE_EFFORT_LEVEL=high` for all sessions
 
-::: {.callout-tip}
-## Composing Effort with Model Choice
-
-Effort levels compose with model selection for fine-grained cost control. For example, `Haiku + high effort` costs less than `Opus + low effort` but may produce comparable results for bounded tasks like formatting. Use `Opus + max` only for tasks that genuinely require deep multi-step reasoning --- complex proofs, intricate data pipeline debugging, or comprehensive paper critique.
-:::
+> **Tip:**
+> **Composing Effort with Model Choice**
+>
+> Effort levels compose with model selection for fine-grained cost control. For example, `Haiku + high effort` costs less than `Opus + low effort` but may produce comparable results for bounded tasks like formatting. Use `Opus + max` only for tasks that genuinely require deep multi-step reasoning --- complex proofs, intricate data pipeline debugging, or comprehensive paper critique.
 
 ## Memory --- Cross-Session Persistence {#memory---cross-session-persistence}
 
@@ -867,7 +801,6 @@ Use it for:
 ## Corrections Log
 - [LEARN:r-code] Package X drops obs silently when covariate is missing
 - [LEARN:citation] Post-LASSO is Belloni (2013), NOT Belloni (2014)
-- [LEARN:workflow] Every Beamer edit must auto-sync to Quarto
 ```
 
 ### Plans --- Compression-Resistant Task Memory
@@ -918,7 +851,7 @@ The template includes hooks for logging, notifications, file protection, and con
 | Context monitor | `PostToolUse[Bash|Task]` | Progressive warnings at 40%/55%/65%/80%/90% context |
 | Verification reminder | `PostToolUse[Write|Edit]` | Reminds to compile/render before marking done |
 
-Verification and Beamer-Quarto sync are enforced via auto-loaded rules, which are the right tool for nuanced judgment. Hooks are reserved for enforcement that *must* survive context compression.
+Verification is enforced via auto-loaded rules, which are the right tool for nuanced judgment. Hooks are reserved for enforcement that *must* survive context compression.
 
 **Hook handler types.** The examples above use `command` hooks (shell scripts), but Claude Code supports four handler types:
 
@@ -931,10 +864,10 @@ Verification and Beamer-Quarto sync are enforced via auto-loaded rules, which ar
 
 **PreToolUse input modification.** PreToolUse hooks can now **modify tool inputs**, not just block or allow. Your hook script can return modified JSON to rewrite parameters before the tool executes --- for example, auto-correcting file paths or enforcing naming conventions.
 
-::: {.callout-tip}
-## Hook Design Principle
-Use **command hooks** for fast, mechanical checks (file exists? counter threshold?). Use **prompt hooks** for soft guidance that doesn't need a script. Use **rules** for nuanced judgment (did Claude verify correctly?). Avoid prompt hooks that fire on high-frequency events --- the injected text adds up in context.
-:::
+> **Tip:**
+> **Hook Design Principle**
+>
+> Use **command hooks** for fast, mechanical checks (file exists? counter threshold?). Use **prompt hooks** for soft guidance that doesn't need a script. Use **rules** for nuanced judgment (did Claude verify correctly?). Avoid prompt hooks that fire on high-frequency events --- the injected text adds up in context.
 
 ### Context Survival System (Advanced) {#context-survival-system-advanced}
 
@@ -996,11 +929,10 @@ You can also manually point Claude to the right context:
 
 > "We just had compaction. Read `quality_reports/plans/2026-02-06_translate-lecture5.md` and continue from where we left off."
 
-::: {.callout-note}
-## 2026 Feature Coverage
-
-Now that you understand the building blocks, here's what's new: Claude Code has added [effort levels](#sec-effort) for cost control, [expanded hook events](#hooks---automated-enforcement), [skill frontmatter fields](#skill-frontmatter) for fine-grained skill configuration, [permission modes](#settings---permissions-and-hooks) for controlling Claude's autonomy, [advanced agent configuration](#sec-agent-config), plugins, `/batch` for parallel refactoring, and headless CLI mode. Each is covered in its respective section above.
-:::
+> **Note:**
+> **2026 Feature Coverage**
+>
+> Now that you understand the building blocks, here's what's new: Claude Code has added [effort levels](#sec-effort) for cost control, [expanded hook events](#hooks---automated-enforcement), [skill frontmatter fields](#skill-frontmatter) for fine-grained skill configuration, [permission modes](#settings---permissions-and-hooks) for controlling Claude's autonomy, [advanced agent configuration](#sec-agent-config), plugins, `/batch` for parallel refactoring, and headless CLI mode. Each is covered in its respective section above.
 
 ---
 
@@ -1059,21 +991,19 @@ Session logs (`quality_reports/session_logs/YYYY-MM-DD_description.md`) are a ru
 
 **At session end** --- add a final section with what was accomplished, open questions, and unresolved issues.
 
-::: {.callout-note collapse="true"}
-## Why Session Logs Matter
-
-**Git records what; session logs record why.** A commit message says "Update Lecture 5 TikZ diagrams." A session log says "Redesigned the TWFE decomposition diagram because the DA challenge revealed students couldn't trace the path from weights to bias. Considered a table format but chose a flow diagram because it shows directionality."
-
-**Incremental logging is the key.** A 4-hour session that only logs at the start and end loses everything in the middle. Appending decisions as they happen means auto-compression can never erase them --- they are already on disk.
-:::
+> **Note:**
+> **Why Session Logs Matter**
+>
+> **Git records what; session logs record why.** A commit message says "Update Lecture 5 TikZ diagrams." A session log says "Redesigned the TWFE decomposition diagram because the DA challenge revealed students couldn't trace the path from weights to bias. Considered a table format but chose a flow diagram because it shows directionality."
+>
+> **Incremental logging is the key.** A 4-hour session that only logs at the start and end loses everything in the middle. Appending decisions as they happen means auto-compression can never erase them --- they are already on disk.
 
 Claude writes all three log entries automatically --- no need to ask.
 
-::: {.callout-tip collapse="true"}
-## Weekly Reviews
-
-For multi-project academics, start each week by asking Claude to read all session logs from the past week and synthesize a status report with priorities and open questions. The session log infrastructure already captures what you need --- the weekly review is just a synthesis prompt: *"Read all session logs from this week. Summarize: what was accomplished, what's blocked, what should I prioritize next?"*
-:::
+> **Tip:**
+> **Weekly Reviews**
+>
+> For multi-project academics, start each week by asking Claude to read all session logs from the past week and synthesize a status report with priorities and open questions. The session log infrastructure already captures what you need --- the weekly review is just a synthesis prompt: *"Read all session logs from this week. Summarize: what was accomplished, what's blocked, what should I prioritize next?"*
 
 ## Pattern 2: Contractor Mode (Orchestrator) {#pattern-2-contractor-mode-orchestrator}
 
@@ -1086,7 +1016,7 @@ Think of the orchestrator as a **general contractor**. You are the client. You d
 ### The Loop
 
 ```
-User: "Translate Lecture 5 to Quarto"
+User: "Review and improve my lecture slides"
   |
   |-- Plan-first (Pattern 1): draft plan, save to disk, get approval
   |
@@ -1095,24 +1025,22 @@ User: "Translate Lecture 5 to Quarto"
   +-- Orchestrator activates:
         |
         Step 1: IMPLEMENT
-        |  Execute plan steps (create QMD, translate content, etc.)
+        |  Execute plan steps (edit slides, create figures, etc.)
         |
         Step 2: VERIFY
-        |  Run verifier: render Quarto, check HTML output
-        |  If render fails -> fix -> re-render
+        |  Run verifier: compile LaTeX, check PDF output
+        |  If compile fails -> fix -> re-compile
         |
         Step 3: REVIEW (agents selected by file type)
         |  +--- proofreader ------+
         |  +--- slide-auditor ----+  (parallel)
         |  +--- pedagogy-reviewer +
-        |  +--- quarto-critic ----+  (needs others first)
         |
         Step 4: FIX
         |  Apply fixes: Critical -> Major -> Minor
-        |  For quarto-critic issues: invoke quarto-fixer
         |
         Step 5: RE-VERIFY
-        |  Render again, confirm fixes are clean
+        |  Compile again, confirm fixes are clean
         |
         Step 6: SCORE
         |  Apply quality-gates rubric
@@ -1129,20 +1057,18 @@ The orchestrator selects agents based on which files were touched:
 | Files Modified | Agents Selected |
 |---------------|----------------|
 | `.tex` only | proofreader + slide-auditor + pedagogy-reviewer |
-| `.qmd` only | proofreader + slide-auditor + pedagogy-reviewer |
-| `.qmd` with matching `.tex` | Above + quarto-critic (parity check) |
 | `.R` scripts | r-reviewer |
 | TikZ diagrams present | tikz-reviewer |
 | Domain content | domain-reviewer (if configured) |
 | Multiple formats | verifier for cross-format parity |
 
-Agents that are independent of each other run in parallel. The quarto-critic runs after other agents because it may need their context.
+Agents that are independent of each other run in parallel.
 
 ### "Just Do It" Mode
 
 Sometimes you do not want to approve the final result --- you just want it done:
 
-> "Translate Lecture 5 to Quarto. Just do it."
+> "Review and fix my lecture slides. Just do it."
 
 In this mode, the orchestrator still runs the full verify-review-fix loop (quality is non-negotiable), but skips the final approval pause and auto-commits if the score is 80 or above. It still presents the summary so you can see what was done.
 
@@ -1150,21 +1076,19 @@ In this mode, the orchestrator still runs the full verify-review-fix loop (quali
 
 The orchestrator does NOT replace skills. It coordinates them:
 
-- `/qa-quarto` remains available as a standalone adversarial QA loop
 - `/slide-excellence` remains available for comprehensive multi-agent review
 - `/create-lecture` remains available as a guided creation workflow
 
 The difference: when you invoke a skill directly, it runs its specific workflow. When the orchestrator is active, it decides which agents to invoke based on context. The orchestrator is the default; skills are for targeted use.
 
-::: {.callout-tip collapse="true"}
-## When to Use Skills vs. the Orchestrator
-
-**Orchestrator** (automatic): "Translate Lecture 5 to Quarto" --- the orchestrator figures out the agents.
-
-**Skill** (explicit): "/qa-quarto Lecture5" --- you specifically want the adversarial critic-fixer loop, nothing else.
-
-Both are valid. The orchestrator is the "I trust you, handle it" path. Skills are the "I know exactly what I want" path.
-:::
+> **Tip:**
+> **When to Use Skills vs. the Orchestrator**
+>
+> **Orchestrator** (automatic): "Review my lecture slides" --- the orchestrator figures out the agents.
+>
+> **Skill** (explicit): "/slide-excellence Lecture5" --- you specifically want the full multi-agent review, nothing else.
+>
+> Both are valid. The orchestrator is the "I trust you, handle it" path. Skills are the "I know exactly what I want" path.
 
 ## Pattern 3: Creating a New Lecture {#pattern-3-creating-a-new-lecture}
 
@@ -1181,27 +1105,7 @@ The `/create-lecture` skill guides you through a structured lecture creation wor
   |     +-- /slide-excellence (domain + visual + pedagogy)
   |     +-- /proofread (grammar/typos)
   |     +-- /visual-audit (layout)
-  +-- Phase 6: Deploy
-        +-- /translate-to-quarto (optional)
-        +-- /deploy
-```
-
-## Pattern 4: Translating Beamer to Quarto {#pattern-4-translating-beamer-to-quarto}
-
-Translation preserves all content while adapting format, converting TikZ to SVG and ggplot to interactive Plotly charts:
-
-```
-/translate-to-quarto Lecture5_Topic.tex
-  |
-  +-- Phase 1-3: Environment mapping + content translation
-  +-- Phase 4-5: Figure conversion (TikZ -> SVG)
-  +-- Phase 6-7: Interactive charts (ggplot -> plotly)
-  +-- Phase 8-9: Render + verify
-  +-- Phase 10-11: /qa-quarto adversarial QA
-        +-- Critic: finds issues
-        +-- Fixer: applies fixes
-        +-- Critic: re-audits
-        +-- ... (until APPROVED or 5 rounds)
+  +-- Phase 6: Finalize
 ```
 
 ## Pattern 5: Replication-First Coding {#pattern-5-replication-first-coding}
@@ -1224,15 +1128,14 @@ Phase 4: Only then extend
   +-- New estimators, new specifications, course-specific figures
 ```
 
-::: {.callout-important}
-## Never Skip Replication
-
-In one course, we discovered that a widely-used R package silently produced **incorrect estimates** due to a subtle specification issue. This bug was caught 3 times in different scripts. Without the replication-first protocol, these wrong numbers would have been taught to PhD students.
-:::
+> **Important:**
+> **Never Skip Replication**
+>
+> In one course, we discovered that a widely-used R package silently produced **incorrect estimates** due to a subtle specification issue. This bug was caught 3 times in different scripts. Without the replication-first protocol, these wrong numbers would have been taught to PhD students.
 
 ## Pattern 6: Multi-Agent Review {#pattern-6-multi-agent-review}
 
-The `/slide-excellence` skill runs up to 6 [specialized agents](#agents---specialized-reviewers) in parallel:
+The `/slide-excellence` skill runs up to 5 [specialized agents](#agents---specialized-reviewers) in parallel:
 
 ```
 /slide-excellence Lecture5_Topic.tex
@@ -1241,8 +1144,7 @@ The `/slide-excellence` skill runs up to 6 [specialized agents](#agents---specia
   +-- Agent 2: Pedagogical Review (pedagogy-reviewer)
   +-- Agent 3: Proofreading (proofreader)
   +-- Agent 4: TikZ Review (tikz-reviewer, if applicable)
-  +-- Agent 5: Content Parity (if Quarto version exists)
-  +-- Agent 6: Substance Review (domain-reviewer)
+  +-- Agent 5: Substance Review (domain-reviewer)
   |
   +-- Synthesize: Combined quality score + prioritized fix list
 ```
@@ -1260,7 +1162,6 @@ Every correction gets tagged for future reference in MEMORY.md:
 - [LEARN:notation] T_t = 1{t=2} is deterministic -> use T_i in {1,2}
 - [LEARN:citation] Post-LASSO is Belloni (2013), NOT Belloni (2014)
 - [LEARN:r-code] Package X: ALWAYS include intercept in design matrix
-- [LEARN:workflow] Every Beamer edit must auto-sync to Quarto
 ```
 
 These tags are searchable and persist across sessions. When Claude encounters a similar situation, it checks memory first.
@@ -1336,15 +1237,14 @@ This catches:
 - Missing intuition before formalism
 - Cognitive load issues
 
-::: {.callout-tip collapse="true"}
-## Fresh-Context Critique
-
-A stronger variant: when Claude reviews its own work in the same conversation, it suffers **confirmation bias** --- it has internalized its own reasoning and will systematically find the work acceptable. The fix: spawn a new agent via the Task tool with NO access to the original conversation. Give it only the artifact and a critique prompt. The fresh agent has no sunk cost in the work and will be ruthless.
-
+> **Tip:**
+> **Fresh-Context Critique**
+>
+> A stronger variant: when Claude reviews its own work in the same conversation, it suffers **confirmation bias** --- it has internalized its own reasoning and will systematically find the work acceptable. The fix: spawn a new agent via the Task tool with NO access to the original conversation. Give it only the artifact and a critique prompt. The fresh agent has no sunk cost in the work and will be ruthless.
+>
 > "Spawn a new agent. Have it read only my paper draft --- not our conversation. Ask it to find the 5 weakest points and suggest how a hostile referee would attack each one."
-
-Like handing your draft to a colleague who wasn't in the room when you wrote it.
-:::
+>
+> Like handing your draft to a colleague who wasn't in the room when you wrote it.
 
 ## Research Workflows {#sec-research-workflows}
 
@@ -1384,11 +1284,10 @@ A powerful variant: give each parallel agent a **distinct methodological perspec
 - Agents are **independent** --- they cannot see each other's work. If task B depends on task A's output, they must run sequentially.
 - Each agent consumes its own context window. For very large files, sequential processing may be more reliable.
 
-::: {.callout-tip}
-## Cost-Conscious Parallelism
-
-Parallel agents multiply token usage. For cost-sensitive tasks, run the expensive work (Opus agents) sequentially and the cheap work (Sonnet agents) in parallel. The orchestrator already does this: it runs Sonnet-level reviewers in parallel, then the Opus-level critic sequentially.
-:::
+> **Tip:**
+> **Cost-Conscious Parallelism**
+>
+> Parallel agents multiply token usage. For cost-sensitive tasks, run the expensive work (Opus agents) sequentially and the cheap work (Sonnet agents) in parallel. The orchestrator already does this: it runs Sonnet-level reviewers in parallel, then the Opus-level critic sequentially.
 
 ### Pattern 10: Research Exploration Workflow {#pattern-10-exploration}
 
@@ -1445,7 +1344,7 @@ The **kill switch** is explicit: at any point, you can stop, archive with a one-
 
 #### Simplified Orchestrator for Research
 
-The full orchestrator (Pattern 2) is designed for course materials with multi-agent review loops. For research projects, the **simple variant** strips this down to: implement → verify → score → done. No multi-round reviews, no parallel agent spawning. This lives in its own path-scoped rule (`.claude/rules/orchestrator-research.md`) that loads only when working on R scripts or explorations.
+The full orchestrator (Pattern 2) is designed for course materials with multi-agent review loops. For research projects, the **simple variant** strips this down to: implement, verify, score, done. No multi-round reviews, no parallel agent spawning. This lives in its own path-scoped rule (`.claude/rules/orchestrator-research.md`) that loads only when working on R scripts or explorations.
 
 #### Merge-Only Quality Reporting
 
@@ -1483,58 +1382,56 @@ A research project is not a waterfall --- it is a **dependency graph**. Some pha
 
 **Enter mid-pipeline.** You do not have to start from ideation. If you already have data, start with `/data-analysis` and work backwards to the research question. If you already have a draft, start with `/review-paper`. The skills are modular --- use what you need, skip what you don't.
 
-::: {.callout-note collapse="true"}
-## For a Production-Grade Paper Pipeline
-
-For a production-grade paper pipeline, a dedicated fork takes these same skills and wraps them in full research infrastructure: 6 worker-critic agent pairs plus specialized agents (data-engineer, referees, verifier), simulated blind peer review, weighted aggregate scoring, journal targeting, and R&R response routing. If your primary output is research papers, see [The Ecosystem](#sec-ecosystem) for details.
-:::
+> **Note:**
+> **For a Production-Grade Paper Pipeline**
+>
+> For a production-grade paper pipeline, a dedicated fork takes these same skills and wraps them in full research infrastructure: 6 worker-critic agent pairs plus specialized agents (data-engineer, referees, verifier), simulated blind peer review, weighted aggregate scoring, journal targeting, and R&R response routing. If your primary output is research papers, see [The Ecosystem](#sec-ecosystem) for details.
 
 ### Pattern 12: Branch Isolation with Git Worktrees (Advanced) {#pattern-12-branch-isolation}
 
-::: {.callout-note}
-## Advanced Pattern
-This pattern is optional and primarily useful for major translations, risky refactors, or multi-day projects. Most day-to-day work doesn't need it.
-:::
+> **Note:**
+> **Advanced Pattern**
+> This pattern is optional and primarily useful for major refactor or multi-day projects. Most day-to-day work doesn't need it.
 
 Git worktrees create a **separate working directory** linked to the same repository. Each directory has its own branch but shares commit history. Subagents can use worktrees via the `isolation: worktree` field (see [Advanced Agent Configuration](#sec-agent-config)).
 
 ```
-your-project/                     ← main branch (stays clean)
-.worktrees/lecture-06-quarto/     ← isolated branch (Claude works here)
+your-project/                     <-- main branch (stays clean)
+.worktrees/lecture-06-rework/    <-- isolated branch (Claude works here)
 ```
 
 #### Why Use Worktrees?
 
 | Benefit | Example |
 |---------|---------|
-| **Safe experimentation** | Translate Lecture 6 to Quarto --- if it fails, main is untouched |
+| **Safe experimentation** | Rework Lecture 6 --- if it fails, main is untouched |
 | **Clean history** | 50 intermediate commits squash into one clean commit |
 | **Easy discard** | Wrong approach? Delete worktree, no trace in main |
 | **Multi-session work** | Resume worktree next day, no context loss |
-| **Parallel work** | Work on slides (main) while Claude translates (worktree) |
+| **Parallel work** | Work on slides (main) while Claude refactors (worktree) |
 
 #### The Workflow
 
 ```
 1. CREATE WORKTREE
-   git worktree add .worktrees/lecture-06-quarto -b quarto/lecture-06
-   cd .worktrees/lecture-06-quarto
+   git worktree add .worktrees/lecture-06-rework -b rework/lecture-06
+   cd .worktrees/lecture-06-rework
          ↓
 2. IMPLEMENT
    All changes happen in the worktree
    Commit frequently (intermediate commits are OK)
          ↓
 3. VERIFY
-   Run tests, render, review against worktree only
+   Run tests, compile, review against worktree only
          ↓
 4. SYNC TO MAIN (when ready)
    git checkout main
-   git merge --squash quarto/lecture-06
-   git commit -m "feat: add Lecture 6 Quarto version"
+   git merge --squash rework/lecture-06
+   git commit -m "feat: rework Lecture 6"
          ↓
 5. CLEANUP
-   git worktree remove .worktrees/lecture-06-quarto
-   git branch -d quarto/lecture-06
+   git worktree remove .worktrees/lecture-06-rework
+   git branch -d rework/lecture-06
 ```
 
 #### Commands Reference
@@ -1564,11 +1461,8 @@ git commit -m "feat: description of changes"
 |-----------|---------------|
 | Quick fix to one file | No --- just edit main |
 | New lecture creation | Maybe --- if multi-session |
-| Beamer → Quarto translation | Yes --- many intermediate states |
 | Major refactor | Yes --- safe rollback |
 | Experimenting with new approach | Yes --- easy discard |
-
-For example, translating Lecture 5 from Beamer to Quarto involves extracting TikZ diagrams, converting ggplot to plotly, and rewriting environments --- dozens of intermediate files over multiple sessions. A worktree keeps main clean while you iterate.
 
 #### Complexity Cost
 
@@ -1603,36 +1497,35 @@ The [Template README for Social Science Replication Packages](https://social-sci
 
 #### Pre-Submission Checklist
 
-::: {.callout-note collapse="true"}
-## Replication Package Checklist
-
-**Documentation:**
-
-- [ ] README follows the [template](https://social-science-data-editors.github.io/template_README/) with all 8 sections
-- [ ] PDF version of README included in root directory
-- [ ] Data citations appear in both README and manuscript
-- [ ] LICENSE.txt specifies code license (MIT/BSD) and data license (CC-BY)
-
-**Code:**
-
-- [ ] All software listed with exact version numbers
-- [ ] Setup script installs all dependencies (`0_setup.R`, `requirements.txt`, etc.)
-- [ ] Random seeds set deterministically (not timestamps)
-- [ ] Master script runs everything without manual intervention
-- [ ] Each table and figure produced by an identifiable, separate script
-
-**Data:**
-
-- [ ] Data Availability Statement for every data source, including confidential data
-- [ ] Rights certifications: legitimate access + redistribution permission
-- [ ] Directory structure separates raw, derived, and output data
-
-**Verification:**
-
-- [ ] Package re-executed in a clean environment
-- [ ] Results numerically identical to manuscript
-- [ ] Runtime and hardware requirements documented
-:::
+> **Note:**
+> **Replication Package Checklist**
+>
+> **Documentation:**
+>
+> - [ ] README follows the [template](https://social-science-data-editors.github.io/template_README/) with all 8 sections
+> - [ ] PDF version of README included in root directory
+> - [ ] Data citations appear in both README and manuscript
+> - [ ] LICENSE.txt specifies code license (MIT/BSD) and data license (CC-BY)
+>
+> **Code:**
+>
+> - [ ] All software listed with exact version numbers
+> - [ ] Setup script installs all dependencies (`0_setup.R`, `requirements.txt`, etc.)
+> - [ ] Random seeds set deterministically (not timestamps)
+> - [ ] Master script runs everything without manual intervention
+> - [ ] Each table and figure produced by an identifiable, separate script
+>
+> **Data:**
+>
+> - [ ] Data Availability Statement for every data source, including confidential data
+> - [ ] Rights certifications: legitimate access + redistribution permission
+> - [ ] Directory structure separates raw, derived, and output data
+>
+> **Verification:**
+>
+> - [ ] Package re-executed in a clean environment
+> - [ ] Results numerically identical to manuscript
+> - [ ] Runtime and hardware requirements documented
 
 #### Recommended Directory Structure
 
@@ -1653,24 +1546,23 @@ project/
 
 The orchestrator applies these standards automatically: ask Claude to *"prepare a replication package"* and the `replication-protocol` rule activates, enforcing the directory structure and checklist above. No manual invocation needed --- the path-scoped rule fires whenever Claude works on replication-related files.
 
-::: {.callout-tip collapse="true"}
-## Reproducibility as Architecture
-
-A key principle that maps directly to this workflow: **separate scientific reasoning from computational execution.** Humans design diagnostic templates (what to measure); AI handles execution (how to run it).
-
-This is the template-executor architecture --- and you are already using it:
-
-- **Your spec** (requirements specification) = the template. It says *what* must be true.
-- **The orchestrator** = the executor. It handles *how* to make it true.
-- **Plans** = why decisions were made (audit trail)
-- **Session logs** = reasoning documentation
-- **Git** = what changed and when
-- **MEMORY.md** = corrections and accumulated learning
-
-The `/learn` skill already implements version-controlled knowledge accumulation: each discovery saved as a SKILL.md file with problem, solution, and verification steps --- the same pattern sometimes called "structured knowledge bases."
-
-Key insight: *"For a fixed pipeline version and fixed inputs, the workflow produces identical numerical outputs and retains a complete audit trail of intermediate artifacts and logs."*
-:::
+> **Tip:**
+> **Reproducibility as Architecture**
+>
+> A key principle that maps directly to this workflow: **separate scientific reasoning from computational execution.** Humans design diagnostic templates (what to measure); AI handles execution (how to run it).
+>
+> This is the template-executor architecture --- and you are already using it:
+>
+> - **Your spec** (requirements specification) = the template. It says *what* must be true.
+> - **The orchestrator** = the executor. It handles *how* to make it true.
+> - **Plans** = why decisions were made (audit trail)
+> - **Session logs** = reasoning documentation
+> - **Git** = what changed and when
+> - **MEMORY.md** = corrections and accumulated learning
+>
+> The `/learn` skill already implements version-controlled knowledge accumulation: each discovery saved as a SKILL.md file with problem, solution, and verification steps --- the same pattern sometimes called "structured knowledge bases."
+>
+> Key insight: *"For a fixed pipeline version and fixed inputs, the workflow produces identical numerical outputs and retains a complete audit trail of intermediate artifacts and logs."*
 
 ### Pattern 14: The Rhetoric of Decks {#pattern-14-rhetoric-of-decks}
 
@@ -1690,7 +1582,7 @@ The [Rhetoric of Decks](https://github.com/scunning1975/MixtapeTools/tree/main/p
 
 The most original contribution of this framework --- applying marginal analysis to slide design:
 
-> Optimal rhetoric equalizes the marginal benefit to marginal cost ratio across all slides: MB₁/MC₁ = MB₂/MC₂ = ... = MBₙ/MCₙ
+> Optimal rhetoric equalizes the marginal benefit to marginal cost ratio across all slides: MB1/MC1 = MB2/MC2 = ... = MBn/MCn
 
 **What this means in practice:**
 
@@ -1714,11 +1606,10 @@ The most original contribution of this framework --- applying marginal analysis 
 
 The `/slide-excellence` skill already invokes the pedagogy-reviewer and slide-auditor, which enforce many of these principles automatically. To enforce *all* of them --- including title-as-assertion and MB/MC smoothness --- customize the **domain-reviewer** agent (`.claude/agents/domain-reviewer.md`) with rhetoric-of-decks lenses. The orchestrator will then apply them during every review cycle without manual invocation.
 
-::: {.callout-note collapse="true"}
-## The Full Framework
-
-For the complete philosophical treatment --- from Aristotle's three modes of persuasion through neuroaesthetics and the Netflix analogy --- see [The Rhetoric of Decks](https://github.com/scunning1975/MixtapeTools/tree/main/presentations). The repository includes a full essay, example Beamer decks with professional color palettes, a `theme_rhetoric()` ggplot2 theme, and a tested deck generation prompt for Claude Code.
-:::
+> **Note:**
+> **The Full Framework**
+>
+> For the complete philosophical treatment --- from Aristotle's three modes of persuasion through neuroaesthetics and the Netflix analogy --- see [The Rhetoric of Decks](https://github.com/scunning1975/MixtapeTools/tree/main/presentations). The repository includes a full essay, example Beamer decks with professional color palettes, a `theme_rhetoric()` ggplot2 theme, and a tested deck generation prompt for Claude Code.
 
 ### Pattern 15: Sequential Adversarial Audits {#pattern-15-sequential-audits}
 
@@ -1770,11 +1661,10 @@ This repository provides the foundation --- the infrastructure patterns (plan-fi
 | Constraint-based autonomy | autoresearch | Define boundaries in Markdown (what CAN/CANNOT change); let Claude explore within |
 | Sequential independent audits | ClaudeCodeTools | Run N blind audit passes; independence prevents groupthink ([Pattern 15](#pattern-15-sequential-audits)) |
 
-::: {.callout-tip}
-## Which Ecosystem Project Should I Start With?
-
-If you write **papers**: start with clo-author (adversarial review pairs) or ClaudeCodeTools (seven-audit protocol, see [Pattern 15](#pattern-15-sequential-audits)). If you give **presentations**: MixtapeTools. If you run **computational experiments**: autoresearch. If you're a **non-technical academic**: claudeblattman. All of them build on the same foundation patterns from this template — the [orchestrator](#sec-system), [quality gates](#sec-quality), and [adversarial review](#the-adversarial-pattern-critic-fixer).
-:::
+> **Tip:**
+> **Which Ecosystem Project Should I Start With?**
+>
+> If you write **papers**: start with clo-author (adversarial review pairs) or ClaudeCodeTools (seven-audit protocol, see [Pattern 15](#pattern-15-sequential-audits)). If you give **presentations**: MixtapeTools. If you run **computational experiments**: autoresearch. If you're a **non-technical academic**: claudeblattman. All of them build on the same foundation patterns from this template --- the [orchestrator](#sec-system), [quality gates](#sec-quality), and [adversarial review](#the-adversarial-pattern-critic-fixer).
 
 Here is what each project does and when you should use it.
 
@@ -1790,7 +1680,7 @@ clo-author reorients the entire workflow from slides to **research papers**. The
 
 - **17 specialized agents** organized as 6 worker-critic pairs (Librarian, Explorer, Strategist, Coder, Writer, Storyteller --- each with a dedicated critic) plus standalone agents (data-engineer, domain-referee, methods-referee, orchestrator, verifier)
 - **Phase-based severity gradient** --- critics are encouraging during Discovery, constructive during Strategy, strict during Execution, and adversarial during Peer Review
-- **Weighted aggregate scoring** with component minimums: Literature 10%, Data 10%, Identification 25%, Code 15%, Paper 25%, Polish 10%, Replication 5%. Submission gate (≥ 95) requires every component independently ≥ 80
+- **Weighted aggregate scoring** with component minimums: Literature 10%, Data 10%, Identification 25%, Code 15%, Paper 25%, Polish 10%, Replication 5%. Submission gate (>= 95) requires every component independently >= 80
 - **Simulated blind peer review** --- two independent Referee agents plus an Editor making an editorial decision (Accept / Minor / Major / Reject)
 - **Humanizer pass** --- identifies and strips 24 AI writing patterns across four categories (structural tics, lexical tells, rhetorical patterns, formatting tells)
 - **Domain profile system** --- configurable field-specific calibration file read by all agents
@@ -1828,7 +1718,7 @@ This paper formalizes many principles that this workflow uses intuitively. It de
 **Key principles:**
 
 - **Template-executor separation** --- humans design diagnostic templates (what to measure), AI handles execution (how to run it). Maps to our spec-then-plan workflow.
-- **Three-layer architecture** --- LLM orchestrator (coordination) → skill descriptions and knowledge bases (contracts and accumulated experience) → deterministic agent code (numerical work). Maps to our orchestrator → skills/rules → agents.
+- **Three-layer architecture** --- LLM orchestrator (coordination) -> skill descriptions and knowledge bases (contracts and accumulated experience) -> deterministic agent code (numerical work). Maps to our orchestrator -> skills/rules -> agents.
 - **Structured intermediate files** --- agents communicate through standardized files on disk (JSON, CSV, logs), not hidden state. Ensures every step is inspectable and rerunnable.
 - **Version-controlled knowledge accumulation** --- SKILL.md files with Context/Problem/Fix/Impact format. Maps to our `/learn` skill.
 - **Adaptation between runs, not during runs** --- fixes are incorporated as version-controlled updates between sessions, never as ad hoc patches within a session. This ensures reproducibility.
@@ -1843,7 +1733,7 @@ This paper formalizes many principles that this workflow uses intuitively. It de
 MixtapeTools provides the philosophical and practical framework for academic presentation design (see Pattern 14). Beyond the Rhetoric of Decks, it includes:
 
 - **Referee 2** --- a systematic 5-audit adversarial protocol for reviewing and replicating empirical work
-- **Deck generation prompt** --- a tested, customizable multi-agent prompt for creating Beamer decks (builder → rhetoric reviewer → graphics specialist)
+- **Deck generation prompt** --- a tested, customizable multi-agent prompt for creating Beamer decks (builder -> rhetoric reviewer -> graphics specialist)
 - **Example decks** with professional color palettes, custom ggplot2 themes (`theme_rhetoric()`), and complete Beamer templates
 - **Zero-warning compilation standard** --- even 0.5pt overfull hbox must be fixed
 
@@ -1875,7 +1765,7 @@ An autonomous research agent that runs continuous experiments --- modifying code
 **Example:** Adapting the `program.md` pattern for a Monte Carlo study:
 
 ```markdown
-# program.md — Monte Carlo Experiment Constraints
+# program.md -- Monte Carlo Experiment Constraints
 
 ## What You CAN Modify
 - DGP parameters (sample sizes, effect sizes, correlation structures)
@@ -1919,7 +1809,7 @@ Each adaptation follows the same pattern: fork the template, fill in `CLAUDE.md`
 
 ## Step 1: Build Your Knowledge Base
 
-The knowledge base (`.claude/rules/knowledge-base-template.md`) is the most domain-specific component — it's a [path-scoped rule](#rules---domain-knowledge-that-auto-loads) that loads automatically when Claude works on your content files. It provides skeleton tables for notation conventions, lecture progression, applications, design principles, anti-patterns, and R code pitfalls. Fill them in as you develop your project --- you don't need everything upfront.
+The knowledge base (`.claude/rules/knowledge-base-template.md`) is the most domain-specific component --- it's a [path-scoped rule](#rules---domain-knowledge-that-auto-loads) that loads automatically when Claude works on your content files. It provides skeleton tables for notation conventions, lecture progression, applications, design principles, anti-patterns, and R code pitfalls. Fill them in as you develop your project --- you don't need everything upfront.
 
 ### Notation Registry
 
@@ -1951,17 +1841,9 @@ The knowledge base (`.claude/rules/knowledge-base-template.md`) is the most doma
 
 Copy `.claude/agents/domain-reviewer.md` and customize the [5-lens framework](#sec-domain-reviewer) for your field. The template provides the structure; you fill in domain-specific checks.
 
-## Step 3: Adapt Your Theme
+## Step 3: Creating Custom Skills {#sec-create-skills}
 
-The template includes an example Quarto theme SCSS file. To customize:
-
-1. Change the color palette to your institution's colors
-2. Update CSS class names if needed
-3. Modify the beamer-translator environment mapping to match your classes
-
-## Step 4: Creating Custom Skills {#sec-create-skills}
-
-The guide includes 22 [skills](#skills---reusable-slash-commands) for common academic tasks. But if you have repetitive workflows specific to your domain, you can create your own.
+The guide includes 21 [skills](#skills---reusable-slash-commands) for common academic tasks. But if you have repetitive workflows specific to your domain, you can create your own.
 
 ### When to Create a Skill
 
@@ -1969,7 +1851,7 @@ Create a skill when:
 - You repeatedly explain the same 3+ step workflow to Claude
 - You need domain-specific quality checks (citation style, notation consistency, lab protocols)
 - You enforce field-specific output formats (thesis structure, journal templates)
-- You coordinate multi-tool workflows (data → analysis → manuscript)
+- You coordinate multi-tool workflows (data -> analysis -> manuscript)
 
 **Don't create a skill for:**
 - One-time tasks
@@ -2022,13 +1904,12 @@ The YAML frontmatter controls how your skill behaves. Here are all available fie
 | `disable-model-invocation` | Prevent Claude from auto-triggering | `true` |
 | `user-invocable` | Whether it appears in the `/` menu | `true` (default) |
 
-::: {.callout-note}
-## Key Design Choices
-
-- **`effort: high`** is useful for review skills that need deep reasoning (e.g., paper critique). Use `effort: low` for simple formatting skills to save tokens.
-- **`context: fork`** runs the skill in a fresh subagent context, protecting your main conversation from large outputs. Good for skills that produce verbose reports.
-- **`allowed-tools`** prevents skills from accidentally using destructive tools. A read-only review skill should use `["Read", "Grep", "Glob"]`.
-:::
+> **Note:**
+> **Key Design Choices**
+>
+> - **`effort: high`** is useful for review skills that need deep reasoning (e.g., paper critique). Use `effort: low` for simple formatting skills to save tokens.
+> - **`context: fork`** runs the skill in a fresh subagent context, protecting your main conversation from large outputs. Good for skills that produce verbose reports.
+> - **`allowed-tools`** prevents skills from accidentally using destructive tools. A read-only review skill should use `["Read", "Grep", "Glob"]`.
 
 ### Dynamic Content in Skills {#skill-dynamic-content}
 
@@ -2038,8 +1919,8 @@ Skills can include dynamic values using string substitutions and live command ou
 
 | Syntax | Expands To | Example Use |
 |--------|-----------|-------------|
-| `$ARGUMENTS` | Full argument string after `/skill-name` | `/compile-latex Lecture01` → `$ARGUMENTS` = `Lecture01` |
-| `$0`, `$1`, `$N` | Positional arguments (0-based, space-separated) | `/deploy Lecture01 draft` → `$0` = `Lecture01`, `$1` = `draft` |
+| `$ARGUMENTS` | Full argument string after `/skill-name` | `/compile-latex Lecture01` -> `$ARGUMENTS` = `Lecture01` |
+| `$0`, `$1`, `$N` | Positional arguments (0-based, space-separated) | `/deploy Lecture01 draft` -> `$0` = `Lecture01`, `$1` = `draft` |
 | `${CLAUDE_SESSION_ID}` | Current session identifier | Unique log file names |
 | `${CLAUDE_SKILL_DIR}` | Path to the skill's directory | Reference supporting files bundled with the skill |
 
@@ -2060,7 +1941,7 @@ The `description` field determines when Claude loads your skill. Use specific tr
 
 **Good (Citation Style Enforcement):**
 ```yaml
-description: Enforces APA 7th edition citation format. Use when user asks to "check citations", "fix references", "apply APA style", or when reviewing .tex/.qmd files with bibliographies.
+description: Enforces APA 7th edition citation format. Use when user asks to "check citations", "fix references", "apply APA style", or when reviewing .tex files with bibliographies.
 ```
 
 **Good (Lab Notebook Entry):**
@@ -2075,9 +1956,7 @@ description: Helps with citations
 
 ### Domain-Specific Examples
 
-::: {.panel-tabset}
-
-#### Econometrics
+**Econometrics:**
 
 **Regression Output Formatter**
 
@@ -2087,7 +1966,7 @@ Converts R regression outputs to publication-ready LaTeX tables with proper form
 
 **Tools:** `Read`, `Write`, `Bash` (to run R scripts)
 
-#### Experimental Sciences
+**Experimental Sciences:**
 
 **Protocol Validator**
 
@@ -2097,7 +1976,7 @@ Validates lab protocols against safety and reproducibility standards. Checks for
 
 **Tools:** `Read`, `Write`
 
-#### Literature Review
+**Literature Review:**
 
 **Citation Cross-Reference Checker**
 
@@ -2106,8 +1985,6 @@ Cross-references in-text citations against bibliography entries. Identifies miss
 **Trigger:** User asks "check citations", "validate references", when working on manuscripts
 
 **Tools:** `Read`, `Grep`, `Glob`, `Write`
-
-:::
 
 ### Quick Start
 
@@ -2134,13 +2011,12 @@ Cross-references in-text citations against bibliography entries. Identifies miss
 
 **Full template:** See `templates/skill-template.md` for comprehensive examples from biology, economics, and physics.
 
-::: {.callout-tip}
-## Real Example: /deep-audit Was Created with /learn
-
-The `/deep-audit` skill was itself extracted from a repeating workflow using `/learn`. After running 7 rounds of manual consistency audits --- each time launching 4 parallel agents to check guide accuracy, hook code quality, skills/rules consistency, and cross-document counts --- the pattern was codified into a skill. Now `/deep-audit` launches those same 4 agents, triages findings, applies fixes, and loops until clean (max 5 rounds). It also encodes a table of known bug patterns from past audits so future rounds catch regressions faster.
-
-This is the `/learn` lifecycle in action: discover a repeating workflow → extract it → never repeat the manual steps again.
-:::
+> **Tip:**
+> **Real Example: /deep-audit Was Created with /learn**
+>
+> The `/deep-audit` skill was itself extracted from a repeating workflow using `/learn`. After running 7 rounds of manual consistency audits --- each time launching 4 parallel agents to check guide accuracy, hook code quality, skills/rules consistency, and cross-document counts --- the pattern was codified into a skill. Now `/deep-audit` launches those same 4 agents, triages findings, applies fixes, and loops until clean (max 5 rounds). It also encodes a table of known bug patterns from past audits so future rounds catch regressions faster.
+>
+> This is the `/learn` lifecycle in action: discover a repeating workflow -> extract it -> never repeat the manual steps again.
 
 ## Tips from 6+ Sessions of Iteration
 
@@ -2151,18 +2027,17 @@ This is the `/learn` lifecycle in action: discover a repeating workflow → extr
 5. **Verify everything.** The verification rule exists for a reason. Never skip compilation or rendering checks.
 6. **Session logs matter.** Document design decisions, not just what changed. Future-you will thank present-you.
 7. **Devil's Advocate early.** Challenge slide structure before you've built 50 slides on a shaky foundation.
-8. **Progressive disclosure.** Start with CLAUDE.md + 2--3 rules. Add more as your workflow matures. Newcomers should not face 18 rules on day one.
+8. **Progressive disclosure.** Start with CLAUDE.md + 2--3 rules. Add more as your workflow matures. Newcomers should not face 17 rules on day one.
 9. **Use `CLAUDE.local.md` for personal overrides.** This file is automatically gitignored and loaded alongside `CLAUDE.md`. Put machine-specific paths, personal preferences, and local tool versions here --- they won't pollute the shared repo.
 
-::: {.callout-note collapse="true"}
-## Extending with MCP Servers
-
-For capabilities beyond file editing and shell commands --- web search during literature review, database queries for replication, or reference manager integration (Zotero, Mendeley) --- Claude Code supports [MCP servers](https://modelcontextprotocol.io). Configure them in `.claude/settings.json` under `"mcpServers"`. Start with skills and agents first; add MCP when you need external integrations.
-
-## Extending with Plugins
-
-Claude Code supports **plugins** --- bundled collections of skills, agents, hooks, and MCP servers that can be installed from git repositories. Use `/plugin` to browse and manage plugins (it has a Discover tab for finding new ones). Plugins are a newer extension point; start with skills and rules (which you control entirely) before adopting third-party plugins.
-:::
+> **Note:**
+> **Extending with MCP Servers**
+>
+> For capabilities beyond file editing and shell commands --- web search during literature review, database queries for replication, or reference manager integration (Zotero, Mendeley) --- Claude Code supports [MCP servers](https://modelcontextprotocol.io). Configure them in `.claude/settings.json` under `"mcpServers"`. Start with skills and agents first; add MCP when you need external integrations.
+>
+> **Extending with Plugins**
+>
+> Claude Code supports **plugins** --- bundled collections of skills, agents, hooks, and MCP servers that can be installed from git repositories. Use `/plugin` to browse and manage plugins (it has a Discover tab for finding new ones). Plugins are a newer extension point; start with skills and rules (which you control entirely) before adopting third-party plugins.
 
 ---
 
@@ -2177,9 +2052,6 @@ Claude Code supports **plugins** --- bundled collections of skills, agents, hook
 | Pedagogy Reviewer | `.claude/agents/pedagogy-reviewer.md` | Narrative arc, notation clarity |
 | R Reviewer | `.claude/agents/r-reviewer.md` | R code quality, reproducibility |
 | TikZ Reviewer | `.claude/agents/tikz-reviewer.md` | Diagram visual quality |
-| Beamer Translator | `.claude/agents/beamer-translator.md` | LaTeX to Quarto translation |
-| Quarto Critic | `.claude/agents/quarto-critic.md` | Adversarial Quarto QA |
-| Quarto Fixer | `.claude/agents/quarto-fixer.md` | Applies critic's fixes |
 | Verifier | `.claude/agents/verifier.md` | Task completion verification |
 | Domain Reviewer | `.claude/agents/domain-reviewer.md` | Your domain-specific review |
 
@@ -2188,15 +2060,14 @@ Claude Code supports **plugins** --- bundled collections of skills, agents, hook
 | Skill | Directory | Purpose |
 |-------|-----------|---------|
 | `/compile-latex` | `.claude/skills/compile-latex/` | XeLaTeX 3-pass compilation |
-| `/deploy` | `.claude/skills/deploy/` | Quarto render + GitHub Pages sync |
 | `/extract-tikz` | `.claude/skills/extract-tikz/` | TikZ to SVG conversion |
+| `/format-tables` | `.claude/skills/format-tables/` | Consistent LaTeX table style |
+| `/format-tables-reg` | `.claude/skills/format-tables-reg/` | Consistent LaTeX regression table style (Stata) |
 | `/proofread` | `.claude/skills/proofread/` | Run proofreading agent |
 | `/visual-audit` | `.claude/skills/visual-audit/` | Run layout audit agent |
 | `/pedagogy-review` | `.claude/skills/pedagogy-review/` | Run pedagogy review agent |
 | `/review-r` | `.claude/skills/review-r/` | Run R code review agent |
-| `/qa-quarto` | `.claude/skills/qa-quarto/` | Critic-fixer adversarial loop |
 | `/slide-excellence` | `.claude/skills/slide-excellence/` | Combined multi-agent review |
-| `/translate-to-quarto` | `.claude/skills/translate-to-quarto/` | Beamer to Quarto translation |
 | `/validate-bib` | `.claude/skills/validate-bib/` | Bibliography validation |
 | `/devils-advocate` | `.claude/skills/devils-advocate/` | Design challenge questions |
 | `/create-lecture` | `.claude/skills/create-lecture/` | Full lecture creation |
@@ -2225,17 +2096,16 @@ Claude Code supports **plugins** --- bundled collections of skills, agents, hook
 
 | Rule | File | Triggers On |
 |------|------|------------|
-| Verification Protocol | `verification-protocol.md` | `.tex`, `.qmd`, `docs/` |
-| Single Source of Truth | `single-source-of-truth.md` | `Figures/`, `.tex`, `.qmd` |
-| Quality Gates | `quality-gates.md` | `.tex`, `.qmd`, `*.R` |
+| Verification Protocol | `verification-protocol.md` | `.tex` |
+| Single Source of Truth | `single-source-of-truth.md` | `Figures/`, `.tex` |
+| Quality Gates | `quality-gates.md` | `.tex`, `*.R` |
 | R Code Conventions | `r-code-conventions.md` | `*.R` |
 | TikZ Quality | `tikz-visual-quality.md` | `.tex` |
-| Beamer-Quarto Sync | `beamer-quarto-sync.md` | `.tex`, `.qmd` |
 | PDF Processing | `pdf-processing.md` | `master_supporting_docs/` |
-| Proofreading Protocol | `proofreading-protocol.md` | `.tex`, `.qmd`, `quality_reports/` |
+| Proofreading Protocol | `proofreading-protocol.md` | `.tex`, `quality_reports/` |
 | No Pause | `no-pause-beamer.md` | `.tex` |
 | Replication Protocol | `replication-protocol.md` | `*.R` |
-| Knowledge Base | `knowledge-base-template.md` | `.tex`, `.qmd`, `*.R` |
+| Knowledge Base | `knowledge-base-template.md` | `.tex`, `*.R` |
 | Orchestrator Research | `orchestrator-research.md` | `*.R`, `explorations/` |
 | Exploration Folder | `exploration-folder-protocol.md` | `explorations/` |
 | Exploration Fast-Track | `exploration-fast-track.md` | `explorations/` |
@@ -2279,15 +2149,6 @@ Claude Code supports **plugins** --- bundled collections of skills, agents, hook
 2. Ensure `TEXINPUTS` includes `Preambles/`: the `/compile-latex` skill handles this
 3. Missing package? Install via TeX Live: `tlmgr install [package]`
 
-### Quarto Won't Render
-
-**Symptom:** `quarto render` fails or produces broken HTML.
-
-**Fix:**
-1. Check Quarto version: `quarto --version` (need 1.3+)
-2. Check for syntax errors in YAML frontmatter
-3. Missing TikZ SVGs? Run `/extract-tikz` first
-
 ### Hooks Not Firing
 
 **Symptom:** No context warnings, no verification reminders.
@@ -2302,7 +2163,7 @@ Claude Code supports **plugins** --- bundled collections of skills, agents, hook
 **Symptom:** Claude doesn't follow conventions in `.claude/rules/`.
 
 **Fix:**
-1. Rules use `paths:` frontmatter — check the path matches your files
+1. Rules use `paths:` frontmatter --- check the path matches your files
 2. Too many rules? Claude follows ~150 instructions reliably. Consolidate.
 3. Try: *"Read `.claude/rules/[rule].md` and follow it for this task"*
 
@@ -2331,7 +2192,7 @@ Claude Code supports **plugins** --- bundled collections of skills, agents, hook
 **Fix:**
 1. Be explicit in your request: *"Review my slides for grammar and layout issues"*
 2. Check skill has auto-invocation enabled (no `disable-model-invocation: true`)
-3. Skill descriptions help Claude know when to use them — check they're clear
+3. Skill descriptions help Claude know when to use them --- check they're clear
 
 ### Plans Saved to Wrong Directory
 

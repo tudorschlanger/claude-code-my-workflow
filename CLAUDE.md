@@ -1,9 +1,9 @@
 # CLAUDE.MD -- Academic Project Development with Claude Code
 
 <!-- HOW TO USE: Replace [BRACKETED PLACEHOLDERS] with your project info.
-     Customize Beamer environments and CSS classes for your theme.
+     Customize Beamer environments for your theme.
      Keep this file under ~150 lines — Claude loads it every session.
-     See the guide at docs/workflow-guide.html for full documentation. -->
+     See the guide at guide/workflow-guide.md for full documentation. -->
 
 **Project:** [YOUR PROJECT NAME]
 **Institution:** [YOUR INSTITUTION]
@@ -15,7 +15,7 @@
 
 - **Plan first** -- enter plan mode before non-trivial tasks; save plans to `quality_reports/plans/`
 - **Verify after** -- compile/render and confirm output at the end of every task
-- **Single source of truth** -- Beamer `.tex` is authoritative; Quarto `.qmd` derives from it
+- **Single source of truth** -- Beamer `.tex` is authoritative
 - **Quality gates** -- nothing ships below 80/100
 - **[LEARN] tags** -- when corrected, save `[LEARN:category] wrong → right` to MEMORY.md
 
@@ -28,16 +28,12 @@
 ├── CLAUDE.MD                    # This file
 ├── .claude/                     # Rules, skills, agents, hooks
 ├── Bibliography_base.bib        # Centralized bibliography
-├── Figures/                     # Figures and images
-├── Preambles/header.tex         # LaTeX headers
-├── Slides/                      # Beamer .tex files
-├── Quarto/                      # RevealJS .qmd files + theme
-├── docs/                        # GitHub Pages (auto-generated)
-├── scripts/                     # Utility scripts + R code
+├── input/                       # Input data (sources from outside the project)
+├── output/                      # Output data, figures, tables, slides, paper drafts (produced by scripts in this project)
+├── scripts/                     # All codes 
 ├── quality_reports/             # Plans, session logs, merge reports
-├── explorations/                # Research sandbox (see rules)
 ├── templates/                   # Session log, quality report templates
-└── master_supporting_docs/      # Papers and existing slides
+└── docs/                        # Papers, emails, technical documentation, and existing slides
 ```
 
 ---
@@ -46,17 +42,15 @@
 
 ```bash
 # LaTeX (3-pass, XeLaTeX only)
-cd Slides && TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
+cd output && TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
 BIBINPUTS=..:$BIBINPUTS bibtex file
-TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-
-# Deploy Quarto to GitHub Pages
-./scripts/sync_to_docs.sh LectureN
-
-# Quality score
-python scripts/quality_score.py Quarto/file.qmd
+TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
+TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
 ```
+
+### LaTeX Headers
+- Slides: always use `scripts/latex_preambles/header_slides.tex`
+- Documents: always use `scripts/latex_preambles/header_doc.tex`
 
 ## Stata
 - Always run Stata to verify code and table output rather than generating blindly
@@ -81,35 +75,33 @@ python scripts/quality_score.py Quarto/file.qmd
 
 | Command | What It Does |
 |---------|-------------|
-| `/compile-latex [file]` | 3-pass XeLaTeX + bibtex |
-| `/deploy [LectureN]` | Render Quarto + sync to docs/ |
-| `/extract-tikz [LectureN]` | TikZ → PDF → SVG |
-| `/proofread [file]` | Grammar/typo/overflow review |
-| `/visual-audit [file]` | Slide layout audit |
-| `/pedagogy-review [file]` | Narrative, notation, pacing review |
-| `/review-r [file]` | R code quality review |
-| `/qa-quarto [LectureN]` | Adversarial Quarto vs Beamer QA |
-| `/slide-excellence [file]` | Combined multi-agent review |
-| `/translate-to-quarto [file]` | Beamer → Quarto translation |
-| `/validate-bib` | Cross-reference citations |
-| `/devils-advocate` | Challenge slide design |
-| `/create-lecture` | Full lecture creation |
-| `/commit [msg]` | Stage, commit, PR, merge |
-| `/lit-review [topic]` | Literature search + synthesis |
-| `/research-ideation [topic]` | Research questions + strategies |
-| `/interview-me [topic]` | Interactive research interview |
-| `/review-paper [file]` | Manuscript review |
-| `/data-analysis [dataset]` | End-to-end R analysis |
-| `/learn [skill-name]` | Extract discovery into persistent skill |
-| `/context-status` | Show session health + context usage |
-| `/deep-audit` | Repository-wide consistency audit |
-| `/format-tables` | Format tables for Latex |
+| `/commit [msg]` | Stage, commit, create PR, and merge to main |
+| `/compile-latex [file]` | Compile Beamer slide deck with XeLaTeX (3 passes + bibtex) |
+| `/context-status` | Show session health and context usage |
+| `/create-lecture` | Create new Beamer lecture from papers and materials |
+| `/data-analysis [dataset]` | End-to-end R data analysis from exploration through regression |
+| `/deep-audit` | Deep consistency audit of the entire repository infrastructure |
+| `/devils-advocate` | Challenge slide design with 5-7 pedagogical questions |
+| `/extract-tikz [LectureN]` | Extract TikZ diagrams from Beamer source, compile to PDF, convert to SVG |
+| `/format-tables` | Apply consistent LaTeX table style for table output |
+| `/format-tables-reg` | Apply consistent LaTeX regression table style for Stata output |
+| `/interview-me [topic]` | Interactive interview to formalize a research idea |
+| `/learn [skill-name]` | Extract reusable knowledge into a persistent skill |
+| `/lit-review [topic]` | Structured literature search and synthesis with citation extraction |
+| `/pedagogy-review [file]` | Holistic pedagogical review: narrative arc, prerequisites, notation, pacing |
+| `/proofread [file]` | Grammar, typo, overflow, consistency review (produces report) |
+| `/research-ideation [topic]` | Generate research questions, hypotheses, and empirical strategies |
+| `/review-paper [file]` | Comprehensive manuscript review: structure, specification, citations |
+| `/review-r [file]` | R code quality, reproducibility, and domain correctness review |
+| `/slide-excellence [file]` | Multi-agent slide review (visual, pedagogy, proofreading) |
+| `/validate-bib` | Cross-reference citations against bibliography |
+| `/visual-audit [file]` | Adversarial visual audit: overflow, font consistency, box fatigue |
 
 ---
 
 <!-- CUSTOMIZE: Replace the example entries below with your own
-     Beamer environments and Quarto CSS classes. These are examples
-     from the original project — delete them and add yours. -->
+     Beamer environments. These are examples from the original project
+     — delete them and add yours. -->
 
 ## Beamer Custom Environments
 
@@ -123,22 +115,11 @@ python scripts/quality_score.py Quarto/file.qmd
 | `definitionbox[Title]` | Blue-bordered titled box | Formal definitions |
 -->
 
-## Quarto CSS Classes
-
-| Class              | Effect        | Use Case       |
-|--------------------|---------------|----------------|
-| `[.your-class]`    | [Description] | [When to use]  |
-
-<!-- Example entries (delete and replace with yours):
-| `.smaller` | 85% font | Dense content slides |
-| `.positive` | Green bold | Good annotations |
--->
-
 ---
 
 ## Current Project State
 
-| Lecture | Beamer | Quarto | Key Content |
-|---------|--------|--------|-------------|
-| 1: [Topic] | `Lecture01_Topic.tex` | `Lecture1_Topic.qmd` | [Brief description] |
-| 2: [Topic] | `Lecture02_Topic.tex` | -- | [Brief description] |
+| Lecture | Beamer | Key Content |
+|---------|--------|-------------|
+| 1: [Topic] | `Lecture01_Topic.tex` | [Brief description] |
+| 2: [Topic] | `Lecture02_Topic.tex` | [Brief description] |

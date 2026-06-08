@@ -115,7 +115,7 @@ The `description` field determines when Claude loads your skill. Use this struct
 
 **Citation Style Enforcement (APA Psychology):**
 ```yaml
-description: Enforces APA 7th edition citation format in manuscripts. Use when user asks to "check citations", "fix references", "apply APA style", or when reviewing .tex or .qmd files with bibliography. Checks author-year format, DOI formatting, and reference list completeness.
+description: Enforces APA 7th edition citation format in manuscripts. Use when user asks to "check citations", "fix references", "apply APA style", or when reviewing .tex or .md files with bibliography. Checks author-year format, DOI formatting, and reference list completeness.
 ```
 
 **Lab Notebook Entry Generator (Wet Lab Biology):**
@@ -155,7 +155,7 @@ description: Reviews econometric specifications for common errors. Use when user
 ```markdown
 ---
 name: validate-citations
-description: Cross-references in-text citations against bibliography entries. Use when user asks to "check citations", "validate references", or when working on .tex, .qmd, or .md files with bibliographies. Identifies missing entries, unused references, and formatting inconsistencies.
+description: Cross-references in-text citations against bibliography entries. Use when user asks to "check citations", "validate references", or when working on .tex, .md, or .R files with bibliographies. Identifies missing entries, unused references, and formatting inconsistencies.
 argument-hint: "[file or 'all']"
 allowed-tools: ["Read", "Grep", "Glob", "Write"]
 ---
@@ -403,4 +403,4 @@ When adapting this template to your domain:
 - **Purpose:** Starter for domain-specific skills
 - **Usage:** Copy to `.claude/skills/[name]/SKILL.md`, customize for your field
 
-For existing skills examples, see `.claude/skills/` directory (22 skills for LaTeX, R, Quarto, and research workflows).
+For existing skills examples, see `.claude/skills/` directory (21 skills for LaTeX, R, and research workflows).
