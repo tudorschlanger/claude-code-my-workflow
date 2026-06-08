@@ -86,3 +86,8 @@ Remove all Quarto-related files, references, and infrastructure from the project
 
 - [ ] Commit changes (user to decide)
 - [ ] Consider whether to update `.claude/WORKFLOW_QUICK_REF.md` if it has Quarto references
+
+
+---
+**Context compaction (manual) at 18:05**
+Check git log and quality_reports/plans/ for current state.

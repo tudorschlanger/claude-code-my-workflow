@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "academic-beamer-deck": {
+      "source": "thinkingwithagents/skills",
+      "sourceType": "github",
+      "skillPath": "academic-beamer-deck/SKILL.md",
+      "computedHash": "9ff78141068becb7a9cac9dc2d66c5f451dab2e375d2bac9cad193589e5aaf03"
+    },
+    "code-review": {
+      "source": "thinkingwithagents/skills",
+      "sourceType": "github",
+      "skillPath": "code-review/SKILL.md",
+      "computedHash": "dfa8db1d0c34dbc7359b71ad3581fb1558f81faf33095f51455762e1195a3dcc"
+    },
+    "data-dictionary": {
+      "source": "thinkingwithagents/skills",
+      "sourceType": "github",
+      "skillPath": "data-dictionary/SKILL.md",
+      "computedHash": "6266b9b9ed9a9cefe5d0ca10de9f192c7a1bcc63701d67495f6182f198433c35"
+    },
+    "econ-audit": {
+      "source": "thinkingwithagents/skills",
+      "sourceType": "github",
+      "skillPath": "econ-audit/SKILL.md",
+      "computedHash": "9f6d8a8b29064689b9c741a1b35a93e27834ec711ef33a4408d595db1e2af940"
+    },
+    "find-data": {
+      "source": "thinkingwithagents/skills",
+      "sourceType": "github",
+      "skillPath": "find-data/SKILL.md",
+      "computedHash": "8024b09e12736e8e87e31c709f0fea03c9f1b2a5a6027b9bc3aa4f91ba07e9be"
+    },
+    "lit-review": {
+      "source": "thinkingwithagents/skills",
+      "sourceType": "github",
+      "skillPath": "lit-review/SKILL.md",
+      "computedHash": "7713cc6c05e1569567df9a36dee7f29eb904f14741fdaae749aa59d0686cafbf"
+    },
+    "pipeline-audit": {
+      "source": "thinkingwithagents/skills",
+      "sourceType": "github",
+      "skillPath": "pipeline-audit/SKILL.md",
+      "computedHash": "8945f74b6dcdd650712d580abd20741b0bc8498f1785dff8f6b79ab5246da643"
+    },
+    "research-brainstorm": {
+      "source": "thinkingwithagents/skills",
+      "sourceType": "github",
+      "skillPath": "research-brainstorm/SKILL.md",
+      "computedHash": "f5fc7c7bf79db09f839db10aa8133ffd90bc0d9c20cb27c48bbfa9e6ff491c86"
+    },
+    "review-paper": {
+      "source": "thinkingwithagents/skills",
+      "sourceType": "github",
+      "skillPath": "review-paper/SKILL.md",
+      "computedHash": "92a8737ef8dbf5f5bd74485bfb7e9f2a71efcd7729db3e54537995e63b178a01"
+    }
+  }
+}
