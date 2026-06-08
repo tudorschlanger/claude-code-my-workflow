@@ -1,5 +1,5 @@
 ---
-name: repo-structure-audit
+name: review-repo-structure
 description: |
   Deep consistency audit of the entire repository infrastructure.
   Launches 4 parallel specialist agents to find factual errors, code bugs,

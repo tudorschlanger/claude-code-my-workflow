@@ -1,5 +1,5 @@
 ---
-name: pedagogy-review
+name: review-slides-pedagogy
 description: Run holistic pedagogical review on lecture slides. Checks narrative arc, student prerequisites, worked examples, notation clarity, and deck pacing.
 argument-hint: "[TEX filename]"
 allowed-tools: ["Read", "Grep", "Glob", "Write", "Task"]

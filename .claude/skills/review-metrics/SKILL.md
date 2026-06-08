@@ -1,5 +1,5 @@
 ---
-name: econ-audit
+name: review-metrics
 description: Adversarial econometrics review — catches specification errors, clustering mistakes, bad controls, and silent analytical failures in Stata, R, or Python code
 ---
 

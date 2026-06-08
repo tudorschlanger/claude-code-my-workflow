@@ -1,5 +1,5 @@
 ---
-name: data-dictionary
+name: create-codebook
 description: Auto-generate comprehensive codebooks from Stata .dta files — variable lists, summary statistics, value labels, and missingness reports
 ---
 

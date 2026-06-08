@@ -1,5 +1,5 @@
 ---
-name: pipeline-audit
+name: review-data-pipeline
 description: Adversarial data pipeline review — audits variable construction, sample restrictions, and analytical decisions against pre-analysis plans
 ---
 
