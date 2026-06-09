@@ -1,6 +1,6 @@
 ---
 paths:
-  - "Slides/**/*.tex"
+  - "output/slides/**/*.tex"
   - "scripts/**/*.R"
 ---
 

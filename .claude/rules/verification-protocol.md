@@ -1,6 +1,6 @@
 ---
 paths:
-  - "Slides/**/*.tex"
+  - "output/slides/**/*.tex"
 ---
 
 # Task Completion Verification Protocol

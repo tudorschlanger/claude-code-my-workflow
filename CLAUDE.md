@@ -54,8 +54,8 @@ TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode
 
 ## Stata
 - Always run Stata to verify code and table output rather than generating blindly
-- Stata executable path: `/Applications/StataNow/StataMP.app/Contents/MacOS/stata-mp`
-- Run do-files with: `/Applications/StataNow/StataMP.app/Contents/MacOS/stata-mp -b do filename.do`
+- Stata executable path: `[PATH TO STATA - configure in .claude/settings.local.json]`
+- Run do-files with: `[STATA PATH] -b do filename.do`
 - Logs are written to the same directory as the do-file; always check the `.log` file for errors after running
 
 
@@ -99,27 +99,22 @@ TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode
 
 ---
 
-<!-- CUSTOMIZE: Replace the example entries below with your own
-     Beamer environments. These are examples from the original project
-     — delete them and add yours. -->
-
 ## Beamer Custom Environments
 
-| Environment       | Effect        | Use Case       |
-|-------------------|---------------|----------------|
-| `[your-env]`      | [Description] | [When to use]  |
-
-<!-- Example entries (delete and replace with yours):
-| `keybox` | Gold background box | Key points |
-| `highlightbox` | Gold left-accent box | Highlights |
-| `definitionbox[Title]` | Blue-bordered titled box | Formal definitions |
--->
+| Environment | Effect | Use Case |
+|---|---|---|
+| `questionbox` | Orange background box | Pose questions to the audience |
+| `answerbox` | Green border box | Highlight answers or solutions |
+| `insightbox` | Orange left-accent bar | Key insights and takeaways |
+| `definitionbox[Title]` | Blue bordered titled box | Formal definitions and theorems |
+| `methodbox` | Sky blue background box | Methodology or estimation approach |
+| `quotebox` | Purple left-accent bar | Quotes, citations, references |
 
 ---
 
 ## Current Project State
 
+<!-- Update this table as you add lectures/content. -->
+
 | Lecture | Beamer | Key Content |
 |---------|--------|-------------|
-| 1: [Topic] | `Lecture01_Topic.tex` | [Brief description] |
-| 2: [Topic] | `Lecture02_Topic.tex` | [Brief description] |
