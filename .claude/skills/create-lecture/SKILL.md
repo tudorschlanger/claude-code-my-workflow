@@ -21,11 +21,12 @@ Create a beautiful, pedagogically excellent Beamer lecture deck.
 3. Motivation before formalism — no exceptions
 4. Worked example within 2 slides of every definition
 5. Max 2 colored boxes per slide
-6. No `\pause` or overlay commands (check project rules)
+6. No overlay commands (check project rules)
 7. Transition slides at major conceptual pivots
 8. Thread at least 1 running empirical application throughout
 9. All citations verified against the bibliography
 10. **Work in batches of 5-10 slides** — share for feedback, don't bulk-dump
+
 
 ---
 
