@@ -15,12 +15,14 @@
 \usepackage[normalem]{ulem}
 
 % Math
-\usepackage{amsmath,amssymb,amsthm,eucal,bbold,bm}
+\usepackage{amsmath,amssymb,amsthm,eucal,bm}
+\usepackage{mathrsfs}
+\usepackage{dsfont}
 
 % Figures and tables
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage{array,tabularx,booktabs,subcaption}
+\usepackage{array,tabularx,booktabs,longtable,subcaption}
 \usepackage{pdflscape}
 \usepackage{siunitx}
 
@@ -148,27 +150,47 @@
 }
 
 % =============================================================================
-% Math Commands
+% Math Commands — Notation Legend
 % =============================================================================
 
-\newcommand{\E}{\mathrm{E}}
-\newcommand{\Var}{\mathrm{Var}}
-\newcommand{\Cov}{\mathrm{Cov}}
+% --- Spaces ---
 \newcommand{\R}{\mathbb{R}}
-\newcommand{\suminfty}[1]{\sum_{#1=0}^\infty}
+\newcommand{\Rplus}{\mathbb{R}_+}
+\newcommand{\Rk}{\mathbb{R}^k}
+
+% --- Probability ---
+\newcommand{\Prob}{\mathbb{P}}
+
+% --- Expectation and moments ---
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\corr}{corr}
+\newcommand{\BLP}{\mathscr{P}}
+
+% --- Convergence ---
+\DeclareMathOperator{\plim}{plim}
+\newcommand{\convp}{\xrightarrow{\quad p \quad}}
+\newcommand{\convd}{\xrightarrow{\quad d \quad}}
+
+% --- Likelihood and information ---
 \newcommand{\Lcal}{\mathcal{L}}
+\newcommand{\Infmat}{\mathscr{I}}
+
+% --- Relations and operators ---
+\newcommand{\defeq}{\overset{\text{def}}{=}}
+\newcommand{\ind}{\mathds{1}}
+\newcommand{\Normal}{\mathrm{N}}
+
+% --- Calculus shortcuts ---
+\newcommand{\suminfty}[1]{\sum_{#1=0}^\infty}
 \newcommand{\prtl}[2]{\frac{\partial #1}{\partial #2}}
 \renewcommand{\div}[2]{\frac{d #1}{d #2}}
 \newcommand{\suchthat}{\text{ s.t. }}
 \newcommand{\wrt}{\text{ w.r.t. }}
+
+% --- Text color shortcuts ---
 \newcommand{\red}[1]{\textcolor{vermillion}{#1}}
 \newcommand{\blue}[1]{\textcolor{blue}{#1}}
-
-% =============================================================================
-% Economics Shortcuts
-% =============================================================================
-
-\newcommand{\OC}{\text{Opportunity Cost}}
-\newcommand{\DWL}{\text{DWL}}
-\newcommand{\pmark}{\textcolor{resultgreen}{\checkmark}}
-\newcommand{\xmark}{\textcolor{darkred}{\texttimes}}
+\newcommand{\pmark}{\textcolor{green}{\checkmark}}
+\newcommand{\xmark}{\textcolor{vermillion}{\texttimes}}

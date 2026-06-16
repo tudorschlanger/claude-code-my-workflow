@@ -5,8 +5,8 @@
      Keep this file under ~150 lines — Claude loads it every session.
      See the guide at guide/workflow-guide.md for full documentation. -->
 
-**Project:** [YOUR PROJECT NAME]
-**Institution:** [YOUR INSTITUTION]
+**Project:** MAM Intro to Statistics
+**Institution:** Yale University, School of Management
 **Branch:** main
 
 ---
@@ -24,7 +24,7 @@
 ## Folder Structure
 
 ```
-[YOUR-PROJECT]/
+MAM-Intro-to-Statistics/
 ├── CLAUDE.MD                    # This file
 ├── .claude/                     # Rules, skills, agents, hooks
 ├── Bibliography_base.bib        # Centralized bibliography
@@ -116,5 +116,6 @@ TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode
 
 <!-- Update this table as you add lectures/content. -->
 
-| Lecture | Beamer | Key Content |
-|---------|--------|-------------|
+| Deck | Beamer | Key Content |
+|------|--------|-------------|
+| | | *(to be filled as decks are created)* |
