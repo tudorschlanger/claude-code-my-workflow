@@ -41,12 +41,11 @@ paths:
 Generated **only at merge time**. Use `templates/quality-report.md` for format.
 Save to `quality_reports/merges/YYYY-MM-DD_[branch-name].md`.
 
-## Tolerance Thresholds (Research)
-
-<!-- Customize for your domain -->
+## Tolerance Thresholds (Simulations)
 
 | Quantity | Tolerance | Rationale |
 |----------|-----------|-----------|
-| Point estimates | [e.g., 1e-6] | [Numerical precision] |
-| Standard errors | [e.g., 1e-4] | [MC variability] |
-| Coverage rates | [e.g., +/- 0.01] | [MC with B reps] |
+| Point estimates (sample mean) | ±0.05 | Teaching simulations use moderate n |
+| Standard errors | ±0.01 | Acceptable MC variability for demos |
+| Coverage rates (CI simulations) | ±0.02 | With B ≥ 1000 replications |
+| CLT convergence demos | Visual | Histogram shape matters more than exact values |

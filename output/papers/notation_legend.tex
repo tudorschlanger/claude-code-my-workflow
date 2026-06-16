@@ -1,0 +1,90 @@
+\documentclass[letterpaper,10pt]{article}
+\input{../../scripts/latex_preambles/header_doc}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries Notation Legend}
+\end{center}
+
+\vspace{1em}
+
+\renewcommand{\arraystretch}{1.35}
+\begin{longtable}{@{} l @{\hspace{2.5cm}} l @{}}
+
+% --- Objects ---
+$a$ & scalar \\
+$a$ or $\bm{a}$ & vector \\
+$\bm{A}$ & matrix \\
+$X$ & random variable or vector \\
+\addlinespace[0.5em]
+
+% --- Spaces ---
+$\R$ & real line \\
+$\Rplus$ & positive real line \\
+$\Rk$ & Euclidean $k$ space \\
+\addlinespace[0.5em]
+
+% --- Probability ---
+$\Prob[A]$ & probability \\
+$\Prob[A \mid B]$ & conditional probability \\
+$F(x)$ & cumulative distribution function \\
+$\pi(x)$ & probability mass function \\
+$f(x)$ & probability density function \\
+\addlinespace[0.5em]
+
+% --- Expectation and moments ---
+$\E[X]$ & mathematical expectation \\
+$\E[Y \mid X = x]$, $\E[Y \mid X]$ & conditional expectation \\
+$\var[X]$ & variance or covariance matrix \\
+$\var[Y \mid X = x]$, $\var[Y \mid X]$ & conditional variance \\
+$\cov(X, Y)$ & covariance \\
+$\BLP[Y \mid X = x]$, $\BLP[Y \mid X]$ & best linear predictor \\
+$\corr(X, Y)$ & correlation \\
+\addlinespace[0.5em]
+
+% --- Sample statistics ---
+$\overline{X}_n$ & sample mean \\
+$\hat{\sigma}^2$ & sample variance \\
+$s^2$ & bias-corrected sample variance \\
+$\hat{\theta}$ & estimator \\
+$s(\hat{\theta})$ & standard error of estimator \\
+\addlinespace[0.5em]
+
+% --- Convergence ---
+$\displaystyle\lim_{n \to \infty}$ & limit \\[0.8em]
+$\displaystyle\plim_{n \to \infty}$ & probability limit \\[0.8em]
+$\longrightarrow$ & convergence \\
+$\convp$ & convergence in probability \\
+$\convd$ & convergence in distribution \\
+\addlinespace[0.5em]
+
+% --- Likelihood and information ---
+$L_n(\theta)$ & likelihood function \\
+$\ell_n(\theta)$ & log-likelihood function \\
+$\Infmat_\theta$ & information matrix \\
+\addlinespace[0.5em]
+
+% --- Distributions ---
+$\Normal(0, 1)$ & standard normal distribution \\
+$\Normal(\mu, \sigma^2)$ & normal distribution with mean $\mu$ and variance $\sigma^2$ \\
+$\chi^2_k$ & chi-square distribution with $k$ degrees of freedom \\
+\addlinespace[0.5em]
+
+% --- Norms ---
+$\|\bm{a}\|$ & Euclidean norm \\
+$\|\bm{A}\|$ & matrix norm \\
+\addlinespace[0.5em]
+
+% --- Relations and operators ---
+$\defeq$ & definitional equality \\
+$\ind\{a\}$ & indicator function ($1$ if $a$ is true, else $0$) \\
+$\simeq$ & approximate equality \\
+$\sim$ & is distributed as \\
+$\log(x)$ & natural logarithm \\
+$\exp(x)$ & exponential function \\
+$\displaystyle\sum_{i=1}^{n}$ & summation from $i = 1$ to $n$ \\
+
+\end{longtable}
+
+\end{document}
