@@ -91,3 +91,9 @@ Remove all Quarto-related files, references, and infrastructure from the project
 ---
 **Context compaction (manual) at 18:05**
 Check git log and quality_reports/plans/ for current state.
+
+---
+**2026-06-16 update**
+- Added `scripts/theme.py` with `OKABE_ITO` dict (Python colorblind-friendly palette for figures)
+- Added `scripts/R/theme.R` with `OKABE_ITO` named vector (R equivalent)
+- Both mirror the LaTeX `\definecolor` definitions already in `header_slides.tex` and `header_doc.tex`
