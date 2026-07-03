@@ -106,9 +106,24 @@ For details on protecting credentials, excluding incompatible tools, and advance
 
 ## Using Claude Code in VS Code
 
-Claude Code has a [VS Code extension](https://code.claude.com/docs/en/ide-integrations) that runs inside the editor. This template includes a `.vscode/settings.json` that hides LaTeX build artifacts (`.aux`, `.bbl`, `.log`, `.nav`, `.synctex.gz`, etc.) from the file explorer so they don't clutter your sidebar.
+Claude Code has a [VS Code extension](https://code.claude.com/docs/en/ide-integrations) that runs inside the editor. This template includes a `.vscode/settings.json` that hides LaTeX build artifacts from the file explorer. If you use a different editor, run `make clean` to remove them manually.
 
-If you use a different editor, the artifacts are still ignored by git (via `.gitignore`) — they just won't be hidden from the file browser. Run `make clean` to remove them manually.
+### Extension Panel vs. Terminal CLI
+
+You can run Claude two ways inside VS Code. **Use the extension as your default** — the inline diffs and `@`-mentions are worth it. Fall back to the terminal CLI when you need full command access or piping.
+
+| | Terminal CLI | Extension Panel |
+|---|---|---|
+| **Open with** | `` Ctrl+` `` then `claude` | Spark icon or `Cmd+Esc` |
+| **Inline diffs** | Text diffs in terminal | Native VS Code side-by-side diff viewer |
+| **File references** | Type `@filename` | Select text + `Option+K` inserts file + line range |
+| **Plan review** | Text in terminal | Opens as editable markdown document |
+| **Error detection** | Claude reads files to find errors | Auto-reads VS Code's Problems panel (saves tokens) |
+| **All commands** | Full set | Partial subset |
+| **Multiple sessions** | Open more terminals | Open tabs/windows |
+| **Pipe data** | `cat error.log \| claude` | Not supported |
+
+Both share conversation history — start in one, resume in the other with `claude --resume`.
 
 ---
 
