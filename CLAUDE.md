@@ -21,6 +21,7 @@
 ## Core Principles
 
 - **Plan first** -- enter plan mode before non-trivial tasks; save plans to `quality_reports/plans/`
+- **When compacting** -- always preserve: list of modified files, current plan path, test/compile commands, and any open questions
 - **Verify after** -- compile/render and confirm output at the end of every task
 - **Single source of truth** -- Beamer `.tex` is authoritative
 - **Quality gates** -- nothing ships below 80/100

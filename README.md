@@ -321,6 +321,25 @@ Read on demand when creating session logs, quality reports, or specs.
 
 ---
 
+## Tips for Working with Claude Code
+
+| Command | What It Does |
+|---------|-------------|
+| `/btw` | Ask a side question without adding to context history — keeps your session clean |
+| `/rewind` or `Esc+Esc` | Restore conversation and code to any previous checkpoint |
+| `/compact Focus on X` | Manually compress context, keeping what you specify |
+| `/goal` | Set a condition Claude keeps working toward until it holds |
+| `/rename` | Name your session (e.g., `data-cleaning`) so you can resume it later |
+| `/clear` | Reset context between unrelated tasks — do this often |
+| `claude --continue` | Resume your most recent session |
+| `claude --resume` | Pick a session to resume from a list |
+| `claude -p "prompt"` | Run Claude non-interactively (for scripts, CI, batch jobs) |
+| `/plugin` | Browse and install community plugins (e.g., code intelligence for typed languages) |
+
+**When Claude goes off track:** correct early. After two failed corrections, `/clear` and write a better prompt incorporating what you learned. A clean session with a better prompt beats a long session with accumulated corrections.
+
+---
+
 ## Adapting for Your Field
 
 1. **Fill in the knowledge base** (`.claude/rules/knowledge-base-template.md`) with your notation, applications, and anti-patterns

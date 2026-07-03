@@ -184,8 +184,44 @@ class IssueDetector:
             return False, "Rscript not installed"
 
     @staticmethod
+    def check_python_syntax(filepath: Path) -> Tuple[bool, str]:
+        """Check Python script for syntax errors."""
+        try:
+            result = subprocess.run(
+                ['python3', '-c', f'import ast; ast.parse(open("{filepath}").read())'],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            if result.returncode != 0:
+                return False, result.stderr
+            return True, ""
+        except subprocess.TimeoutExpired:
+            return False, "Syntax check timeout"
+        except FileNotFoundError:
+            return False, "python3 not found"
+
+    @staticmethod
+    def check_stata_syntax(filepath: Path) -> List[Dict]:
+        """Check Stata do-file for common issues (static analysis only)."""
+        issues = []
+        content = filepath.read_text(encoding='utf-8', errors='replace')
+        lines = content.split('\n')
+
+        has_clear = any('clear all' in line or 'clear' == line.strip() for line in lines)
+        if not has_clear:
+            issues.append({'line': 1, 'description': 'Missing `clear all` at top of do-file'})
+
+        has_random = any(cmd in content for cmd in ['bootstrap', 'simulate', 'bsample', 'sample'])
+        has_seed = 'set seed' in content
+        if has_random and not has_seed:
+            issues.append({'line': 1, 'description': 'Missing `set seed` before randomization commands'})
+
+        return issues
+
+    @staticmethod
     def check_hardcoded_paths(content: str) -> List[int]:
-        """Detect absolute paths in R scripts."""
+        """Detect absolute paths in scripts."""
         issues = []
         lines = content.split('\n')
 
@@ -400,6 +436,78 @@ class QualityScorer:
         self.score = max(0, self.score)
         return self._generate_report()
 
+    def score_python(self) -> Dict:
+        """Score Python script quality."""
+        content = self.filepath.read_text(encoding='utf-8')
+
+        # Check syntax
+        is_valid, error = IssueDetector.check_python_syntax(self.filepath)
+        if not is_valid:
+            self.auto_fail = True
+            self.issues['critical'].append({
+                'type': 'syntax_error',
+                'description': 'Python syntax error',
+                'details': error[:200],
+                'points': 100
+            })
+            self.score = 0
+            return self._generate_report()
+
+        # Check hardcoded paths
+        path_issues = IssueDetector.check_hardcoded_paths(content)
+        for line in path_issues:
+            self.issues['critical'].append({
+                'type': 'hardcoded_path',
+                'description': f'Hardcoded absolute path at line {line}',
+                'details': 'Use pathlib.Path or scripts.src.paths module',
+                'points': 20
+            })
+            self.score -= 20
+
+        # Check for random seed if randomness detected
+        has_random = any(fn in content for fn in ['random.', 'np.random.', 'torch.manual_seed'])
+        has_seed = any(s in content for s in ['random.seed', 'np.random.seed', 'seed('])
+        if has_random and not has_seed:
+            self.issues['major'].append({
+                'type': 'missing_seed',
+                'description': 'Missing random seed for reproducibility',
+                'details': 'Add np.random.seed() or random.seed() at top of script',
+                'points': 10
+            })
+            self.score -= 10
+
+        self.score = max(0, self.score)
+        return self._generate_report()
+
+    def score_stata(self) -> Dict:
+        """Score Stata do-file quality."""
+        content = self.filepath.read_text(encoding='utf-8', errors='replace')
+
+        # Static analysis checks
+        stata_issues = IssueDetector.check_stata_syntax(self.filepath)
+        for issue in stata_issues:
+            self.issues['major'].append({
+                'type': 'stata_issue',
+                'description': issue['description'],
+                'details': 'See stata-reviewer agent for full review',
+                'points': 10
+            })
+            self.score -= 10
+
+        # Check hardcoded paths
+        path_issues = IssueDetector.check_hardcoded_paths(content)
+        for line in path_issues:
+            self.issues['critical'].append({
+                'type': 'hardcoded_path',
+                'description': f'Hardcoded absolute path at line {line}',
+                'details': 'Use relative paths or global macros',
+                'points': 20
+            })
+            self.score -= 20
+
+        self.score = max(0, self.score)
+        return self._generate_report()
+
     def _generate_report(self) -> Dict:
         """Generate quality score report."""
         if self.auto_fail:
@@ -578,6 +686,10 @@ Exit Codes:
                 report = scorer.score_r_script()
             elif filepath.suffix == '.tex':
                 report = scorer.score_beamer()
+            elif filepath.suffix == '.py':
+                report = scorer.score_python()
+            elif filepath.suffix == '.do':
+                report = scorer.score_stata()
             else:
                 print(f"Error: Unsupported file type: {filepath.suffix}")
                 continue
