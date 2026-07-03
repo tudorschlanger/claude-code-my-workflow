@@ -72,48 +72,22 @@ Claude reads all configuration files, adapts to your project, and enters contrac
 
 ---
 
-## How It Works
+## Tips for Working with Claude Code
 
-### Contractor Mode
+| Command | What It Does |
+|---------|-------------|
+| `/btw` | Ask a side question without adding to context history — keeps your session clean |
+| `/rewind` or `Esc+Esc` | Restore conversation and code to any previous checkpoint |
+| `/compact Focus on X` | Manually compress context, keeping what you specify |
+| `/goal` | Set a condition Claude keeps working toward until it holds |
+| `/rename` | Name your session (e.g., `data-cleaning`) so you can resume it later |
+| `/clear` | Reset context between unrelated tasks — do this often |
+| `claude --continue` | Resume your most recent session |
+| `claude --resume` | Pick a session to resume from a list |
+| `claude -p "prompt"` | Run Claude non-interactively (for scripts, CI, batch jobs) |
+| `/plugin` | Browse and install community plugins (e.g., code intelligence for typed languages) |
 
-You describe a task. For complex or ambiguous requests, Claude first creates a requirements specification with MUST/SHOULD/MAY priorities and clarity status (CLEAR/ASSUMED/BLOCKED). You approve the spec, then Claude plans the approach, implements it, runs specialized review agents, fixes issues, re-verifies, and scores against quality gates — all autonomously. You see a summary when the work meets quality standards.
-
-### The Core Loop
-
-```
-Your instruction
-    |
-[PLAN] (if multi-file or ambiguous) --> Your approval
-    |
-[EXECUTE] Implement --> Verify (compile/run) --> Review (agents)
-    |
-[REPORT] Summary + quality score
-    |
-Score >= 80? --> Commit.  Score < 80? --> Fix --> Re-verify (max 5 rounds)
-```
-
-### Specialized Agents
-
-7 focused agents each check one dimension:
-
-- **proofreader** — grammar, typos, consistency
-- **slide-auditor** — visual layout, overflow, spacing
-- **pedagogy-reviewer** — narrative arc, pacing, notation clarity
-- **domain-reviewer** — field-specific correctness (template — customize for your field)
-- **r-reviewer** — R code quality, reproducibility
-- **tikz-reviewer** — TikZ diagram visual critique
-- **verifier** — end-to-end task completion verification
-
-### Quality Gates
-
-Every file gets a score (0-100). Scores below threshold block the action:
-- **80** — commit threshold
-- **90** — PR threshold
-- **95** — excellence (aspirational)
-
-### Context Survival
-
-Plans, specifications, and session logs survive auto-compression and session boundaries. The PreCompact hook saves a context snapshot before Claude's auto-compression triggers. MEMORY.md accumulates learning across sessions.
+**When Claude goes off track:** correct early. After two failed corrections, `/clear` and write a better prompt incorporating what you learned. A clean session with a better prompt beats a long session with accumulated corrections.
 
 ---
 
@@ -205,6 +179,13 @@ your-project/
 ---
 
 ## What's Included
+
+Claude Code can be extended with four types of components:
+
+- **Agents** — specialized reviewers that Claude spawns as sub-tasks. Each runs in its own context, checks one dimension (grammar, layout, econometrics, etc.), and returns a report. They never edit files directly.
+- **Skills** — slash commands (`/commit`, `/lit-review`, `/format-tables`) that teach Claude reusable workflows. Loaded on demand when you invoke them — zero context cost otherwise.
+- **Rules** — persistent instructions Claude follows automatically. Always-on rules load every session; path-scoped rules load only when Claude touches matching files.
+- **Hooks** — shell scripts that run at specific lifecycle points (before compaction, after edits, on stop). Unlike rules which are advisory, hooks are deterministic — they always execute.
 
 ### Agents (`.claude/agents/`)
 
@@ -326,53 +307,36 @@ Read on demand when creating session logs, quality reports, or specs.
 
 ---
 
-## Tips for Working with Claude Code
+## Plugins
 
-| Command | What It Does |
-|---------|-------------|
-| `/btw` | Ask a side question without adding to context history — keeps your session clean |
-| `/rewind` or `Esc+Esc` | Restore conversation and code to any previous checkpoint |
-| `/compact Focus on X` | Manually compress context, keeping what you specify |
-| `/goal` | Set a condition Claude keeps working toward until it holds |
-| `/rename` | Name your session (e.g., `data-cleaning`) so you can resume it later |
-| `/clear` | Reset context between unrelated tasks — do this often |
-| `claude --continue` | Resume your most recent session |
-| `claude --resume` | Pick a session to resume from a list |
-| `claude -p "prompt"` | Run Claude non-interactively (for scripts, CI, batch jobs) |
-| `/plugin` | Browse and install community plugins (e.g., code intelligence for typed languages) |
+Claude Code supports **plugins** — installable packages that add skills, agents, hooks, and tool integrations. They're useful for extending Claude's capabilities beyond what this template provides.
 
-**When Claude goes off track:** correct early. After two failed corrections, `/clear` and write a better prompt incorporating what you learned. A clean session with a better prompt beats a long session with accumulated corrections.
+**How to use them:**
+- Run `/plugin` to browse and install from the official and community marketplaces
+- Plugins are namespaced (e.g., `/my-plugin:skill-name`) to avoid conflicts
+- Uninstall anytime with `/plugin uninstall <name>`
+
+**Recommended plugins:**
+- **Code intelligence** (TypeScript, Python, Rust) — gives Claude precise symbol navigation and automatic error detection after edits. Run `/plugin` and search for your language.
+- **Community marketplace** — add it with `/plugin marketplace add anthropics/claude-plugins-community` to access third-party plugins
+
+**When to create your own:** if you develop a reusable workflow in `.claude/skills/`, you can package it as a plugin and share it with collaborators or the community. See the [Plugins documentation](https://code.claude.com/docs/en/plugins) for details.
 
 ---
 
-## Adapting for Your Field
+## Resources
 
-1. **Fill in the knowledge base** (`.claude/rules/knowledge-base-template.md`) with your notation, applications, and anti-patterns
-2. **Customize the domain reviewer** (`.claude/agents/domain-reviewer.md`) with review lenses specific to your field
-3. **Add field-specific R pitfalls** to `.claude/rules/r-code-conventions.md`
-4. **Set your non-negotiables and preferences** in the `## Workflow` section of `CLAUDE.md`
-5. **Update LaTeX preambles** (`drafts/latex_files/`) with your institutional theme
+**Official documentation:**
+- [Claude Code Documentation](https://code.claude.com/docs/en/overview)
+- [Writing a Good CLAUDE.md](https://code.claude.com/docs/en/memory) — project memory guidance
+- [Best Practices](https://code.claude.com/docs/en/best-practices) — tips for getting the most out of Claude Code
 
----
-
-## Community & Extensions
-
-As of 2026, **15+ research groups** across economics, energy, political science, and engineering have forked and adapted this workflow. The infrastructure transfers without modification.
-
-**Extended workflows:**
-
+**Community workflows:**
 - **[clo-author](https://github.com/hsantanna88/clo-author)** by Hugo Sant'Anna (UAB) — Paper-centric research workflows with 17 specialized agents, simulated blind peer review, AEA replication compliance
 - **[claudeblattman](https://github.com/chrisblattman/claudeblattman)** by Chris Blattman (U Chicago) — Comprehensive guide for non-technical academics: executive assistant workflows, proposal writing, agent debates
 - **[MixtapeTools](https://github.com/scunning1975/MixtapeTools)** by Scott Cunningham (Baylor) — The Rhetoric of Decks: philosophy and practice of beautiful academic presentations
 - **[autoresearch](https://github.com/karpathy/autoresearch)** by Andrej Karpathy — Constraint-based autonomous research with `program.md` as constitutional document
 - **[ClaudeCodeTools](https://github.com/aspi6246/ClaudeCodeTools)** — "The Editor" persona: seven-audit sequential paper review protocol
-
----
-
-## Additional Resources
-
-- [Claude Code Documentation](https://code.claude.com/docs/en/overview)
-- [Writing a Good CLAUDE.md](https://code.claude.com/docs/en/memory) — official guidance on project memory
 
 ---
 
