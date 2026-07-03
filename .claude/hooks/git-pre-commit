@@ -1,7 +1,51 @@
 #!/bin/bash
-# Git pre-commit hook: runs quality_score.py on staged .tex/.R/.py/.do files
+# Git pre-commit hook: quality gate + data protection
 # Install: cp .claude/hooks/git-pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 # Or run: make install-hooks
+
+# =============================================================================
+# PART 1: Data Protection — block large files, binary data, and PDFs
+# =============================================================================
+
+MAX_SIZE_KB=5120  # 5 MB
+
+# Blocked extensions (binary data formats and PDFs)
+BLOCKED_EXT='\.dta$|\.sav$|\.parquet$|\.feather$|\.arrow$|\.rds$|\.RData$|\.Rdata$|\.xlsx$|\.xls$|\.pdf$|\.zip$|\.gz$|\.tar$|\.7z$|\.h5$|\.hdf5$|\.sqlite$|\.db$'
+
+ALL_STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
+BLOCKED=0
+
+for file in $ALL_STAGED; do
+  if [ ! -f "$file" ]; then
+    continue
+  fi
+
+  # Check blocked extensions
+  if echo "$file" | grep -qE "$BLOCKED_EXT"; then
+    echo "BLOCKED: $file — binary/PDF files cannot be committed"
+    echo "  Move large data to RESEARCH_DATA (see scripts/src/paths.py)"
+    BLOCKED=1
+    continue
+  fi
+
+  # Check file size
+  SIZE_KB=$(du -k "$file" | cut -f1)
+  if [ "$SIZE_KB" -gt "$MAX_SIZE_KB" ]; then
+    echo "BLOCKED: $file — ${SIZE_KB}KB exceeds ${MAX_SIZE_KB}KB limit"
+    echo "  Move large data to RESEARCH_DATA (see scripts/src/paths.py)"
+    BLOCKED=1
+  fi
+done
+
+if [ "$BLOCKED" -eq 1 ]; then
+  echo ""
+  echo "Commit blocked by data protection. Use --no-verify to override (not recommended)."
+  exit 1
+fi
+
+# =============================================================================
+# PART 2: Quality Gate — score staged .tex/.R/.py/.do files
+# =============================================================================
 
 QUALITY_SCRIPT="scripts/src/Python/quality_score.py"
 THRESHOLD=80
@@ -13,7 +57,7 @@ SKIP_FILES=(
 )
 
 # Get staged files matching scorable extensions
-STAGED=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(tex|R|py|do)$')
+STAGED=$(echo "$ALL_STAGED" | grep -E '\.(tex|R|py|do)$')
 
 if [ -z "$STAGED" ]; then
   exit 0

@@ -499,6 +499,24 @@ def install_git_hooks():
     print("  Installed git hooks (pre-commit quality gate + conventional commits)")
 
 
+def exclude_git_from_dropbox():
+    """On macOS, mark .git/ as ignored by Dropbox to prevent sync conflicts."""
+    import platform
+    if platform.system() != "Darwin":
+        return
+    if not os.path.isdir(".git"):
+        return
+    try:
+        result = subprocess.run(
+            ["xattr", "-w", "com.dropbox.ignored", "1", ".git"],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            print("  Excluded .git/ from Dropbox sync (prevents corruption)")
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        pass
+
+
 def update_gitignore(entries):
     """Add entries to .gitignore if not already present."""
     path = ".gitignore"
@@ -637,6 +655,7 @@ def main():
     fill_knowledge_base(project_name)
     update_settings_local(tool_paths)
     install_git_hooks()
+    exclude_git_from_dropbox()
 
     print()
     print("Done! Next steps:")
