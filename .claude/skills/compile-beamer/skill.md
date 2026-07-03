@@ -16,7 +16,7 @@ Compile a Beamer slide deck using XeLaTeX with full citation resolution.
 ```bash
 cd drafts/slides
 TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode $ARGUMENTS.tex
-BIBINPUTS=../latex_files:$BIBINPUTS bibtex $ARGUMENTS
+BIBINPUTS=../latex_files:$BIBINPUTS BSTINPUTS=../latex_files:$BSTINPUTS bibtex $ARGUMENTS
 TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode $ARGUMENTS.tex
 TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode $ARGUMENTS.tex
 ```
@@ -24,7 +24,7 @@ TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode $ARGUMENTS.
 **Alternative (latexmk):**
 ```bash
 cd drafts/slides
-TEXINPUTS=../latex_files:$TEXINPUTS BIBINPUTS=../latex_files:$BIBINPUTS latexmk -xelatex -interaction=nonstopmode $ARGUMENTS.tex
+TEXINPUTS=../latex_files:$TEXINPUTS BIBINPUTS=../latex_files:$BIBINPUTS BSTINPUTS=../latex_files:$BSTINPUTS latexmk -xelatex -interaction=nonstopmode $ARGUMENTS.tex
 ```
 
 2. **Check for warnings:**

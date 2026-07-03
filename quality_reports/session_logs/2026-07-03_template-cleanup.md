@@ -108,6 +108,20 @@ Clean up the existing repo into a distributable template for economists new to C
 | init_project.py | Now installs git hooks automatically during make init | Done |
 | init_project.py | Enables sandbox by default, denyWrite for data/raw/, excludes gh from sandbox | Done |
 
+## Data Protocol & Beamer Test (later in session)
+
+| File/Area | Change | Quality |
+|-----------|--------|---------|
+| paths.py | Two-tier data model: RESEARCH_DATA (external) + RAW (small, project-specific) | Done |
+| data/raw/README.md | Classification requirement (public/proprietary) for every dataset | Done |
+| confidential-data.md | Rewritten as Data Use Protocol with four hard rules | Done |
+| git-pre-commit | Blocks binary formats, PDFs, archives, and files > 5 MB | Done |
+| init_project.py | Excludes .git/ from Dropbox sync on macOS (xattr) | Done |
+| header_slides.tex | Added Tables section (makecell, esttab), References section (natbib/aea, citeay) | Done |
+| references.bib | Added test entries (Angrist 1996, Callaway 2021) | Done |
+| test_slides.tex | Mock Beamer deck testing all box environments, citations, tables | Done |
+| CLAUDE.md, Makefile, compile-beamer | Fixed: added BSTINPUTS so bibtex finds aea.bst | Done |
+
 ## All Commits This Session
 
 | Commit | Description |
@@ -119,3 +133,5 @@ Clean up the existing repo into a distributable template for economists new to C
 | `8c5f205` | feat: add PR workflow with branching strategy |
 | `3cb54a4` | docs: update session log with full session summary |
 | `c2e7e55` | docs: restructure README — add tips, plugins, streamline sections |
+| `2de7633` | feat: enable sandbox by default, protect raw data, add privacy warnings |
+| `0a6107b` | feat(data): add data use protocol with two-tier model and commit protection |

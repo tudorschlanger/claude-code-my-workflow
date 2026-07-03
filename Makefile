@@ -15,7 +15,7 @@ BIBTEX   := $(call _read_setting,BIBTEX_PATH,bibtex)
 PDFLATEX := $(call _read_setting,PDFLATEX_PATH,pdflatex)
 
 TEX_INPUTS := TEXINPUTS=../latex_files:$$TEXINPUTS
-BIB_INPUTS := BIBINPUTS=../latex_files:$$BIBINPUTS
+BIB_INPUTS := BIBINPUTS=../latex_files:$$BIBINPUTS BSTINPUTS=../latex_files:$$BSTINPUTS
 
 .PHONY: compile quality clean verify init install-hooks help
 

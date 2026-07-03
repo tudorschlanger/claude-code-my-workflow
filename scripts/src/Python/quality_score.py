@@ -396,17 +396,17 @@ class QualityScorer:
 
         # Check for undefined/broken citations (\cite, \citep, \citet patterns)
         # Search for bib file: sibling latex_files/ dir, same dir, or project root
-        bib_file = self.filepath.parent.parent / 'latex_files' / 'Bibliography_base.bib'
+        bib_file = self.filepath.parent.parent / 'latex_files' / 'references.bib'
         if not bib_file.exists():
-            bib_file = self.filepath.parent / 'Bibliography_base.bib'
+            bib_file = self.filepath.parent / 'references.bib'
         if not bib_file.exists():
-            bib_file = Path.cwd() / 'drafts' / 'latex_files' / 'Bibliography_base.bib'
+            bib_file = Path.cwd() / 'drafts' / 'latex_files' / 'references.bib'
         broken_citations = IssueDetector.check_broken_citations(content, bib_file)
         for key in broken_citations:
             self.issues['critical'].append({
                 'type': 'undefined_citation',
                 'description': f'Citation key not in bibliography: {key}',
-                'details': 'Add to Bibliography_base.bib or fix key',
+                'details': 'Add to references.bib or fix key',
                 'points': 15
             })
             self.score -= 15

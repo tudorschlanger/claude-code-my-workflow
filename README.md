@@ -104,6 +104,14 @@ For details on protecting credentials, excluding incompatible tools, and advance
 
 ---
 
+## Using Claude Code in VS Code
+
+Claude Code has a [VS Code extension](https://code.claude.com/docs/en/ide-integrations) that runs inside the editor. This template includes a `.vscode/settings.json` that hides LaTeX build artifacts (`.aux`, `.bbl`, `.log`, `.nav`, `.synctex.gz`, etc.) from the file explorer so they don't clutter your sidebar.
+
+If you use a different editor, the artifacts are still ignored by git (via `.gitignore`) — they just won't be hidden from the file browser. Run `make clean` to remove them manually.
+
+---
+
 ## Workflows
 
 ### Research Workflow

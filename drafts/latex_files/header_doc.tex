@@ -1,10 +1,10 @@
 % =============================================================================
-% [YOUR PROJECT NAME] — Document Preamble
+% Pathways: Economics & Finance Workshop — Document Preamble
 % =============================================================================
-% Usage: Each paper/document .tex file should start with:
+% Usage: Each handout/activity .tex file should start with:
 %   \documentclass[letterpaper,10pt]{article}
-%   \input{header_doc}
-% Compile: cd drafts/documents && TEXINPUTS=../latex_files:$TEXINPUTS pdflatex file.tex
+%   \input{../../codes/Preambles/header_doc}
+% Compile: cd output/Handouts && TEXINPUTS=../../codes/Preambles:$TEXINPUTS xelatex file.tex
 % =============================================================================
 
 % ---------- Packages ----------
@@ -15,14 +15,12 @@
 \usepackage[normalem]{ulem}
 
 % Math
-\usepackage{amsmath,amssymb,amsthm,eucal,bm}
-\usepackage{mathrsfs}
-\usepackage{dsfont}
+\usepackage{amsmath,amssymb,amsthm,eucal,bbold,bm}
 
 % Figures and tables
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage{array,tabularx,booktabs,longtable,subcaption}
+\usepackage{array,tabularx,booktabs,subcaption}
 \usepackage{pdflscape}
 \usepackage{siunitx}
 
@@ -150,47 +148,27 @@
 }
 
 % =============================================================================
-% Math Commands — Notation Legend
+% Math Commands
 % =============================================================================
 
-% --- Spaces ---
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
 \newcommand{\R}{\mathbb{R}}
-\newcommand{\Rplus}{\mathbb{R}_+}
-\newcommand{\Rk}{\mathbb{R}^k}
-
-% --- Probability ---
-\newcommand{\Prob}{\mathbb{P}}
-
-% --- Expectation and moments ---
-\newcommand{\E}{\mathbb{E}}
-\DeclareMathOperator{\var}{var}
-\DeclareMathOperator{\cov}{cov}
-\DeclareMathOperator{\corr}{corr}
-\newcommand{\BLP}{\mathscr{P}}
-
-% --- Convergence ---
-\DeclareMathOperator{\plim}{plim}
-\newcommand{\convp}{\xrightarrow{\quad p \quad}}
-\newcommand{\convd}{\xrightarrow{\quad d \quad}}
-
-% --- Likelihood and information ---
-\newcommand{\Lcal}{\mathcal{L}}
-\newcommand{\Infmat}{\mathscr{I}}
-
-% --- Relations and operators ---
-\newcommand{\defeq}{\overset{\text{def}}{=}}
-\newcommand{\ind}{\mathds{1}}
-\newcommand{\Normal}{\mathrm{N}}
-
-% --- Calculus shortcuts ---
 \newcommand{\suminfty}[1]{\sum_{#1=0}^\infty}
+\newcommand{\Lcal}{\mathcal{L}}
 \newcommand{\prtl}[2]{\frac{\partial #1}{\partial #2}}
 \renewcommand{\div}[2]{\frac{d #1}{d #2}}
 \newcommand{\suchthat}{\text{ s.t. }}
 \newcommand{\wrt}{\text{ w.r.t. }}
-
-% --- Text color shortcuts ---
 \newcommand{\red}[1]{\textcolor{vermillion}{#1}}
 \newcommand{\blue}[1]{\textcolor{blue}{#1}}
-\newcommand{\pmark}{\textcolor{green}{\checkmark}}
-\newcommand{\xmark}{\textcolor{vermillion}{\texttimes}}
+
+% =============================================================================
+% Economics Shortcuts
+% =============================================================================
+
+\newcommand{\OC}{\text{Opportunity Cost}}
+\newcommand{\DWL}{\text{DWL}}
+\newcommand{\pmark}{\textcolor{resultgreen}{\checkmark}}
+\newcommand{\xmark}{\textcolor{darkred}{\texttimes}}

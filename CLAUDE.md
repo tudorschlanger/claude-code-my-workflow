@@ -59,7 +59,7 @@
 ```bash
 # LaTeX (3-pass, XeLaTeX only) — run from the directory containing your .tex file
 cd drafts/slides && TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-BIBINPUTS=../latex_files:$BIBINPUTS bibtex file
+BIBINPUTS=../latex_files:$BIBINPUTS BSTINPUTS=../latex_files:$BSTINPUTS bibtex file
 TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
 TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
 ```

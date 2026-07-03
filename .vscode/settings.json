@@ -1,0 +1,19 @@
+{
+  "files.exclude": {
+    "**/*.aux": true,
+    "**/*.bbl": true,
+    "**/*.blg": true,
+    "**/*.fdb_latexmk": true,
+    "**/*.fls": true,
+    "**/*.log": true,
+    "**/*.nav": true,
+    "**/*.out": true,
+    "**/*.snm": true,
+    "**/*.toc": true,
+    "**/*.vrb": true,
+    "**/*.synctex.gz": true,
+    "**/*.run.xml": true,
+    "**/*-blx.bib": true,
+    "**/.DS_Store": true
+  }
+}
