@@ -157,7 +157,7 @@ your-project/
 │
 ├── .claude/                     # Claude Code infrastructure
 │   ├── settings.json            # Permissions + hooks
-│   ├── agents/                  # 7 review agents
+│   ├── agents/                  # 9 review agents
 │   ├── rules/                   # 19 workflow rules
 │   ├── skills/                  # 28 skills
 │   └── hooks/                   # 7 lifecycle hooks
@@ -210,6 +210,8 @@ your-project/
 | `pedagogy-reviewer` | 13-pattern pedagogical review (narrative arc, notation, pacing) |
 | `r-reviewer` | R code quality, reproducibility, and domain correctness |
 | `tikz-reviewer` | TikZ diagram visual critique |
+| `stata-reviewer` | Stata do-file quality, reproducibility, econometric specification |
+| `python-reviewer` | Python script quality, data pipeline correctness, figure standards |
 | `verifier` | End-to-end task completion verification |
 | `domain-reviewer` | **Template** for your field-specific substance reviewer |
 

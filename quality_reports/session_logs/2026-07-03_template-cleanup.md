@@ -46,11 +46,36 @@ Clean up the existing repo into a distributable template for economists new to C
 - Grep for old paths (scripts/latex_preambles, output/slides, Slides/, Preambles/) - zero hits outside plan file
 - Component counts: 28 skills, 19 rules, 7 agents, 7 hooks, 7 templates - all match README
 
-## Open Questions
+## Additional Changes (after initial completion)
 
-- None blocking
+| File/Area | Change | Quality |
+|-----------|--------|---------|
+| init_project.py | Full rewrite (~400 lines): tool detection, conda/renv setup, path saving, placeholder filling | Done |
+| Makefile | Added PYTHON, RSCRIPT, XELATEX, BIBTEX vars from settings.local.json; use in compile target | Done |
+| quality_score.py | Added `_get_r_path()` to read R_PATH from settings.local.json | Done |
+| README.md | Added macOS platform note, full prerequisites table (Node, Git, MacTeX, Conda, R, Stata) | Done |
+| README.md | Updated Quick Start: "Use this template" + manual clone options, expanded `make init` description | Done |
+| WORKFLOW_QUICK_REF.md | **Deleted** — unique content (ask-vs-execute, preferences) merged into CLAUDE.md `## Workflow` | Done |
+| meta-governance.md | Trimmed 252 → 46 lines (kept generic-vs-specific framework, removed dogfooding/examples) | Done |
+| plan-first-workflow.md | Trimmed 84 → 39 lines (removed context mgmt section, handled by hooks) | Done |
+| MEMORY.md | Trimmed 73 → 34 lines (entries condensed to summaries, no rule reproduction) | Done |
+| README.md | Added "How Claude Uses These Files" section explaining 5-tier loading hierarchy | Done |
+| CLAUDE.md | Added comment block documenting file roles; added `## Workflow` section | Done |
+| LICENSE | Dual copyright: Pedro H. C. Sant'Anna + Tudor Schlanger | Done |
+| review-paper, Bibliography_base.bib | Stripped all Quarto/.qmd references | Done |
+| README.md | Removed origin story paragraph | Done |
+| GitHub repo | Marked as template repository | Done |
 
-## Next Steps
+## Final Verification
 
-- Commit the changes
-- Test end-to-end: fork, `make init`, start Claude, create a lecture
+- Always-on context: 771 → 356 lines (54% reduction, zero duplication)
+- `make help` — PASS
+- `python3 init_project.py --non-interactive` — PASS, all placeholders filled
+- `paths.py` ROOT resolution — PASS
+- Grep for old paths (Quarto, Slides/, Preambles/, output/slides) — zero hits
+- Repo marked as GitHub template — confirmed
+
+## Committed & Pushed
+
+- Commit `a5ab470`: 74 files changed, 1,843 insertions, 66,995 deletions
+- Pushed to `main` on GitHub
