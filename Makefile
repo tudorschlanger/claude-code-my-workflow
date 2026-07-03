@@ -1,45 +1,54 @@
 # Makefile for Claude Code Academic Workflow
-# Usage: make compile FILE=output/slides/Lecture01.tex
+# Usage: make compile FILE=drafts/slides/Lecture01.tex
 
 # Default values (override with: make compile FILE=path/to/file.tex)
 FILE ?=
-QUALITY_SCRIPT := scripts/quality_score.py
-TEX_INPUTS := TEXINPUTS=../scripts/latex_preambles:$$TEXINPUTS
-BIB_INPUTS := BIBINPUTS=..:$$BIBINPUTS
-STATA := $(shell python3 -c "import json; d=json.load(open('.claude/settings.local.json')); print(d.get('env',{}).get('STATA_PATH','stata-mp'))" 2>/dev/null || echo stata-mp)
+QUALITY_SCRIPT := scripts/src/Python/quality_score.py
+
+# Tool paths from .claude/settings.local.json (with fallback defaults)
+_read_setting = $(shell python3 -c "import json; print(json.load(open('.claude/settings.local.json')).get('env',{}).get('$(1)','$(2)'))" 2>/dev/null || echo $(2))
+PYTHON   := $(call _read_setting,PYTHON_PATH,python3)
+RSCRIPT  := $(call _read_setting,R_PATH,Rscript)
+STATA    := $(call _read_setting,STATA_PATH,stata-mp)
+XELATEX  := $(call _read_setting,XELATEX_PATH,xelatex)
+BIBTEX   := $(call _read_setting,BIBTEX_PATH,bibtex)
+PDFLATEX := $(call _read_setting,PDFLATEX_PATH,pdflatex)
+
+TEX_INPUTS := TEXINPUTS=../latex_files:$$TEXINPUTS
+BIB_INPUTS := BIBINPUTS=../latex_files:$$BIBINPUTS
 
 .PHONY: compile quality clean verify init help
 
 help:
 	@echo "Available targets:"
-	@echo "  make compile FILE=output/slides/Lecture01.tex   Compile Beamer slides (3-pass XeLaTeX + bibtex)"
-	@echo "  make quality FILE=output/slides/Lecture01.tex     Run quality scoring on a file"
-	@echo "  make verify FILE=output/slides/Lecture01.tex      Compile + quality check"
-	@echo "  make clean                                        Remove LaTeX build artifacts"
-	@echo "  make init                                          Run project initialization script"
-	@echo "  make stata FILE=scripts/do_file.do                Run a Stata do-file"
+	@echo "  make compile FILE=drafts/slides/Lecture01.tex    Compile Beamer slides (3-pass XeLaTeX + bibtex)"
+	@echo "  make quality FILE=drafts/slides/Lecture01.tex   Run quality scoring on a file"
+	@echo "  make verify FILE=drafts/slides/Lecture01.tex    Compile + quality check"
+	@echo "  make clean                                      Remove LaTeX build artifacts"
+	@echo "  make init                                       Run project initialization script"
+	@echo "  make stata FILE=scripts/src/Stata/analysis.do   Run a Stata do-file"
 
 # Compile Beamer slides (3-pass XeLaTeX + bibtex)
 compile:
-	@if [ -z "$(FILE)" ]; then echo "Error: FILE is required. Usage: make compile FILE=output/slides/Lecture01.tex"; exit 1; fi
+	@if [ -z "$(FILE)" ]; then echo "Error: FILE is required. Usage: make compile FILE=drafts/slides/Lecture01.tex"; exit 1; fi
 	@echo "Compiling $(FILE)..."
-	cd $$(dirname $(FILE)) && $(TEX_INPUTS) xelatex -interaction=nonstopmode $$(basename $(FILE))
-	cd $$(dirname $(FILE)) && $(BIB_INPUTS) bibtex $$(basename $(FILE) .tex)
-	cd $$(dirname $(FILE)) && $(TEX_INPUTS) xelatex -interaction=nonstopmode $$(basename $(FILE))
-	cd $$(dirname $(FILE)) && $(TEX_INPUTS) xelatex -interaction=nonstopmode $$(basename $(FILE))
+	cd $$(dirname $(FILE)) && $(TEX_INPUTS) $(XELATEX) -interaction=nonstopmode $$(basename $(FILE))
+	cd $$(dirname $(FILE)) && $(BIB_INPUTS) $(BIBTEX) $$(basename $(FILE) .tex)
+	cd $$(dirname $(FILE)) && $(TEX_INPUTS) $(XELATEX) -interaction=nonstopmode $$(basename $(FILE))
+	cd $$(dirname $(FILE)) && $(TEX_INPUTS) $(XELATEX) -interaction=nonstopmode $$(basename $(FILE))
 	@echo "Done. Output: $$(dirname $(FILE))/$$(basename $(FILE) .tex).pdf"
 
 # Run quality scoring
 quality:
-	@if [ -z "$(FILE)" ]; then echo "Error: FILE is required. Usage: make quality FILE=output/slides/Lecture01.tex"; exit 1; fi
-	python3 $(QUALITY_SCRIPT) $(FILE)
+	@if [ -z "$(FILE)" ]; then echo "Error: FILE is required. Usage: make quality FILE=drafts/slides/Lecture01.tex"; exit 1; fi
+	$(PYTHON) $(QUALITY_SCRIPT) $(FILE)
 
 # Compile + quality check
 verify: compile quality
 
 # Run a Stata do-file
 stata:
-	@if [ -z "$(FILE)" ]; then echo "Error: FILE is required. Usage: make stata FILE=scripts/file.do"; exit 1; fi
+	@if [ -z "$(FILE)" ]; then echo "Error: FILE is required. Usage: make stata FILE=scripts/src/Stata/analysis.do"; exit 1; fi
 	$(STATA) -b do $(FILE)
 	@echo "Stata log: $$(basename $(FILE) .do).log"
 
@@ -62,4 +71,4 @@ clean:
 
 # Run project initialization
 init:
-	python3 scripts/init_project.py
+	python3 scripts/src/Python/init_project.py

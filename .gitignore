@@ -32,6 +32,12 @@ __pycache__/
 .RData
 .Rdata
 
+# Stata (uncomment *.dta if your .dta files are small enough to track)
+*.dta
+*.smcl
+*.sthlp
+*.ster
+
 # OS files
 .DS_Store
 Thumbs.db

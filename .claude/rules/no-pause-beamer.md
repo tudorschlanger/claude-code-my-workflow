@@ -1,6 +1,6 @@
 ---
 paths:
-  - "output/slides/**/*.tex"
+  - "drafts/slides/**/*.tex"
 ---
 
 # No \pause in Beamer Slides

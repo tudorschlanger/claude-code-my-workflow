@@ -1,7 +1,7 @@
 ---
 paths:
   - "output/figures/**/*"
-  - "output/slides/**/*.tex"
+  - "drafts/slides/**/*.tex"
 ---
 
 # Single Source of Truth: Enforcement Protocol
@@ -13,7 +13,7 @@ paths:
 ```
 Beamer .tex (SOURCE OF TRUTH)
   ├── extract_tikz.tex → PDF → SVGs (derived)
-  ├── Bibliography_base.bib (shared)
+  ├── drafts/latex_files/Bibliography_base.bib (shared)
   └── output/figures/LectureN/*.rds → plots (data source)
 
 NEVER edit derived artifacts independently.

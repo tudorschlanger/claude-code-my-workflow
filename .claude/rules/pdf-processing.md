@@ -1,6 +1,6 @@
 ---
 paths:
-  - "input/**"
+  - "docs/**"
 ---
 
 # Robust PDF Processing
@@ -8,7 +8,7 @@ paths:
 ## The Safe Processing Workflow
 
 **Step 1: Receive PDF Upload**
-- User uploads PDF to `input/papers/` or `input/slides/`
+- User uploads PDF to `docs/papers/` or `docs/slides/`
 - Claude DOES NOT attempt to read the full PDF at once
 
 **Step 2: Check PDF Properties**

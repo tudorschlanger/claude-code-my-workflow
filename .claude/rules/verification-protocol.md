@@ -1,6 +1,6 @@
 ---
 paths:
-  - "output/slides/**/*.tex"
+  - "drafts/slides/**/*.tex"
 ---
 
 # Task Completion Verification Protocol
@@ -19,7 +19,7 @@ paths:
 4. **Freshness check:** Before using any TikZ SVG, verify extract_tikz.tex matches current Beamer source
 
 ## For R Scripts:
-1. Run `Rscript scripts/R/filename.R`
+1. Run `Rscript scripts/src/R/filename.R`
 2. Verify output files (PDF, RDS) were created with non-zero size
 3. Spot-check estimates for reasonable magnitude
 

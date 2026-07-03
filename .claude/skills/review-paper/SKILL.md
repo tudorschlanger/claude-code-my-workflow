@@ -9,7 +9,7 @@ description: Adversarial paper review simulating a skeptical referee — checks 
 Simulate a rigorous peer review of an academic manuscript before submission. Combines economics-specific review criteria (identification strategy, econometric specification) with a Devil's Advocate stress test and editorial synthesis.
 
 **Argument:** `$ARGUMENTS`
-- Path to a paper file (`.pdf`, `.tex`, `.qmd`, `.md`, `.docx`)
+- Path to a paper file (`.pdf`, `.tex`, `.md`, `.docx`)
 - Or a project name (will look for the paper in the project's standard locations)
 
 **Modes** (append to argument):
@@ -32,7 +32,7 @@ Example: `/review-paper dep-dts quick`
    - `~/Dropbox/Github/[project]/paper/`
    - `~/Dropbox/Github/[project]/manuscript/`
    - `~/Dropbox/Github/[project]/draft/`
-   - Glob for `*.tex`, `*.pdf`, `*.qmd`, `*.docx` in the project repo
+   - Glob for `*.tex`, `*.pdf`, `*.docx` in the project repo
 3. For PDFs, read in chunks (5 pages at a time). For LaTeX, read the main file and any `\input{}` files.
 4. Read the **full paper** end-to-end before starting any review pass.
 

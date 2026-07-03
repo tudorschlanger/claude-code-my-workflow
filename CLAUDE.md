@@ -1,12 +1,19 @@
 # CLAUDE.MD -- Academic Project Development with Claude Code
 
-<!-- HOW TO USE: Replace [BRACKETED PLACEHOLDERS] with your project info.
-     Customize Beamer environments for your theme.
-     Keep this file under ~150 lines — Claude loads it every session.
-     See the guide at guide/workflow-guide.md for full documentation. -->
+<!-- HOW TO USE: Run `make init` to fill placeholders, or replace [BRACKETS] manually.
+     This file loads every session — keep it under ~150 lines.
+     
+     File roles (each has one unique job, no duplication):
+       CLAUDE.md              — Project identity, commands, workflow, skills
+       MEMORY.md              — Accumulated learnings from corrections
+       rules/plan-first-*     — When and how to plan
+       rules/orchestrator-*   — The implement-verify-review-fix loop
+       rules/session-logging  — When and where to log
+       rules/meta-governance  — Generic vs. specific content decisions
+     See README.md "How Claude Uses These Files" for the full hierarchy.  -->
 
-**Project:** MAM Intro to Statistics
-**Institution:** Yale University, School of Management
+**Project:** [YOUR PROJECT NAME]
+**Institution:** [YOUR INSTITUTION]
 **Branch:** main
 
 ---
@@ -24,16 +31,24 @@
 ## Folder Structure
 
 ```
-MAM-Intro-to-Statistics/
-├── CLAUDE.MD                    # This file
+[YOUR-PROJECT]/
+├── CLAUDE.md                    # This file
 ├── .claude/                     # Rules, skills, agents, hooks
-├── Bibliography_base.bib        # Centralized bibliography
-├── input/                       # Input data (sources from outside the project)
-├── output/                      # Output data, figures, tables, slides, paper drafts (produced by scripts in this project)
-├── scripts/                     # All codes 
+├── data/
+│   ├── raw/                     # External data (never modify, document provenance)
+│   └── derived/                 # All intermediates (.dta, .parquet, .rds)
+├── docs/                        # Reference papers, emails, technical docs
+├── drafts/
+│   ├── documents/               # Paper drafts (.tex)
+│   ├── slides/                  # Lecture slides (.tex)
+│   └── latex_files/             # Preambles, .bib, .bst
+├── output/
+│   ├── figures/                 # Generated figures
+│   ├── tables/                  # Generated tables
+│   └── logs/                    # Compilation + execution logs
+├── scripts/src/                 # All code (Python/, R/, Stata/)
 ├── quality_reports/             # Plans, session logs, merge reports
-├── templates/                   # Session log, quality report templates
-└── docs/                        # Papers, emails, technical documentation, and existing slides
+└── templates/                   # Session log, quality report templates
 ```
 
 ---
@@ -41,16 +56,17 @@ MAM-Intro-to-Statistics/
 ## Commands
 
 ```bash
-# LaTeX (3-pass, XeLaTeX only)
-cd output && TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-BIBINPUTS=..:$BIBINPUTS bibtex file
-TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
-TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
+# LaTeX (3-pass, XeLaTeX only) — run from the directory containing your .tex file
+cd drafts/slides && TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
+BIBINPUTS=../latex_files:$BIBINPUTS bibtex file
+TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
+TEXINPUTS=../latex_files:$TEXINPUTS xelatex -interaction=nonstopmode file.tex
 ```
 
 ### LaTeX Headers
-- Slides: always use `scripts/latex_preambles/header_slides.tex`
-- Documents: always use `scripts/latex_preambles/header_doc.tex`
+- Slides: always use `drafts/latex_files/header_slides.tex`
+- Documents: always use `drafts/latex_files/header_doc.tex`
+
 
 ## Stata
 - Always run Stata to verify code and table output rather than generating blindly
@@ -58,6 +74,36 @@ TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode
 - Run do-files with: `[STATA PATH] -b do filename.do`
 - Logs are written to the same directory as the do-file; always check the `.log` file for errors after running
 
+---
+
+## Workflow
+
+### Claude asks when:
+- Design forks with multiple valid approaches
+- Spec is unclear or ambiguous
+- Scope question (also do Y, or focus on X?)
+
+### Claude just executes when:
+- Code fix is obvious (bug, pattern application)
+- Verification (compilation, tests, tolerance checks)
+- Documentation (session logs, commits)
+- Plotting (per established standards)
+
+### Non-Negotiables
+
+<!-- Replace with YOUR project's locked-in preferences -->
+
+- [YOUR PATH CONVENTION] (e.g., `here::here()` for R, relative paths for LaTeX)
+- [YOUR SEED CONVENTION] (e.g., `set.seed()` once at top for stochastic code)
+- [YOUR FIGURE STANDARDS] (e.g., white bg, 300 DPI, custom theme)
+- [YOUR COLOR PALETTE] (e.g., Okabe-Ito)
+
+### Preferences
+
+<!-- Fill in as you discover your working style -->
+
+- **Reporting:** [Concise bullets? Detailed prose?]
+- **Replication:** [How strict? Flag near-misses?]
 
 ---
 
@@ -75,24 +121,29 @@ TEXINPUTS=../scripts/latex_preambles:$TEXINPUTS xelatex -interaction=nonstopmode
 
 | Command | What It Does |
 |---------|-------------|
-| `/commit [msg]` | Stage, commit, create PR, and merge to main |
-| `/compile-latex [file]` | Compile Beamer slide deck with XeLaTeX (3 passes + bibtex) |
+| `/commit [msg]` | Stage, commit, and push to main |
+| `/compile-beamer [file]` | Compile Beamer slide deck with XeLaTeX (3 passes + bibtex) |
+| `/compile-paper [file]` | Compile LaTeX paper/document with pdflatex |
 | `/context-status` | Show session health and context usage |
+| `/create-codebook [file]` | Auto-generate codebook from Stata .dta file |
 | `/create-lecture` | Create new Beamer lecture from papers and materials |
-| `/data-analysis [dataset]` | End-to-end R data analysis from exploration through regression |
-| `/deep-audit` | Deep consistency audit of the entire repository infrastructure |
 | `/devils-advocate` | Challenge slide design with 5-7 pedagogical questions |
-| `/extract-tikz [LectureN]` | Extract TikZ diagrams from Beamer source, compile to PDF, convert to SVG |
+| `/extract-tikz [file]` | Extract TikZ diagrams from Beamer source, compile to PDF, convert to SVG |
+| `/find-data [topic]` | Identify and catalog relevant datasets for empirical research |
+| `/format-graphs` | Apply consistent matplotlib figure style (Okabe-Ito palette) |
 | `/format-tables` | Apply consistent LaTeX table style for table output |
 | `/format-tables-reg` | Apply consistent LaTeX regression table style for Stata output |
 | `/interview-me [topic]` | Interactive interview to formalize a research idea |
 | `/learn [skill-name]` | Extract reusable knowledge into a persistent skill |
 | `/lit-review [topic]` | Structured literature search and synthesis with citation extraction |
-| `/pedagogy-review [file]` | Holistic pedagogical review: narrative arc, prerequisites, notation, pacing |
+| `/pdf [file]` | Read, merge, split, extract, or annotate PDFs |
 | `/proofread [file]` | Grammar, typo, overflow, consistency review (produces report) |
-| `/research-ideation [topic]` | Generate research questions, hypotheses, and empirical strategies |
-| `/review-paper [file]` | Comprehensive manuscript review: structure, specification, citations |
+| `/research-brainstorm [topic]` | Multi-turn research idea development and stress-testing |
+| `/review-data-pipeline` | Adversarial audit of variable construction and sample restrictions |
+| `/review-metrics` | Adversarial econometrics review (clustering, specification, controls) |
+| `/review-paper [file]` | Simulated adversarial referee review of manuscripts |
 | `/review-r [file]` | R code quality, reproducibility, and domain correctness review |
+| `/review-slides-pedagogy [file]` | Holistic pedagogical review: narrative arc, prerequisites, notation, pacing |
 | `/slide-excellence [file]` | Multi-agent slide review (visual, pedagogy, proofreading) |
 | `/validate-bib` | Cross-reference citations against bibliography |
 | `/visual-audit [file]` | Adversarial visual audit: overflow, font consistency, box fatigue |

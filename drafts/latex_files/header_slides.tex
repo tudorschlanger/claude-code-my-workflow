@@ -1,51 +1,90 @@
 % =============================================================================
-% Pathways: Economics & Finance Workshop — Document Preamble
+% [YOUR PROJECT NAME] — Beamer Preamble
 % =============================================================================
-% Usage: Each handout/activity .tex file should start with:
-%   \documentclass[letterpaper,10pt]{article}
-%   \input{../../codes/Preambles/header_doc}
-% Compile: cd output/Handouts && TEXINPUTS=../../codes/Preambles:$TEXINPUTS xelatex file.tex
+% Usage: Each lecture .tex file should start with:
+%   \documentclass[10pt,english,aspectratio=169]{beamer}
+%   \input{header_slides}
+% Compile: cd drafts/slides && TEXINPUTS=../latex_files:$TEXINPUTS xelatex file.tex
 % =============================================================================
 
 % ---------- Packages ----------
 % Fonts
-\usepackage{palatino}
+\usepackage{lmodern}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage[normalem]{ulem}
 
 % Math
-\usepackage{amsmath,amssymb,amsthm,eucal,bm}
+\usepackage{amsmath,amssymb,amsthm,bm}
 \usepackage{mathrsfs}
 \usepackage{dsfont}
 
 % Figures and tables
 \usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{array,tabularx,booktabs,longtable,subcaption}
-\usepackage{pdflscape}
-\usepackage{siunitx}
+\usepackage{array,tabularx,booktabs,threeparttable}
 
 % TikZ and pgfplots
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 \usepackage{tikz}
-\usetikzlibrary{positioning,arrows.meta,calc}
+\usetikzlibrary{positioning,arrows.meta,calc,shapes.geometric}
 
 % Colored boxes
 \usepackage[most]{tcolorbox}
 
 % Miscellaneous
-\usepackage{hyperref}
+\usepackage{transparent}
 \usepackage{setspace}
-\usepackage{enumitem}
+\usepackage[nodayofweek]{datetime}
+\usepackage{hyperref}
 
-% ---------- Margins ----------
-\usepackage[left=1in,right=1in,top=0.75in,bottom=1in,marginparwidth=1.5in,footskip=0.7in]{geometry}
+% ---------- Theme ----------
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+\usepackage{appendixnumberbeamer}
 
 % ---------- Itemize ----------
-\setlist[enumerate]{itemsep=-0.4em,topsep=0.2em}
-\setlist[itemize]{itemsep=-0.4em,topsep=0.2em}
+\setbeamercovered{invisible}
+\setbeamertemplate{itemize items}[bullet]
+\setbeamertemplate{enumerate items}[default]
+
+\setbeamertemplate{itemize item}[bullet]
+\setbeamertemplate{itemize subitem}[default]
+\setbeamertemplate{itemize subsubitem}[default]
+
+% ---------- Headline / Footline ----------
+\setbeamertemplate{headline}{}
+
+\setbeamertemplate{footline}{
+  \leavevmode
+  \hbox{
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.25ex,leftskip=1em,rightskip=1em]{footline}
+      \hfill \insertframenumber
+    \end{beamercolorbox}
+  }
+}
+
+\setbeamertemplate{navigation symbols}{}
+
+% ---------- Frame title (centered) ----------
+\makeatletter
+\setbeamertemplate{frametitle}{
+  \nointerlineskip
+  \begin{beamercolorbox}[wd=\paperwidth,sep=0.35cm,center]{frametitle}
+    {\usebeamerfont{frametitle}\insertframetitle\par}
+    \ifx\insertframesubtitle\@empty\else
+      \vspace{0.15cm}
+      {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\par}
+    \fi
+  \end{beamercolorbox}
+}
+\makeatother
+
+% ---------- Margins ----------
+\setbeamersize{
+  text margin left=2em,
+  text margin right=2em
+}
+
 
 % =============================================================================
 % Colors — Okabe-Ito colorblind-friendly palette
@@ -64,12 +103,24 @@
 \definecolor{softbg}{HTML}{F5F5F5}
 \definecolor{lightgray}{gray}{0.65}
 
+% ---------- Section outline frames ----------
+\setbeamercolor{section in toc}{fg=black}
+\setbeamercolor{section in toc shaded}{fg=black!30}
+\setbeamertemplate{section in toc}[sections numbered]
+
+\AtBeginSection[]{
+  \begin{frame}{Outline}
+    \tableofcontents[currentsection,
+                     sectionstyle=show/shaded]
+  \end{frame}
+}
+
 % =============================================================================
 % Box Environments
 % =============================================================================
 
-% --- Key points (orange background) ---
-\newtcolorbox{keybox}{
+% --- Question box (orange background) ---
+\newtcolorbox{questionbox}{
   colback=orange!12,
   colframe=orange,
   fonttitle=\bfseries,
@@ -81,8 +132,22 @@
   bottom=4pt
 }
 
+% --- Answer box (green border) ---
+\newtcolorbox{answerbox}{
+  colback=green!5,
+  colframe=green,
+  fonttitle=\bfseries,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=6pt,
+  right=6pt,
+  top=4pt,
+  bottom=4pt
+}
+
+
 % --- Highlights (orange left accent) ---
-\newtcolorbox{highlightbox}{
+\newtcolorbox{insightbox}{
   colback=white,
   colframe=orange,
   fonttitle=\bfseries,
@@ -113,19 +178,6 @@
 \newtcolorbox{methodbox}{
   colback=skyblue!8,
   colframe=skyblue!70,
-  fonttitle=\bfseries,
-  boxrule=0.5pt,
-  arc=2pt,
-  left=6pt,
-  right=6pt,
-  top=4pt,
-  bottom=4pt
-}
-
-% --- Results (green border) ---
-\newtcolorbox{resultbox}{
-  colback=green!5,
-  colframe=green,
   fonttitle=\bfseries,
   boxrule=0.5pt,
   arc=2pt,

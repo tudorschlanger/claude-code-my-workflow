@@ -6,10 +6,10 @@ Calculates objective quality scores (0-100) based on defined rubrics.
 Enforces quality gates: 80 (commit), 90 (PR), 95 (excellence).
 
 Usage:
-    python scripts/quality_score.py Slides/Lecture01_Topic.tex
-    python scripts/quality_score.py Slides/Lecture01_Topic.tex --summary
-    python scripts/quality_score.py Slides/*.tex
-    python scripts/quality_score.py scripts/R/Lecture06_simulations.R
+    python scripts/src/Python/quality_score.py drafts/slides/Lecture01.tex
+    python scripts/src/Python/quality_score.py drafts/slides/Lecture01.tex --summary
+    python scripts/src/Python/quality_score.py drafts/slides/*.tex
+    python scripts/src/Python/quality_score.py scripts/src/R/analysis.R
 """
 
 import sys
@@ -155,11 +155,22 @@ class IssueDetector:
         return list(broken)
 
     @staticmethod
+    def _get_r_path() -> str:
+        """Read R_PATH from settings.local.json, falling back to 'Rscript'."""
+        try:
+            settings = Path(__file__).resolve().parent.parent.parent.parent / ".claude" / "settings.local.json"
+            with open(settings) as f:
+                return json.load(f).get("env", {}).get("R_PATH", "Rscript")
+        except (FileNotFoundError, json.JSONDecodeError, KeyError):
+            return "Rscript"
+
+    @staticmethod
     def check_r_syntax(filepath: Path) -> Tuple[bool, str]:
         """Check R script for syntax errors."""
+        r_path = IssueDetector._get_r_path()
         try:
             result = subprocess.run(
-                ['Rscript', '-e', f'parse("{filepath}")'],
+                [r_path, '-e', f'parse("{filepath}")'],
                 capture_output=True,
                 text=True,
                 timeout=10
@@ -348,10 +359,12 @@ class QualityScorer:
             return self._generate_report()
 
         # Check for undefined/broken citations (\cite, \citep, \citet patterns)
-        bib_file = self.filepath.parent.parent / 'Bibliography_base.bib'
+        # Search for bib file: sibling latex_files/ dir, same dir, or project root
+        bib_file = self.filepath.parent.parent / 'latex_files' / 'Bibliography_base.bib'
         if not bib_file.exists():
-            # Also check same directory
             bib_file = self.filepath.parent / 'Bibliography_base.bib'
+        if not bib_file.exists():
+            bib_file = Path.cwd() / 'drafts' / 'latex_files' / 'Bibliography_base.bib'
         broken_citations = IssueDetector.check_broken_citations(content, bib_file)
         for key in broken_citations:
             self.issues['critical'].append({
@@ -516,19 +529,19 @@ def main():
         epilog="""
 Examples:
   # Score a Beamer/LaTeX file
-  python scripts/quality_score.py Slides/Lecture01_Topic.tex
+  python scripts/src/Python/quality_score.py drafts/slides/Lecture01.tex
 
   # Score multiple files
-  python scripts/quality_score.py Slides/*.tex
+  python scripts/src/Python/quality_score.py drafts/slides/*.tex
 
   # Score an R script
-  python scripts/quality_score.py scripts/R/Lecture06_simulations.R
+  python scripts/src/Python/quality_score.py scripts/src/R/analysis.R
 
   # Summary only (no detailed issues)
-  python scripts/quality_score.py Slides/Lecture01_Topic.tex --summary
+  python scripts/src/Python/quality_score.py drafts/slides/Lecture01.tex --summary
 
   # Verbose output (include minor issues)
-  python scripts/quality_score.py Slides/Lecture01_Topic.tex --verbose
+  python scripts/src/Python/quality_score.py drafts/slides/Lecture01.tex --verbose
 
 Quality Thresholds:
   80/100 = Commit threshold (blocks if below)
