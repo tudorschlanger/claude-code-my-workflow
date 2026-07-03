@@ -45,12 +45,17 @@ git init && git add . && git commit -m "Initial project setup"
 
 ```bash
 make init
+make install-hooks
 ```
 
-This runs an interactive wizard that:
+`make init` runs an interactive wizard that:
 - Detects installed tools (Python, R, Stata, LaTeX) and saves their paths
 - Creates a **conda environment** for Python and initializes **renv** for R
 - Removes directories for tools you don't use
+
+`make install-hooks` installs git hooks that:
+- **Pre-commit**: blocks commits if any staged `.tex`/`.R`/`.py`/`.do` file scores below 80/100
+- **Commit-msg**: enforces [Conventional Commits](https://www.conventionalcommits.org/) format (`feat:`, `fix:`, `docs:`, etc.)
 - Fills in your project name, institution, and domain across all config files
 
 ### 3. Start Claude Code

@@ -1,0 +1,47 @@
+#!/bin/bash
+# Git commit-msg hook: enforces conventional commit format
+# Install: cp .claude/hooks/git-commit-msg .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
+# Or run: make install-hooks
+#
+# Valid types: feat, fix, docs, refactor, test, style, chore, perf, data, slides
+# Optional scope: feat(api): ..., fix(panel): ...
+#
+# Examples:
+#   feat: add regression table formatting skill
+#   fix(panel): correct clustering standard errors in estimation
+#   docs: update README prerequisites section
+#   data: add CRSP monthly returns to raw data
+#   slides: create Lecture 3 on hypothesis testing
+#   refactor(scripts): reorganize Python utilities
+
+MSG_FILE="$1"
+MSG=$(head -1 "$MSG_FILE")
+
+# Allow merge commits
+if echo "$MSG" | grep -qE '^Merge '; then
+  exit 0
+fi
+
+# Check conventional commit format: type[(scope)][!]: description
+PATTERN='^(feat|fix|docs|refactor|test|style|chore|perf|data|slides)(\([a-z0-9_-]+\))?!?: .+'
+
+if ! echo "$MSG" | grep -qE "$PATTERN"; then
+  echo "ERROR: Commit message must follow conventional format:"
+  echo ""
+  echo "  <type>[optional scope]: <description>"
+  echo ""
+  echo "  Types: feat, fix, docs, refactor, test, style, chore, perf, data, slides"
+  echo "  Scope: optional, in parentheses — e.g., feat(api): ..."
+  echo ""
+  echo "  Examples:"
+  echo "    feat: add bootstrap standard error computation"
+  echo "    fix(panel): correct sample restriction for firm-year data"
+  echo "    docs: update README with conda setup instructions"
+  echo "    data: add cleaned Compustat panel to derived/"
+  echo "    slides: create Lecture 5 on instrumental variables"
+  echo ""
+  echo "  Your message: $MSG"
+  exit 1
+fi
+
+exit 0

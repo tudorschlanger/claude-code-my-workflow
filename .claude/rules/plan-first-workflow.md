@@ -8,11 +8,14 @@
 2. **Check MEMORY.md** — read any `[LEARN]` entries relevant to this task
 3. **Requirements Specification (for complex/ambiguous tasks)** — see below
 4. **Draft the plan** — what changes, which files, in what order
-5. **Save to disk** — write to `quality_reports/plans/YYYY-MM-DD_short-description.md`
-6. **Present to user** — wait for approval
-7. **Exit plan mode** — only after approval
-8. **Save initial session log** — capture goal and key context while fresh
-9. **Implement via orchestrator** — see `orchestrator-protocol.md`
+5. **Decide branching strategy:**
+   - **Minor** (single file, small fix, docs): commit directly to `main`
+   - **Major** (multi-file feature, risky refactor, new lecture): use a git worktree branch, then merge via PR
+6. **Save to disk** — write to `quality_reports/plans/YYYY-MM-DD_short-description.md`
+7. **Present to user** — wait for approval
+8. **Exit plan mode** — only after approval
+9. **Save initial session log** — capture goal and key context while fresh
+10. **Implement via orchestrator** — see `orchestrator-protocol.md`
 
 ## Step 3: Requirements Specification (For Complex/Ambiguous Tasks)
 

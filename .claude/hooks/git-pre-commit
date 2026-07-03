@@ -1,0 +1,68 @@
+#!/bin/bash
+# Git pre-commit hook: runs quality_score.py on staged .tex/.R/.py/.do files
+# Install: cp .claude/hooks/git-pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+# Or run: make install-hooks
+
+QUALITY_SCRIPT="scripts/src/Python/quality_score.py"
+THRESHOLD=80
+
+# Skip infrastructure files
+SKIP_FILES=(
+  "scripts/src/Python/init_project.py"
+  "scripts/src/Python/quality_score.py"
+)
+
+# Get staged files matching scorable extensions
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(tex|R|py|do)$')
+
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+# Filter out skipped files
+FILES=""
+for f in $STAGED; do
+  skip=false
+  for s in "${SKIP_FILES[@]}"; do
+    if [ "$f" = "$s" ]; then
+      skip=true
+      break
+    fi
+  done
+  if [ "$skip" = false ]; then
+    FILES="$FILES $f"
+  fi
+done
+
+if [ -z "$FILES" ]; then
+  exit 0
+fi
+
+# Check if quality_score.py exists
+if [ ! -f "$QUALITY_SCRIPT" ]; then
+  echo "Warning: $QUALITY_SCRIPT not found, skipping quality gate"
+  exit 0
+fi
+
+FAILED=0
+for file in $FILES; do
+  if [ ! -f "$file" ]; then
+    continue
+  fi
+
+  RESULT=$(python3 "$QUALITY_SCRIPT" "$file" --json 2>/dev/null)
+  SCORE=$(echo "$RESULT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d[0]['score'])" 2>/dev/null)
+
+  if [ -n "$SCORE" ] && [ "$SCORE" -lt "$THRESHOLD" ] 2>/dev/null; then
+    echo "BLOCKED: $file scores $SCORE/100 (threshold: $THRESHOLD)"
+    FAILED=1
+  fi
+done
+
+if [ "$FAILED" -eq 1 ]; then
+  echo ""
+  echo "Commit blocked by quality gate. Fix issues above or use --no-verify to skip."
+  exit 1
+fi
+
+exit 0

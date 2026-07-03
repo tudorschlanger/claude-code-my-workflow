@@ -17,7 +17,7 @@ PDFLATEX := $(call _read_setting,PDFLATEX_PATH,pdflatex)
 TEX_INPUTS := TEXINPUTS=../latex_files:$$TEXINPUTS
 BIB_INPUTS := BIBINPUTS=../latex_files:$$BIBINPUTS
 
-.PHONY: compile quality clean verify init help
+.PHONY: compile quality clean verify init install-hooks help
 
 help:
 	@echo "Available targets:"
@@ -27,6 +27,7 @@ help:
 	@echo "  make clean                                      Remove LaTeX build artifacts"
 	@echo "  make init                                       Run project initialization script"
 	@echo "  make stata FILE=scripts/src/Stata/analysis.do   Run a Stata do-file"
+	@echo "  make install-hooks                               Install git hooks (quality gate + commit format)"
 
 # Compile Beamer slides (3-pass XeLaTeX + bibtex)
 compile:
@@ -72,3 +73,10 @@ clean:
 # Run project initialization
 init:
 	python3 scripts/src/Python/init_project.py
+
+# Install git hooks (pre-commit quality gate + conventional commit format)
+install-hooks:
+	cp .claude/hooks/git-pre-commit .git/hooks/pre-commit
+	cp .claude/hooks/git-commit-msg .git/hooks/commit-msg
+	chmod +x .git/hooks/pre-commit .git/hooks/commit-msg
+	@echo "Git hooks installed: pre-commit (quality gate) + commit-msg (conventional format)"
