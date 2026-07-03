@@ -12,15 +12,15 @@ A ready-to-use Claude Code template for research and teaching projects. Designed
 
 > **Platform:** This setup is designed for **macOS**. Most components work on Linux with minor path adjustments. Windows users should use WSL.
 
-| Tool | Required For | Install |
-|------|-------------|---------|
-| [Claude Code](https://code.claude.com/docs/en/overview) | Everything | `npm install -g @anthropic-ai/claude-code` |
-| [Node.js](https://nodejs.org/) (v18+) | Claude Code | `brew install node` |
-| [Git](https://git-scm.com/) | Version control | `brew install git` |
-| [MacTeX](https://www.tug.org/mactex/) | LaTeX compilation | `brew install --cask mactex` |
-| [Python 3](https://www.python.org/) + [Conda](https://docs.conda.io/) | Analysis, env management | `brew install --cask miniconda` |
-| [R](https://www.r-project.org/) | Statistical analysis | `brew install --cask r` |
-| [Stata](https://www.stata.com/) | Econometric analysis | Requires license (optional) |
+| # | Tool | Required For | Install |
+|---|------|-------------|---------|
+| 1 | [Git](https://git-scm.com/) | Version control | `brew install git` |
+| 2 | [Node.js](https://nodejs.org/) (v18+) | Claude Code | `brew install node` |
+| 3 | [Claude Code](https://code.claude.com/docs/en/overview) | Everything | `npm install -g @anthropic-ai/claude-code` |
+| 4 | [Python 3](https://www.python.org/) + [Conda](https://docs.conda.io/) | Analysis, env management | `brew install --cask miniconda` |
+| 5 | [MacTeX](https://www.tug.org/mactex/) | LaTeX compilation | `brew install --cask mactex` |
+| 6 | [R](https://www.r-project.org/) | Statistical analysis (optional) | `brew install --cask r` |
+| 7 | [Stata](https://www.stata.com/) | Econometric analysis (optional) | Requires license |
 
 `make init` will detect which of these are installed, set up conda/renv environments, and save all executable paths. You only need to install the tools you plan to use — Python and LaTeX are the only ones required by the infrastructure itself.
 
@@ -45,18 +45,14 @@ git init && git add . && git commit -m "Initial project setup"
 
 ```bash
 make init
-make install-hooks
 ```
 
-`make init` runs an interactive wizard that:
+This runs an interactive wizard that:
 - Detects installed tools (Python, R, Stata, LaTeX) and saves their paths
 - Creates a **conda environment** for Python and initializes **renv** for R
 - Removes directories for tools you don't use
-
-`make install-hooks` installs git hooks that:
-- **Pre-commit**: blocks commits if any staged `.tex`/`.R`/`.py`/`.do` file scores below 80/100
-- **Commit-msg**: enforces [Conventional Commits](https://www.conventionalcommits.org/) format (`feat:`, `fix:`, `docs:`, etc.)
 - Fills in your project name, institution, and domain across all config files
+- Installs **git hooks**: pre-commit quality gate (blocks commits below 80/100) and [Conventional Commits](https://www.conventionalcommits.org/) format enforcement (`feat:`, `fix:`, `docs:`, etc.)
 
 ### 3. Start Claude Code
 
@@ -88,6 +84,23 @@ Claude reads all configuration files, adapts to your project, and enters contrac
 | `/plugin` | Browse and install community plugins (e.g., code intelligence for typed languages) |
 
 **When Claude goes off track:** correct early. After two failed corrections, `/clear` and write a better prompt incorporating what you learned. A clean session with a better prompt beats a long session with accumulated corrections.
+
+### The Sandbox
+
+`make init` enables the **sandbox** by default — Claude can only write to your project directory and approved paths, enforced at the OS level. To get the most out of it, run `/sandbox` in your first session and select **auto-allow** mode so Claude runs Bash commands without prompting.
+
+| Without sandbox | With sandbox |
+|----------------|-------------|
+| Approve every `git`, `python3`, `xelatex` command | Commands run automatically |
+| Dozens of permission prompts per session | Only prompted for new network domains |
+
+The first time Claude needs a network domain (e.g., `github.com`, `cloud.r-project.org`), you approve once per session.
+
+**Lightweight alternative:** [`agent-safehouse`](https://github.com/eugene1g/agent-safehouse) provides OS-kernel enforcement on macOS without Docker: `brew install eugene1g/safehouse/agent-safehouse && safehouse claude`.
+
+**Data privacy warning:** Sandboxing limits what Claude can *do*, not what it can *see*. If `data/raw/` contains personally identifiable information (PII) or confidential data, that data is sent to Anthropic's API when Claude reads it. For sensitive datasets, consider local models or remove PII before placing data in the project.
+
+For details on protecting credentials, excluding incompatible tools, and advanced configuration, see the [Sandboxing documentation](https://code.claude.com/docs/en/sandboxing).
 
 ---
 

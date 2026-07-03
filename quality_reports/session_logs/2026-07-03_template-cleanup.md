@@ -94,6 +94,20 @@ Clean up the existing repo into a distributable template for economists new to C
 - Git hooks installed and validated (pre-commit + commit-msg)
 - Repo marked as GitHub template — confirmed
 
+## README Polish & Sandbox (later in session)
+
+| File/Area | Change | Quality |
+|-----------|--------|---------|
+| README.md | Restructured: moved tips after Quick Start, removed How It Works, removed Adapting for Your Field | Done |
+| README.md | Added explainer for agents/skills/rules/hooks in What's Included | Done |
+| README.md | Added Plugins section (what they are, how to install, recommended ones) | Done |
+| README.md | Combined Resources + Community into single section | Done |
+| README.md | Added sandbox section: /sandbox, agent-safehouse, data privacy warning | Done |
+| README.md | Sandbox enabled by default — updated Quick Start and sandbox section | Done |
+| confidential-data.md | Added rule: "Anything Claude reads is sent to the API" — PII/API exposure warning | Done |
+| init_project.py | Now installs git hooks automatically during make init | Done |
+| init_project.py | Enables sandbox by default, denyWrite for data/raw/, excludes gh from sandbox | Done |
+
 ## All Commits This Session
 
 | Commit | Description |
@@ -103,3 +117,5 @@ Clean up the existing repo into a distributable template for economists new to C
 | `4dae8fa` | Add quality-gate stop hook, compaction instructions, user tips |
 | `a55e32c` | feat: add git hooks for quality gate and conventional commits |
 | `8c5f205` | feat: add PR workflow with branching strategy |
+| `3cb54a4` | docs: update session log with full session summary |
+| `c2e7e55` | docs: restructure README — add tips, plugins, streamline sections |

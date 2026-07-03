@@ -458,8 +458,45 @@ def update_settings_local(tool_paths):
         if value:
             data["env"][key] = value
 
+    # Enable sandbox by default with raw data protection
+    if "sandbox" not in data:
+        data["sandbox"] = {}
+    data["sandbox"]["enabled"] = True
+    if "filesystem" not in data["sandbox"]:
+        data["sandbox"]["filesystem"] = {}
+    deny_write = data["sandbox"]["filesystem"].get("denyWrite", [])
+    if "./data/raw" not in deny_write:
+        deny_write.append("./data/raw")
+        data["sandbox"]["filesystem"]["denyWrite"] = deny_write
+    # Exclude tools that break under sandbox
+    if "excludedCommands" not in data["sandbox"]:
+        data["sandbox"]["excludedCommands"] = []
+    excluded = data["sandbox"]["excludedCommands"]
+    if "gh *" not in excluded:
+        excluded.append("gh *")
+
     write_file(path, json.dumps(data, indent=2) + "\n")
     print(f"  Updated {path}")
+
+
+def install_git_hooks():
+    """Copy git hooks from .claude/hooks/ to .git/hooks/."""
+    hooks = [
+        ("git-pre-commit", "pre-commit"),
+        ("git-commit-msg", "commit-msg"),
+    ]
+    git_hooks_dir = ".git/hooks"
+    if not os.path.isdir(git_hooks_dir):
+        print("  Warning: .git/hooks/ not found — skipping hook installation")
+        return
+
+    for src_name, dst_name in hooks:
+        src = os.path.join(".claude", "hooks", src_name)
+        dst = os.path.join(git_hooks_dir, dst_name)
+        if os.path.isfile(src):
+            shutil.copy2(src, dst)
+            os.chmod(dst, 0o755)
+    print("  Installed git hooks (pre-commit quality gate + conventional commits)")
 
 
 def update_gitignore(entries):
@@ -599,6 +636,7 @@ def main():
     fill_domain_reviewer(domain)
     fill_knowledge_base(project_name)
     update_settings_local(tool_paths)
+    install_git_hooks()
 
     print()
     print("Done! Next steps:")
@@ -607,7 +645,8 @@ def main():
     if conda_env_name:
         print(f"  3. Activate conda: conda activate {conda_env_name}")
     print("  4. Start Claude Code: claude")
-    print("  5. Use /context-status to check session health")
+    print("  5. Run /sandbox and select auto-allow for hands-free Bash commands")
+    print("  6. Use /context-status to check session health")
     print()
 
 

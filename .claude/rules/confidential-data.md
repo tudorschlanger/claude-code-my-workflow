@@ -16,11 +16,12 @@ This is a **template** — replace the placeholder thresholds and providers with
 
 ---
 
-## The three hard rules
+## The four hard rules
 
 1. **Never commit raw confidential data.** Raw microdata, identifiers, and provider-supplied files do not belong in git — not even in a private repo, not even once. `.gitignore` must cover `data/raw/`, `data/restricted/`, `*.dta`/`*.sav` containing microdata, and any path your DUA names. Commit *code* and *derived, disclosure-cleared* outputs only.
-2. **Nothing leaves without disclosure clearance.** Any table, figure, coefficient, or count built on restricted data must pass disclosure-avoidance review *before* it appears in a draft, a slide, a commit, or an email. Pre-screen with [`/disclosure-check`](../skills/disclosure-check/SKILL.md); the data provider's official review is still mandatory and final.
-3. **Access is per-person, per-agreement.** A co-author without the DUA cannot receive the data, the identifiers, or outputs that fail disclosure rules. Handoffs ([`/coauthor-brief`](../skills/coauthor-brief/SKILL.md)) carry *instructions to obtain access*, never the data.
+2. **Anything Claude reads is sent to the API.** Sandboxing limits what Claude can *do*, not what it can *see*. If PII or restricted data is in a directory Claude can read, that data is transmitted to Anthropic's servers. For truly confidential datasets: do not place them in the project directory, or use local models instead.
+3. **Nothing leaves without disclosure clearance.** Any table, figure, coefficient, or count built on restricted data must pass disclosure-avoidance review *before* it appears in a draft, a slide, a commit, or an email.
+4. **Access is per-person, per-agreement.** A co-author without the DUA cannot receive the data, the identifiers, or outputs that fail disclosure rules.
 
 ## Disclosure avoidance (the short version)
 
