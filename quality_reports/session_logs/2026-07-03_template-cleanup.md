@@ -66,16 +66,40 @@ Clean up the existing repo into a distributable template for economists new to C
 | README.md | Removed origin story paragraph | Done |
 | GitHub repo | Marked as template repository | Done |
 
+## Best Practices & Git Workflow (later in session)
+
+| File/Area | Change | Quality |
+|-----------|--------|---------|
+| stata-reviewer.md | New agent: 8 categories (structure, reproducibility, data, specification, tables, figures, efficiency, comments) | Done |
+| python-reviewer.md | New agent: 9 categories (structure, reproducibility, pipeline, statistics, figures, tables, quality, errors, polish) | Done |
+| quality-gate.py | New Stop hook: blocks Claude if modified .tex/.R/.py/.do files score < 80/100 | Done |
+| quality_score.py | Extended with Python scoring (syntax, paths, seeds) and Stata scoring (clear all, set seed, paths) | Done |
+| CLAUDE.md | Added compaction instructions to core principles | Done |
+| README.md | Added "Tips for Working with Claude Code" section (/btw, /rewind, /goal, /compact, etc.) | Done |
+| git-pre-commit | New git hook: blocks commits if staged files score < 80/100 | Done |
+| git-commit-msg | New git hook: enforces conventional commits (feat/fix/docs/refactor/test/style/chore/perf/data/slides) | Done |
+| Makefile | Added `make install-hooks` target | Done |
+| /commit skill | Updated with conventional commit format, scope support, PR creation for branches | Done |
+| orchestrator-protocol.md | Added branching strategy: minor → main, major → worktree branch + PR | Done |
+| plan-first-workflow.md | Added branching decision as step 5 in planning protocol | Done |
+| README.md | Updated Quick Start with `make install-hooks`, conventional commits, PR info | Done |
+
 ## Final Verification
 
 - Always-on context: 771 → 356 lines (54% reduction, zero duplication)
 - `make help` — PASS
-- `python3 init_project.py --non-interactive` — PASS, all placeholders filled
+- `python3 init_project.py --non-interactive` — PASS
 - `paths.py` ROOT resolution — PASS
-- Grep for old paths (Quarto, Slides/, Preambles/, output/slides) — zero hits
+- Grep for old paths — zero hits
+- Git hooks installed and validated (pre-commit + commit-msg)
 - Repo marked as GitHub template — confirmed
 
-## Committed & Pushed
+## All Commits This Session
 
-- Commit `a5ab470`: 74 files changed, 1,843 insertions, 66,995 deletions
-- Pushed to `main` on GitHub
+| Commit | Description |
+|--------|-------------|
+| `a5ab470` | Reorganize repo into distributable template (74 files, main restructure) |
+| `dddf954` | Add Stata and Python reviewer agents |
+| `4dae8fa` | Add quality-gate stop hook, compaction instructions, user tips |
+| `a55e32c` | feat: add git hooks for quality gate and conventional commits |
+| `8c5f205` | feat: add PR workflow with branching strategy |
